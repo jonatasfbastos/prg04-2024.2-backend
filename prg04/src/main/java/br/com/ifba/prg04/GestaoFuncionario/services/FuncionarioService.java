@@ -1,6 +1,5 @@
 package br.com.ifba.prg04.GestaoFuncionario.services;
 
-
 import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import br.com.ifba.prg04.GestaoFuncionario.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
