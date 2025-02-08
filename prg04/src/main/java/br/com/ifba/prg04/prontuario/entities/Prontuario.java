@@ -23,5 +23,4 @@ public class Prontuario extends PersistenceEntity {
     @OneToMany(mappedBy = "prontuario", cascade = CascadeType.ALL)
     private List<Documento> documentos;
 
-    private LocalDateTime dataCriacao = LocalDateTime.now();
 }

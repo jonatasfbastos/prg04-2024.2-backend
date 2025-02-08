@@ -8,4 +8,9 @@ import lombok.Data;
 public class Responsavel {
     private String nome;
     private String contato;
+
+    public Responsavel() {
+        this.nome = "Não possui";
+        this.contato = "N/A";
+    }
 }
