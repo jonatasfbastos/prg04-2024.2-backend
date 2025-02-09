@@ -55,7 +55,7 @@ public class VacinaService implements VacinaIService{
 
     @Override
     @Transactional
-    public void DeleteById(Long id) {
+    public void deleteById(Long id) {
         log.info("Deletando vacina com ID: " + id);
         try {
             vacinaIRepository.deleteById(id);

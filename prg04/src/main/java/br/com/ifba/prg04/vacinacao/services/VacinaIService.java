@@ -10,6 +10,6 @@ public interface VacinaIService {
     Vacina save(Vacina vacina);
     Vacina findById(Long id);
     Page<Vacina> findAll(Pageable pageable);
-    void DeleteById(Long id);
+    void deleteById(Long id);
     Vacina updateVacina(Vacina vacina);
 }
