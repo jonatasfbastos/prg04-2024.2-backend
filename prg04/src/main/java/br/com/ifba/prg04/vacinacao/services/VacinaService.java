@@ -13,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -79,6 +82,45 @@ public class VacinaService implements VacinaIService{
             return vacinaIRepository.save(vacina);
         }catch (DataAccessException e){
             log.error("Erro ao atualizar vacina com ID: " + e.getMessage());
+            throw new ResourceNotFoundException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public Page<Vacina> findByDoencaCombatida(String doencaCombatida, Pageable pageable){
+        try {
+            log.info("Filtrando vacinas por doenca: {}", doencaCombatida);
+            Page<Vacina> vacinas = vacinaIRepository.findByDoencaCombatida(doencaCombatida, pageable);
+            return vacinas;
+        }catch (EmptyResultDataAccessException e){
+            log.error("Erro ao filtrar vacinas por doenca");
+            throw new ResourceNotFoundException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public Page<Vacina> findByDataVencimento(LocalDate dataVencimento, Pageable pageable){
+        try {
+            log.info("Filtrando vacinas por data de vencimento: {}", dataVencimento);
+            Page<Vacina> vacinas = vacinaIRepository.findByDataVencimento(dataVencimento, pageable);
+            return vacinas;
+        }catch (EmptyResultDataAccessException e){
+            log.error("Erro ao filtrar vacinas por data de vencimento");
+            throw new ResourceNotFoundException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public Page<Vacina> findByDataVencimentoAfter(LocalDate dataVencimentoAfter, Pageable pageable){
+        try {
+            log.info("Filtrando vacinas vencidas: {}", dataVencimentoAfter);
+            Page<Vacina> vacinas = vacinaIRepository.findByDataVencimentoAfter(dataVencimentoAfter, pageable);
+            return vacinas;
+        }catch (EmptyResultDataAccessException e){
+            log.error("Erro ao filtrar vacinas vencidas");
             throw new ResourceNotFoundException(e.getMessage());
         }
     }

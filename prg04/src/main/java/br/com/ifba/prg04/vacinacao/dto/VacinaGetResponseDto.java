@@ -1,5 +1,6 @@
 package br.com.ifba.prg04.vacinacao.dto;
 
+import br.com.ifba.prg04.vacinacao.entities.Lote;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class VacinaGetResponseDto {
     private Integer quantidade;
 
     @JsonProperty(value = "loteAtrelado")
-    private String loteAtrelado;
+    private Lote loteAtrelado;
 
     @JsonProperty(value = "doencaCombatida")
     private String doencaCombatida;

@@ -53,8 +53,9 @@ public class VacinaController {
 
     @PutMapping(path = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@PathVariable ("id") Long id
-            , @RequestBody Vacina vacina) {
+            , @RequestBody @Valid Vacina vacina) {
         vacina.setId(id);
+        vacinaIService.updateVacina(vacina);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
