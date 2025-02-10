@@ -1,0 +1,11 @@
+package br.com.ifba.prg04.paciente.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/paciente")
+@RequiredArgsConstructor
+public class PacienteController {
+}
