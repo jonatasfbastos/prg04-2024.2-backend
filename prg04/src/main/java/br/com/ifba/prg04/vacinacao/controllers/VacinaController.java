@@ -54,11 +54,12 @@ public class VacinaController {
     }
 
     @PutMapping(path = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@PathVariable ("id") Long id
-            , @RequestBody @Valid Vacina vacina) {
+    public ResponseEntity<?> update(@PathVariable ("id") Long id, @RequestBody @Valid Vacina vacina) {
         vacina.setId(id);
-        vacinaIService.updateVacina(vacina);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(objectMapperUtil
+                        .map(vacinaIService.updateVacina(objectMapperUtil
+                                .map(vacina, Vacina.class)), VacinaGetResponseDto.class));
     }
 
     @GetMapping(path = "findByDoenca/{doencaCombatida}", produces = MediaType.APPLICATION_JSON_VALUE)
