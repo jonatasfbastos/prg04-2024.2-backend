@@ -1,15 +1,14 @@
 package br.com.ifba.prg04.vacinacao.entities;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "vacinas")
@@ -24,10 +23,12 @@ public class Vacina extends PersistenceEntity {
     private String nomeLaboratorio;
     private Integer idadeFoco;
     private Integer quantidade;
-    private String loteAtrelado;
     private String doencaCombatida;
     private String observacao;
     private String metodoAplicacao;
     private LocalDate dataVencimento;
+
+    @OneToMany(mappedBy = "vacina")
+    private List<Lote> loteAtrelado; // Lista de lotes associados à vacina
 
 }

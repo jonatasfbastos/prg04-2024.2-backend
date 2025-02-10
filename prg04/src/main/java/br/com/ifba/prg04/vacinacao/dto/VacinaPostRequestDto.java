@@ -1,5 +1,6 @@
 package br.com.ifba.prg04.vacinacao.dto;
 
+import br.com.ifba.prg04.vacinacao.entities.Lote;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,9 +37,7 @@ public class VacinaPostRequestDto {
     private Integer quantidade;
 
     @JsonProperty(value = "loteAtrelado")
-    @NotBlank(message = "Este é um campo obrigatorio")
-    @NotNull(message = "Este campo nao pode ser nulo")
-    private String loteAtrelado;
+    private Lote loteAtrelado;
 
     @JsonProperty(value = "doencaCombatida")
     @NotBlank(message = "Este é um campo obrigatorio")
