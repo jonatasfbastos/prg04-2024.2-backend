@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.prontuario.entities;
+package br.com.ifba.prg04.paciente.entity;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.Column;

@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.prontuario.entities;
+package br.com.ifba.prg04.paciente.entity;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;
