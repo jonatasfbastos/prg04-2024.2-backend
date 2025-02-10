@@ -1,14 +1,14 @@
 package br.com.ifba.prg04.paciente.entity;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import br.com.ifba.prg04.termoconsentimento.entity.TermoConsentimento;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

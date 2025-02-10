@@ -1,13 +1,15 @@
 package br.com.ifba.prg04.GestaoFuncionario.entities;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import br.com.ifba.prg04.termoconsentimento.entity.TermoConsentimento;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "funcionarios")

@@ -7,13 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-
 public interface TermoConsentimentoRepository extends JpaRepository<TermoConsentimento, Long> {
 
     @Query("select t from TermoConsentimento t")
     Page<TermoConsentimentoProjection> findAllPageable(Pageable pageable);
 
-    Page<TermoConsentimentoProjection> findByPaciente(String paciente, Pageable pageable);
+    Page<TermoConsentimentoProjection> findByPacienteId(Long id, Pageable pageable);
 
 }

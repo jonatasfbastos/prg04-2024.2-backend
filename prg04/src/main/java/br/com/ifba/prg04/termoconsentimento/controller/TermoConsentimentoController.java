@@ -25,7 +25,7 @@ public class TermoConsentimentoController {
     @PostMapping(value = "/create")
     public ResponseEntity<TermoConsentimentoResponseDto> create(@Valid @RequestBody TermoConsentimentoCreateDto dto) {
         TermoConsentimento termo = TermoConsentimentoMapper.toEntity(dto);
-        termo = service.create(termo);
+        termo = service.create(termo, dto.getCpfPaciente(), dto.getCpfFuncionario());
         return ResponseEntity.status(201).body(TermoConsentimentoMapper.toDto(termo));
     }
 
@@ -35,9 +35,9 @@ public class TermoConsentimentoController {
         return ResponseEntity.ok(TermoConsentimentoMapper.toDto(termo));
     }
 
-    @GetMapping(value = "/find-by-paciente", params = "paciente")
-    public ResponseEntity<PageableDto> findByPaciente(@RequestParam("paciente") String paciente, Pageable pageable) {
-        Page<TermoConsentimentoProjection> page = service.findByPaciente(paciente, pageable);
+    @GetMapping(value = "/find-by-paciente", params = "id-paciente")
+    public ResponseEntity<PageableDto> findByPaciente(@RequestParam("id-paciente") Long idPaciente, Pageable pageable) {
+        Page<TermoConsentimentoProjection> page = service.findByPaciente(idPaciente, pageable);
         return ResponseEntity.ok(PageableMapper.toDto(page));
     }
 
