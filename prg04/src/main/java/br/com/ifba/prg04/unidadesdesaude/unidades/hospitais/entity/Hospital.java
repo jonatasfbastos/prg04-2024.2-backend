@@ -30,7 +30,7 @@ public class Hospital extends UnidadesSaude {
 
     // Lista de Serviços Laboratoriais do hospital
     @ElementCollection
-    private List<String> ServicosLaboratorio;
+    private List<String> servicosLaboratoriais;
 
     // Lista de exames de imagem disponíveis no hospital (ex: raio-X, tomografia, ultrassom)
     @ElementCollection
