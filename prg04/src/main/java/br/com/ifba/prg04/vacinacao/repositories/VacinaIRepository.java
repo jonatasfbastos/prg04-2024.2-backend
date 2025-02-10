@@ -11,5 +11,4 @@ import java.util.List;
 public interface VacinaIRepository extends JpaRepository<Vacina, Long> {
     Page<Vacina> findByDoencaCombatida(String doencaCombatida, Pageable pageable);
     Page<Vacina> findByDataVencimento(LocalDate dataVencimento, Pageable pageable);
-    Page<Vacina> findByDataVencimentoAfter(LocalDate dataVencimentoAfter, Pageable pageable);
 }

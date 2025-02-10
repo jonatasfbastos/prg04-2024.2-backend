@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping(path = "/vacinas")
 @RequiredArgsConstructor
@@ -57,5 +59,21 @@ public class VacinaController {
         vacina.setId(id);
         vacinaIService.updateVacina(vacina);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(path = "findByDoenca/{doencaCombatida}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findByDoencaCombatida(@PathVariable ("doencaCombatida") String doencaCombatida,
+                                                   Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.vacinaIService.findByDoencaCombatida(doencaCombatida, pageable)
+                        .map(c -> objectMapperUtil.map(c, VacinaGetResponseDto.class)));
+    }
+
+    @GetMapping(path = "findByDataVencimento/{dataVencimento}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findByDataVencimento(@PathVariable ("dataVencimento") LocalDate dataVencimento,
+                                                   Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.vacinaIService.findByDataVencimento(dataVencimento, pageable)
+                        .map(c -> objectMapperUtil.map(c, VacinaGetResponseDto.class)));
     }
 }

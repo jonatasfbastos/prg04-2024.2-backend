@@ -111,17 +111,4 @@ public class VacinaService implements VacinaIService{
             throw new ResourceNotFoundException(e.getMessage());
         }
     }
-
-    @Override
-    @Transactional
-    public Page<Vacina> findByDataVencimentoAfter(LocalDate dataVencimentoAfter, Pageable pageable){
-        try {
-            log.info("Filtrando vacinas vencidas: {}", dataVencimentoAfter);
-            Page<Vacina> vacinas = vacinaIRepository.findByDataVencimentoAfter(dataVencimentoAfter, pageable);
-            return vacinas;
-        }catch (EmptyResultDataAccessException e){
-            log.error("Erro ao filtrar vacinas vencidas");
-            throw new ResourceNotFoundException(e.getMessage());
-        }
-    }
 }
