@@ -1,14 +1,23 @@
-//package br.com.ifba.prg04.medicamento.controller;
+package br.com.ifba.prg04.medicamento.controller;
+
+
+import lombok.AllArgsConstructor;
+
+import lombok.Data;
+
+import lombok.NoArgsConstructor;
+
+import org.springframework.web.bind.annotation.RestController;
 //
-//
-//import lombok.AllArgsConstructor;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//@RestController("/medicamentos")
+
+@RestController("/medicamentos")
+
 //@Data
+
 //@AllArgsConstructor
+
 //@NoArgsConstructor
-//public class MedicamentoController {
-//}
+
+public class MedicamentoController {
+
+}

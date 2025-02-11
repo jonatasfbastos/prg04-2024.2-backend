@@ -30,4 +30,16 @@ public class Endereco{
         this.cidade = cidade;
         this.uf = uf;
     }
+
+    @Override
+    public String toString() {
+        return  id.getRua() + ", "
+                + id.getNumero() + ", "
+                + id.getCep() + ", "
+                + complemento + ", "
+                + bairro + ", "
+                + cidade + ", "
+                + uf;
+
+    }
 }
