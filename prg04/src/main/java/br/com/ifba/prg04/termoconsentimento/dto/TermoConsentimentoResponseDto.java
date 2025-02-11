@@ -1,5 +1,7 @@
 package br.com.ifba.prg04.termoconsentimento.dto;
 
+import br.com.ifba.prg04.GestaoFuncionario.dto.FuncionarioSimpleResponseDto;
+import br.com.ifba.prg04.paciente.dto.PacienteSimpleResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +16,10 @@ import java.time.LocalDateTime;
 public class TermoConsentimentoResponseDto {
 
     private Long id;
-    //private String paciente;
+    private PacienteSimpleResponseDto paciente;
     private LocalDateTime dataHoraConsentimento;
     private String conteudo;
     private String assinaturaPaciente;
-    //private String funcionario;
+    private FuncionarioSimpleResponseDto funcionario;
 
 }
