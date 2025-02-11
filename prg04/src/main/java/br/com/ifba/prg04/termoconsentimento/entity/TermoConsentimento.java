@@ -28,6 +28,4 @@ public class TermoConsentimento extends PersistenceEntity {
     @JoinColumn(name = "funcionario_id", nullable = false)
     private Funcionario funcionario;
 
-    // Adicionar um HashSet de consultas
-
 }

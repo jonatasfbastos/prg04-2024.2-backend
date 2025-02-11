@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface TermoConsentimentoRepository extends JpaRepository<TermoConsentimento, Long> {
 
@@ -13,5 +14,9 @@ public interface TermoConsentimentoRepository extends JpaRepository<TermoConsent
     Page<TermoConsentimentoProjection> findAllPageable(Pageable pageable);
 
     Page<TermoConsentimentoProjection> findByPacienteId(Long id, Pageable pageable);
+
+    @Query("SELECT t FROM TermoConsentimento t WHERE t.paciente.cpf LIKE CONCAT(:cpfPrefix, '%')")
+    Page<TermoConsentimentoProjection> findByPacienteCpfLike(@Param("cpfPrefix") String cpfPrefix, Pageable pageable);
+
 
 }
