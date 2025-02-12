@@ -12,4 +12,5 @@ public interface FuncionarioIService {
     void deleteById(Long id);
     Funcionario updateFuncionario(Funcionario funcionario);
     Funcionario findByCpf(String cpf);
+    Funcionario getFuncionarioByCodigo(String codigo);
 }

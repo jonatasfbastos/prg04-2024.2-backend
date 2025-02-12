@@ -25,7 +25,7 @@ public class TermoConsentimentoController {
     @PostMapping(value = "/create")
     public ResponseEntity<TermoConsentimentoResponseDto> create(@Valid @RequestBody TermoConsentimentoCreateDto dto) {
         TermoConsentimento termo = TermoConsentimentoMapper.toEntity(dto);
-        termo = service.create(termo, dto.getCpfPaciente(), dto.getCpfFuncionario());
+        termo = service.create(termo, dto.getCpfPaciente(), dto.getCodigoFuncionario());
         return ResponseEntity.status(201).body(TermoConsentimentoMapper.toDto(termo));
     }
 
