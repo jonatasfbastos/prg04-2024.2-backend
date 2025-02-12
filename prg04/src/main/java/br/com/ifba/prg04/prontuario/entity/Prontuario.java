@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class Prontuario extends PersistenceEntity {
     @OneToMany(mappedBy = "prontuario", cascade = CascadeType.ALL)
     private List<Documento> documentos;
 
-    private LocalDateTime dataCriacao;
+    private LocalDate dataCriacao;
 
+    @Column(name = "cod_prontuario", nullable = false)
+    private String codigoProntuario;
+    //concatenação do cpf do paciente vinculado + a data da criação do pronturario + uma sequencia aleatoria
 }

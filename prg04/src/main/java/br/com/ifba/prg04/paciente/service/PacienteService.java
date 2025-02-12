@@ -1,9 +1,62 @@
 package br.com.ifba.prg04.paciente.service;
 
+import br.com.ifba.prg04.infrastructure.exception.BusinessException;
+import br.com.ifba.prg04.paciente.entity.Paciente;
+import br.com.ifba.prg04.paciente.repository.PacienteRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class PacienteService {
+@RequiredArgsConstructor
+@Slf4j
+public class PacienteService implements PacienteIService{
+
+    private final PacienteRepository pacienteRepository;
+
+    @Transactional
+    @Override
+    public Paciente save(Paciente paciente) {
+        try {
+            return pacienteRepository.save(paciente);
+            //log.info(paciente.getNome());
+           // pacienteRepository.save(paciente);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Erro de integridade de dados: " + e.getMessage(), e);
+            throw new BusinessException("Erro de integridade de dados ao tentar salvar o paciente", e);
+        } catch (Exception e) {
+            log.error("Erro ao salvar paciente: " + e.getMessage(), e);
+            throw new BusinessException("Erro ao tentar salvar os dados do paciente", e);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void update(Paciente paciente) {
+
+        try {
+            Paciente novosDados = pacienteRepository.findByNomeOrCpf(paciente.getNome(), paciente.getCpf());
+
+            novosDados.setNome(paciente.getNome());
+            novosDados.setEmail(paciente.getEmail());
+            novosDados.setEndereco(paciente.getEndereco());
+            novosDados.setGenero(paciente.getGenero());
+            novosDados.setResponsavel(paciente.getResponsavel());
+            novosDados.setTelefone(paciente.getTelefone());
+            novosDados.setEstadoCivil(paciente.getEstadoCivil());
+
+
+            if(paciente.getId() != null) {
+
+                pacienteRepository.save(novosDados);
+            }
+            else
+                log.error("Dados do paciente não encontrado");
+        }catch (Exception e) {
+            throw new BusinessException("Erro ao tentar atualizar os dados do paciente", e);
+        }
+    }
+
 }
