@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface FuncionarioIService {
+    Funcionario update(Long id, Funcionario funcionario);
     Funcionario save(Funcionario funcionario);
     Funcionario findById(Long id);
     Page<Funcionario> findAll(Pageable pageable);
