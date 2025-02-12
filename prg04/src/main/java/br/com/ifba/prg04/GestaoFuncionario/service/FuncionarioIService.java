@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.GestaoFuncionario.services;
+package br.com.ifba.prg04.GestaoFuncionario.service;
 
 import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import org.springframework.data.domain.Page;
