@@ -30,13 +30,13 @@ public class UnidadesSaudeController {
         return ResponseEntity.status(HttpStatus.OK).body(this.unidadeSaudeService.findAll(pageable).map(c -> objectMapperUtil.map(c, UnidadeSaudeGetResponseDto.class)));
     }
 
-    @GetMapping(path = "/findbyid", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findById(@NotNull @NotBlank Long id) {
+    @GetMapping(path = "/findbyid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findById(@PathVariable(value="id") @NotNull Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(objectMapperUtil.map(unidadeSaudeService.findById(id), UnidadeSaudeGetResponseDto.class));
     }
 
-    @GetMapping(path = "/findbynome", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findByNome(@NotNull @NotBlank String nome) {
+    @GetMapping(path = "/findbynome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findByNome(@PathVariable(value="nome") @NotNull @NotBlank String nome) {
         return ResponseEntity.status(HttpStatus.OK).body(objectMapperUtil.map(unidadeSaudeService.findByNome(nome), UnidadeSaudeGetResponseDto.class));
     }
 
@@ -46,7 +46,7 @@ public class UnidadesSaudeController {
     }
 
     @DeleteMapping(path = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> delete(@PathVariable("id") @NotNull @NotEmpty Long id) {
+    public ResponseEntity<?> delete(@PathVariable(value="id") @NotNull Long id) {
         unidadeSaudeService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
