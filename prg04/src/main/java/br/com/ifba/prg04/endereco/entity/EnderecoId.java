@@ -15,4 +15,11 @@ public class EnderecoId implements Serializable {
     private String rua;
     private Integer numero;
     private String cep;
+
+    @Override
+    public String toString() {
+        return  "Rua: " + rua +
+                ", Número: " + numero +
+                ", CEP: " + cep;
+    }
 }

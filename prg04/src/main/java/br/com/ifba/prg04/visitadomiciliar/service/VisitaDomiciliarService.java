@@ -4,6 +4,7 @@ import br.com.ifba.prg04.visitadomiciliar.dto.VisitaDomiciliarRequestDto;
 import br.com.ifba.prg04.visitadomiciliar.dto.VisitaDomiciliarResponseDto;
 import br.com.ifba.prg04.visitadomiciliar.entity.VisitaDomiciliar;
 import br.com.ifba.prg04.visitadomiciliar.repository.VisitaDomiciliarRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class VisitaDomiciliarService implements VisitaDomiciliarIService{
     private final VisitaDomiciliarRepository repository;
-    private final ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
-    public VisitaDomiciliarService(VisitaDomiciliarRepository repository, ModelMapper modelMapper) {
-        this.repository = repository;
-        this.modelMapper = modelMapper;
-    }
+//    public VisitaDomiciliarService(VisitaDomiciliarRepository repository, ModelMapper modelMapper) {
+//        this.repository = repository;
+//        this.modelMapper = modelMapper;
+//    }
 
     @Override
     public VisitaDomiciliarResponseDto salvar(VisitaDomiciliarRequestDto dto) {
