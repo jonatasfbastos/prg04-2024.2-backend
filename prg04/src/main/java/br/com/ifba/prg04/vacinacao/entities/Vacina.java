@@ -23,14 +23,9 @@ public class Vacina extends PersistenceEntity {
     private String nomeComum;
     private String nomeLaboratorio;
     private Integer idadeFoco;
-    private Integer quantidade;
     private String doencaCombatida;
     private String observacao;
     private String metodoAplicacao;
     private LocalDate dataVencimento;
-
-    @OneToMany(mappedBy = "vacina")
-    @JsonIgnore // Evita serializar a lista de lotes
-    private List<Lote> loteAtrelado; // Lista de lotes associados à vacina
 
 }

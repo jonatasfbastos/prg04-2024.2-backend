@@ -1,6 +1,8 @@
 package br.com.ifba.prg04.vacinacao.services;
 
+import br.com.ifba.prg04.infrastructure.exception.BusinessException;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
+import br.com.ifba.prg04.infrastructure.exception.ErrorMessage;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import br.com.ifba.prg04.vacinacao.entities.Vacina;
 import br.com.ifba.prg04.vacinacao.repositories.VacinaIRepository;
@@ -25,6 +27,7 @@ public class VacinaService implements VacinaIService{
     @Transactional
     public Vacina save(Vacina vacina) {
         log.info("Salvando nova vacina");
+
         try {
             Vacina vacinaCriada = vacinaIRepository.save(vacina);
             log.info("Vacina salva com sucesso");

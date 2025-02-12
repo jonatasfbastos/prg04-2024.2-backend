@@ -24,10 +24,11 @@ public class LoteService implements LoteIservice{
     @Transactional
     public Lote saveLote(Lote lote) {
         log.info("Salvando lote");
-        if (lote.getVacina() == null || lote.getVacina().getId() == null) {
-            log.warn("Nenhuma vacina encontrada com esse Id");
-            throw new ResourceNotFoundException("Nenhuma vacina encontrada com esse id");
+        if (lote.getVacina() == null ) {
+            log.warn("Nenhuma vacina encontrada");
+            throw new ResourceNotFoundException("Nenhuma vacina encontrada");
         }
+
         try {
             log.info("Salvando lote com ID: " + lote.getId());
             return loteIRepository.save(lote);
