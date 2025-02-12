@@ -9,7 +9,7 @@ public interface LoteIservice {
     Lote saveLote(Lote lote);
     Lote findLoteById(Long id);
     Page<Lote> findAllLote(Pageable pageable);
-    void deleteLote(Lote lote);
+    void deleteLoteById(Long id);
     Lote updateLote(Lote lote);
-    Lote findByVacina(Vacina vacina);
+
 }
