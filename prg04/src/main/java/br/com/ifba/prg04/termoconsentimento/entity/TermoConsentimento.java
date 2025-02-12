@@ -1,9 +1,9 @@
 package br.com.ifba.prg04.termoconsentimento.entity;
 
+import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import br.com.ifba.prg04.paciente.entity.Paciente;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,19 +15,17 @@ import java.time.LocalDateTime;
 @ToString
 public class TermoConsentimento extends PersistenceEntity {
 
-    //Tocar para o tipo usuário
-    @Column(nullable = false, updatable = false)
-    private String paciente;
+    @ManyToOne
+    @JoinColumn(name = "paciente_id", nullable = false)
+    private Paciente paciente;
     @Column(nullable = false, updatable = false)
     private LocalDateTime dataHoraConsentimento;
     @Column(nullable = false, updatable = false, length = 500)
     private String conteudo;
     @Column(nullable = false, updatable = false)
     private String assinaturaPaciente;
-    // Trocar para o tipo funcionario
-    @Column(nullable = false, updatable = false)
-    private String funcionario;
-
-    // Adicionar um HashSet de consultas
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Funcionario funcionario;
 
 }

@@ -1,7 +1,11 @@
 package br.com.ifba.prg04.termoconsentimento.service;
 
+import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
+import br.com.ifba.prg04.GestaoFuncionario.services.FuncionarioService;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
+import br.com.ifba.prg04.paciente.entity.Paciente;
+import br.com.ifba.prg04.paciente.service.PacienteIService;
 import br.com.ifba.prg04.termoconsentimento.entity.TermoConsentimento;
 import br.com.ifba.prg04.termoconsentimento.repository.TermoConsentimentoRepository;
 import br.com.ifba.prg04.termoconsentimento.repository.projection.TermoConsentimentoProjection;
@@ -21,6 +25,8 @@ import java.time.LocalDateTime;
 public class TermoConsentimentoService implements TermoConsentimentoIService {
 
     private final TermoConsentimentoRepository repository;
+    private final FuncionarioService funcionarioService;
+    private final PacienteIService pacienteService;
 
     /**
      * Autor: Rafael Andrade
@@ -30,7 +36,13 @@ public class TermoConsentimentoService implements TermoConsentimentoIService {
      */
     @Override
     @Transactional
-    public TermoConsentimento create(TermoConsentimento termoConsentimento) {
+    public TermoConsentimento create(TermoConsentimento termoConsentimento, String cpfPaciente, String cpfFuncionario) {
+        Paciente paciente = pacienteService.findByCpf(cpfPaciente);
+        termoConsentimento.setPaciente(paciente);
+
+        Funcionario funcionario = funcionarioService.getFuncionarioByCpf(cpfFuncionario);
+        termoConsentimento.setFuncionario(funcionario);
+
         termoConsentimento.setDataHoraConsentimento(LocalDateTime.now());
         log.info("Criando um novo termo de consentimento...");
 
@@ -64,15 +76,31 @@ public class TermoConsentimentoService implements TermoConsentimentoIService {
     /**
      * Autor: Rafael Andrade
      * Busca termos de consentimento associados a um paciente.
-     * @param paciente Nome do paciente.
+     * @param idPaciente Id do paciente.
      * @param pageable Configuração de paginação.
      * @return Página de termos de consentimento filtrados pelo paciente.
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<TermoConsentimentoProjection> findByPaciente(String paciente, Pageable pageable) {
-        log.info("Buscando termos de consentimento para o paciente: {}", paciente);
-        return repository.findByPaciente(paciente, pageable);
+    public Page<TermoConsentimentoProjection> findByIdPaciente(Long idPaciente, Pageable pageable) {
+        Paciente paciente = pacienteService.findById(idPaciente);
+
+        log.info("Buscando termos de consentimento para o paciente com id: {}", idPaciente);
+        return repository.findByPacienteId(paciente.getId(), pageable);
+    }
+
+    /**
+     * Autor: Rafael Andrade
+     * Busca termos de consentimento associados a um paciente pelo CPF (consulta incompleta permitida).
+     * @param cpf Prefixo do CPF do paciente (ex: "123" retorna todos os CPFs que começam com "123").
+     * @param pageable Configuração de paginação.
+     * @return Página de termos de consentimento filtrados pelo CPF do paciente.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TermoConsentimentoProjection> findByCpfPaciente(String cpf, Pageable pageable) {
+        log.info("Buscando termos de consentimento para pacientes com CPF começando por: {}", cpf);
+        return repository.findByPacienteCpfLike(cpf, pageable);
     }
 
     /**

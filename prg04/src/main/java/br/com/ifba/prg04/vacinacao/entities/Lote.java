@@ -28,5 +28,4 @@ public class Lote extends PersistenceEntity {
     @ManyToOne //muitos lotes podem estar associados a uma única vacina.
     @JoinColumn(name = "vacina_id", nullable = false)
     private Vacina vacina; // Relacionamento com a vacina
-
 }

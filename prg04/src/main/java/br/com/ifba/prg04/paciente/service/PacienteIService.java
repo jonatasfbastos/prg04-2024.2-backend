@@ -7,4 +7,8 @@ public interface PacienteIService {
     public abstract Paciente save(Paciente paciente);
 
     public abstract void update(Paciente paciente);
+
+   public abstract Paciente findByCpf(String cpf);
+
+   public abstract Paciente findById(Long id);
 }

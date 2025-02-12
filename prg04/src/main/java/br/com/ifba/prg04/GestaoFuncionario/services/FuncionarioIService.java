@@ -10,4 +10,5 @@ public interface FuncionarioIService {
     Page<Funcionario> findAll(Pageable pageable);
     void deleteById(Long id);
     Funcionario updateFuncionario(Funcionario funcionario);
+    Funcionario findByCpf(String cpf);
 }

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProntuarioRepository extends JpaRepository<Prontuario, Long> {
 
+    //Prontuario findByNomeOrCpf(String nome, String cpf);
+
+    //boolean findaById(Long Id);
 
 
 }

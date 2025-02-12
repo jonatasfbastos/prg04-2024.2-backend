@@ -1,6 +1,8 @@
 package br.com.ifba.prg04.vacinacao.services;
 
+import br.com.ifba.prg04.infrastructure.exception.BusinessException;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
+import br.com.ifba.prg04.infrastructure.exception.ErrorMessage;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import br.com.ifba.prg04.vacinacao.entities.Vacina;
 import br.com.ifba.prg04.vacinacao.repositories.VacinaIRepository;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -26,6 +27,7 @@ public class VacinaService implements VacinaIService{
     @Transactional
     public Vacina save(Vacina vacina) {
         log.info("Salvando nova vacina");
+
         try {
             Vacina vacinaCriada = vacinaIRepository.save(vacina);
             log.info("Vacina salva com sucesso");
@@ -108,19 +110,6 @@ public class VacinaService implements VacinaIService{
             return vacinas;
         }catch (EmptyResultDataAccessException e){
             log.error("Erro ao filtrar vacinas por data de vencimento");
-            throw new ResourceNotFoundException(e.getMessage());
-        }
-    }
-
-    @Override
-    @Transactional
-    public Page<Vacina> findByDataVencimentoAfter(LocalDate dataVencimentoAfter, Pageable pageable){
-        try {
-            log.info("Filtrando vacinas vencidas: {}", dataVencimentoAfter);
-            Page<Vacina> vacinas = vacinaIRepository.findByDataVencimentoAfter(dataVencimentoAfter, pageable);
-            return vacinas;
-        }catch (EmptyResultDataAccessException e){
-            log.error("Erro ao filtrar vacinas vencidas");
             throw new ResourceNotFoundException(e.getMessage());
         }
     }

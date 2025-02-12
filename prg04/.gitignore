@@ -18,6 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
+*.properties
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+#### Configuração ###
+prg04/src/main/resources/application.properties

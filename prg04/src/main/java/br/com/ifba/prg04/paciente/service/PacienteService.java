@@ -1,6 +1,7 @@
 package br.com.ifba.prg04.paciente.service;
 
 import br.com.ifba.prg04.infrastructure.exception.BusinessException;
+import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import br.com.ifba.prg04.paciente.entity.Paciente;
 import br.com.ifba.prg04.paciente.repository.PacienteRepository;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +59,38 @@ public class PacienteService implements PacienteIService{
             throw new BusinessException("Erro ao tentar atualizar os dados do paciente", e);
         }
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Paciente findByCpf(String cpf) {
+        log.info("Buscando paciente com CPF: {}", cpf);
+        return pacienteRepository.findByCpf(cpf)
+                .orElseThrow(() -> {
+                    log.warn("Paciente não encontrado para o CPF: {}", cpf);
+                    return new ResourceNotFoundException("Não foi encontrado nenhum paciente com o CPF: " + cpf);
+                });
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Paciente findById(Long id) {
+        log.info("Buscando paciente com ID: {}", id);
+        return pacienteRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.warn("Paciente não encontrado para o ID: {}", id);
+                    return new ResourceNotFoundException("Não foi encontrado nenhum paciente com o ID: " + id);
+                });
+    }
+
+    //
+//    @Transactional
+//    @Override
+//    public Prontuario findByPaciente(Paciente paciente) {
+//        try {
+//            return prontuarioRepository.findByNomeOrCpf(paciente.getNome(), paciente.getCpf());
+//        } catch (Exception e) {
+//            throw new BusinessException("Erro ao tentar buscar os dados",e);
+//        }
+//    }
 
 }

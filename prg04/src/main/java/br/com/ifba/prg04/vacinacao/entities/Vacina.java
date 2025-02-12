@@ -1,6 +1,7 @@
 package br.com.ifba.prg04.vacinacao.entities;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,13 +23,9 @@ public class Vacina extends PersistenceEntity {
     private String nomeComum;
     private String nomeLaboratorio;
     private Integer idadeFoco;
-    private Integer quantidade;
     private String doencaCombatida;
     private String observacao;
     private String metodoAplicacao;
     private LocalDate dataVencimento;
-
-    @OneToMany(mappedBy = "vacina")
-    private List<Lote> loteAtrelado; // Lista de lotes associados à vacina
 
 }

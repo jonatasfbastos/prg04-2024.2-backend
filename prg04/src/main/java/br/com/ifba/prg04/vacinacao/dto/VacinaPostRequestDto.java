@@ -31,14 +31,6 @@ public class VacinaPostRequestDto {
     @JsonProperty(value = "idadeFoco")
     private Integer idadeFoco;
 
-    @JsonProperty(value = "quantidade")
-    @NotBlank(message = "Este é um campo obrigatorio")
-    @NotNull(message = "Este campo nao pode ser nulo")
-    private Integer quantidade;
-
-    @JsonProperty(value = "loteAtrelado")
-    private Lote loteAtrelado;
-
     @JsonProperty(value = "doencaCombatida")
     @NotBlank(message = "Este é um campo obrigatorio")
     @NotNull(message = "Este campo nao pode ser nulo")

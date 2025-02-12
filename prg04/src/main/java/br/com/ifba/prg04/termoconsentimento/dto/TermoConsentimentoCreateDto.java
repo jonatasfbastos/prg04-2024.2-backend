@@ -11,14 +11,14 @@ import lombok.Setter;
 @Getter @Setter
 public class TermoConsentimentoCreateDto {
 
-    @NotBlank(message = "O nome do paciente não pode ser vazio")
-    private String paciente;
+    @NotBlank(message = "O CPF do paciente não pode ser vazio")
+    private String cpfPaciente;
     @NotBlank(message = "O conteúdo do termo não pode ser vazio")
     @Size(max = 500, message = "O conteúdo do termo não pode ter mais de 500 caracteres")
     private String conteudo;
     @NotBlank(message = "A assinatura do paciente não pode ser vazia")
     private String assinaturaPaciente;
-    @NotBlank(message = "O código do funcionário não pode ser vazio")
-    private String funcionario;
+    @NotBlank(message = "O CPF do funcionário não pode ser vazio")
+    private String cpfFuncionario;
 
 }

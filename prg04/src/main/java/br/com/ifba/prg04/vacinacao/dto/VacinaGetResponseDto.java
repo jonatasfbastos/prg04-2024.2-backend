@@ -24,12 +24,6 @@ public class VacinaGetResponseDto {
     @JsonProperty(value = "idadeFoco")
     private Integer idadeFoco;
 
-    @JsonProperty(value = "quantidade")
-    private Integer quantidade;
-
-    @JsonProperty(value = "loteAtrelado")
-    private Lote loteAtrelado;
-
     @JsonProperty(value = "doencaCombatida")
     private String doencaCombatida;
 
@@ -41,5 +35,4 @@ public class VacinaGetResponseDto {
 
     @JsonProperty(value = "dataVencimento")
     private LocalDate dataVencimento;
-
 }
