@@ -2,9 +2,7 @@ package br.com.ifba.prg04.vacinacao.controllers;
 
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
 import br.com.ifba.prg04.vacinacao.dto.LotePostRequestDto;
-import br.com.ifba.prg04.vacinacao.dto.VacinaGetResponseDto;
 import br.com.ifba.prg04.vacinacao.entities.Lote;
-import br.com.ifba.prg04.vacinacao.entities.Vacina;
 import br.com.ifba.prg04.vacinacao.services.LoteIservice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +44,7 @@ public class LoteController {
     public ResponseEntity<?> findById(@PathVariable ("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(objectMapperUtil
-                        .map(loteIservice.findLoteById(id), VacinaGetResponseDto.class));
+                        .map(loteIservice.findLoteById(id), LotePostRequestDto.class));
     }
 
     @PutMapping(path = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,6 +53,6 @@ public class LoteController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body(objectMapperUtil
                         .map(loteIservice.updateLote(objectMapperUtil
-                                .map(lote, Lote.class)), VacinaGetResponseDto.class));
+                                .map(lote, Lote.class)), LotePostRequestDto.class));
     }
 }
