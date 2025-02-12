@@ -35,3 +35,4 @@ build/
 
 #### Configuração ###
 prg04/src/main/resources/application.properties
+src/main/resources/application.properties
