@@ -1,7 +1,7 @@
 package br.com.ifba.prg04.termoconsentimento.service;
 
 import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
-import br.com.ifba.prg04.GestaoFuncionario.services.FuncionarioServices;
+import br.com.ifba.prg04.GestaoFuncionario.services.FuncionarioService;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import br.com.ifba.prg04.paciente.entity.Paciente;

@@ -1,16 +1,19 @@
 package br.com.ifba.prg04.GestaoFuncionario.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class FuncionarioUpdateDto {
-    @NotBlank
+
+    @NotBlank(message = "A senha não pode ser vazia")
+    @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres")
     private String senha;
 
-    @NotBlank
+    @NotBlank(message = "O endereço não pode ser vazio")
     private String endereco;
 
-    @NotBlank
+    @NotBlank(message = "O telefone não pode ser vazio")
     private String telefone;
 }
