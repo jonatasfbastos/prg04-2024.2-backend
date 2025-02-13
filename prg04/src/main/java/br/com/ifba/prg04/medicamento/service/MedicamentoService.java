@@ -8,10 +8,12 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 @Service
@@ -28,8 +30,8 @@ public class MedicamentoService implements IMedicamentoService{
 
 
     @Override
-    public List<Medicamento> findAll() {
-        return medicamentoDao.findAll();
+    public Page<Medicamento> findAll(Pageable pageable) {
+        return medicamentoDao.findAll(pageable);
     }
 
     @Override

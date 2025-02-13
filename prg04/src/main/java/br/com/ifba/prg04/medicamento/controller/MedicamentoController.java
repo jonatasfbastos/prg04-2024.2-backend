@@ -10,6 +10,9 @@ import br.com.ifba.prg04.medicamento.service.IMedicamentoService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +29,15 @@ public class MedicamentoController {
     private final ObjectMapperUtil objectMapperUtil;
 
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> cadastrarMedicamento(@RequestBody @Valid MedicamentoPostRequestDtos medicamentoPostRequestDtos) {
+    public ResponseEntity<?> postMedicamento(@RequestBody @Valid MedicamentoPostRequestDtos medicamentoPostRequestDtos) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ObjectMapperUtil.map(this.service.save(objectMapperUtil.map(medicamentoPostRequestDtos, Medicamento.class)),
                 MedicamentoGetResponseDtos.class));
     }
 
     @GetMapping(path = "/findall")
-    public ResponseEntity<?> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(objectMapperUtil.mapAll(this.service.findAll(), MedicamentoGetResponseDtos.class));
+    public ResponseEntity<Page<MedicamentoGetResponseDtos>> findAll(Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(this.service.findAll(pageable)
+                .map(c -> ObjectMapperUtil.map(c, MedicamentoGetResponseDtos.class)));
     }
 
     @DeleteMapping(path = "/delete/{id}")
