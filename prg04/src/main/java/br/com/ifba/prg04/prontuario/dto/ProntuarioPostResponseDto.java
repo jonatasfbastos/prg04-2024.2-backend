@@ -1,8 +1,8 @@
 package br.com.ifba.prg04.prontuario.dto;
 
 import br.com.ifba.prg04.anamnese.dto.AnamneseGetResponseDto;
-import br.com.ifba.prg04.anamnese.dto.AnamnesePostResponseDto;
-import br.com.ifba.prg04.documento.dto.DocumentoDto;
+import br.com.ifba.prg04.documento.dto.DocumentoGetResponseDto;
+import br.com.ifba.prg04.documento.dto.DocumentoPostResponseDto;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -19,5 +19,5 @@ public class ProntuarioPostResponseDto {
 
     private List<AnamneseGetResponseDto> anamneses;
 
-    private List<DocumentoDto> documentos;
+    private List<DocumentoGetResponseDto> documentos;
 }

@@ -6,5 +6,5 @@ public interface AnamneseIService {
 
     public Anamnese save(Anamnese anamnese, Long prontuarioId);
 
-    public abstract void update(Anamnese anamnese);
+    //public abstract void update(Anamnese anamnese);
 }

@@ -37,9 +37,9 @@ public class AnamneseService implements AnamneseIService{
     }
 
 
-    @Override
-    @Transactional
-    public void update(Anamnese anamnese) {
-
-    }
+//    @Override
+//    @Transactional
+//    public void update(Anamnese anamnese) {
+//
+//    }
 }

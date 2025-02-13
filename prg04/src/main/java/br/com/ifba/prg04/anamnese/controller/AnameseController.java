@@ -37,10 +37,12 @@ public class AnameseController {
     }
 
 
-    @PutMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> update(@RequestBody @Valid AnamnesePostResponseDto anamnesePostResponseDto) {
-        anamneseService.update(objectMapperUtil.map(anamnesePostResponseDto, Anamnese.class));
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
+    //Não será necessário por enquanto
+//    @PutMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Void> update(@RequestBody @Valid AnamnesePostResponseDto anamnesePostResponseDto) {
+//        anamneseService.update(objectMapperUtil.map(anamnesePostResponseDto, Anamnese.class));
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 }
