@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+
+/*Arquivo enviado para o front-end*/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

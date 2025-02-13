@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f285ce07-c0f0-4aca-a94d-48e266d66a57",
+		"_postman_id": "2c5405d1-88d2-4d19-93a9-7f49f998db80",
 		"name": "Prg04",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "32808472"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40241866"
 	},
 	"item": [
 		{
@@ -23,18 +23,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/termo-consentimento/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"termo-consentimento",
-								"create"
-							]
-						}
+						"url": "http://localhost:8080/termo-consentimento/create"
 					},
 					"response": []
 				},
@@ -95,18 +84,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/termo-consentimento/find-all",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"termo-consentimento",
-								"find-all"
-							]
-						}
+						"url": "http://localhost:8080/termo-consentimento/find-all"
 					},
 					"response": []
 				},
@@ -133,6 +111,55 @@
 								}
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medicamentos",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/medicamentos/save"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/medicamentos/delete/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": "http://localhost:8080/medicamentos/update/6"
 					},
 					"response": []
 				}
