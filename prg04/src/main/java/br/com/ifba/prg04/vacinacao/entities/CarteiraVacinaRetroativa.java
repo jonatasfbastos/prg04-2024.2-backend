@@ -1,7 +1,10 @@
 package br.com.ifba.prg04.vacinacao.entities;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
-import jakarta.persistence.*;
+import br.com.ifba.prg04.paciente.entity.Paciente;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,20 +13,16 @@ import lombok.ToString;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vacinas")
+@Table(name = "vacinas_retroativas")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
-public class Vacina extends PersistenceEntity {
-
-    private String nomeCientifico;
+public class CarteiraVacinaRetroativa extends PersistenceEntity {
     private String nomeComum;
-    private String nomeLaboratorio;
-    private Integer idadeFoco;
-    private String doencaCombatida;
+    private LocalDate dataAplicacao;
     private String observacao;
-    private String metodoAplicacao;
-    private LocalDate dataVencimento;
 
+    @ManyToOne
+    private Paciente paciente;
 }

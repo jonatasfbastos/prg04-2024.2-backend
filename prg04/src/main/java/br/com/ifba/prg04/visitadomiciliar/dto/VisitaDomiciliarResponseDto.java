@@ -4,7 +4,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class VisitaDomiciliarResponseDto {
@@ -18,3 +19,4 @@ public class VisitaDomiciliarResponseDto {
     private String cnes;
     private String ine;
 }
+

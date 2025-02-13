@@ -5,7 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class VisitaDomiciliarRequestDto {
@@ -35,3 +36,4 @@ public class VisitaDomiciliarRequestDto {
     @NotBlank(message = "O INE do profissional é obrigatório.")
     private String ine;
 }
+
