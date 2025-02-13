@@ -16,8 +16,8 @@ public class ObjectMapperUtil {
         MODEL_MAPPER = new ModelMapper(); // Inicializa a instância do ModelMapper no bloco estático.
     }
 
-    public <Input, Output> Output map(final Input object,
-                                      final Class<Output> clazz) {
+    public static <Input, Output> Output map(final Input object,
+                                             final Class<Output> clazz) {
         // Método genérico para mapear um objeto de entrada para um objeto de saída.
 
         MODEL_MAPPER.getConfiguration()
