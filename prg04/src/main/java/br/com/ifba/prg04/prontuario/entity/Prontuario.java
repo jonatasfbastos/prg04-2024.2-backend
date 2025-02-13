@@ -21,15 +21,14 @@ public class Prontuario extends PersistenceEntity {
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
 
+    @Column(name = "data_criacao", nullable = false)
+    private LocalDate dataCriacao;
+
+
     @OneToMany(mappedBy = "prontuario", cascade = CascadeType.ALL)
     private List<Anamnese> anamneses;
 
     @OneToMany(mappedBy = "prontuario", cascade = CascadeType.ALL)
     private List<Documento> documentos;
 
-    private LocalDate dataCriacao;
-
-    @Column(name = "cod_prontuario", nullable = false)
-    private String codigoProntuario;
-    //concatenação do cpf do paciente vinculado + a data da criação do pronturario + uma sequencia aleatoria
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class FuncionarioService {
+public class FuncionarioServices {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
@@ -45,5 +45,11 @@ public class FuncionarioService {
 
     public Funcionario updateFuncionario(Funcionario funcionario) {
         return funcionarioRepository.save(funcionario);
+    }
+
+    @Transactional(readOnly = true)
+    public Funcionario getFuncionarioByCodigo(String codigo) {
+        return funcionarioRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o código: " + codigo));
     }
 }

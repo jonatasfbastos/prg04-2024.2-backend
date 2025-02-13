@@ -1,7 +1,7 @@
 package br.com.ifba.prg04.termoconsentimento.service;
 
 import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
-import br.com.ifba.prg04.GestaoFuncionario.services.FuncionarioService;
+import br.com.ifba.prg04.GestaoFuncionario.services.FuncionarioServices;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import br.com.ifba.prg04.paciente.entity.Paciente;
@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class TermoConsentimentoService implements TermoConsentimentoIService {
 
     private final TermoConsentimentoRepository repository;
-    private final FuncionarioService funcionarioService;
+    private final FuncionarioServices funcionarioService;
     private final PacienteIService pacienteService;
 
     /**
@@ -36,11 +36,11 @@ public class TermoConsentimentoService implements TermoConsentimentoIService {
      */
     @Override
     @Transactional
-    public TermoConsentimento create(TermoConsentimento termoConsentimento, String cpfPaciente, String cpfFuncionario) {
+    public TermoConsentimento create(TermoConsentimento termoConsentimento, String cpfPaciente, String codigoFuncionario) {
         Paciente paciente = pacienteService.findByCpf(cpfPaciente);
         termoConsentimento.setPaciente(paciente);
 
-        Funcionario funcionario = funcionarioService.getFuncionarioByCpf(cpfFuncionario);
+        Funcionario funcionario = funcionarioService.getFuncionarioByCodigo(codigoFuncionario);
         termoConsentimento.setFuncionario(funcionario);
 
         termoConsentimento.setDataHoraConsentimento(LocalDateTime.now());

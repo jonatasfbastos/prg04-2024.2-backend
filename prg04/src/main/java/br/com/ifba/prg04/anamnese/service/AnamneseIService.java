@@ -4,5 +4,7 @@ import br.com.ifba.prg04.anamnese.entity.Anamnese;
 
 public interface AnamneseIService {
 
-    public abstract void save(Anamnese anamnese);
+    public Anamnese save(Anamnese anamnese, Long prontuarioId);
+
+    public abstract void update(Anamnese anamnese);
 }

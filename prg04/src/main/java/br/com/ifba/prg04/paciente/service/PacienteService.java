@@ -35,6 +35,8 @@ public class PacienteService implements PacienteIService{
 
     @Transactional
     @Override
+
+    //É preciso que ele recebe um string cpf e string nome para fazer a logica de mudar o cpf também se precisar
     public void update(Paciente paciente) {
 
         try {

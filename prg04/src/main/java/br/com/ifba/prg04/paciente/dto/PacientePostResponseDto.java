@@ -1,6 +1,5 @@
 package br.com.ifba.prg04.paciente.dto;
 
-import br.com.ifba.prg04.prontuario.dto.ProntuarioDto;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,6 @@ import lombok.Setter;
 
 //import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,7 +36,6 @@ public class PacientePostResponseDto {
     private String endereco;
 
     @NotBlank(message = "O telefone não pode estar vazio")
-    //@Pattern(regexp = "^\\(\\d{2}\\) \\d{5}-\\d{4}$", message = "Formato de telefone inválido")
     private String telefone;
 
     @Email(message = "O email deve ser válido")

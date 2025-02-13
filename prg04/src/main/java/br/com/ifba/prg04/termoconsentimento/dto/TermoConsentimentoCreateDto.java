@@ -19,6 +19,6 @@ public class TermoConsentimentoCreateDto {
     @NotBlank(message = "A assinatura do paciente não pode ser vazia")
     private String assinaturaPaciente;
     @NotBlank(message = "O CPF do funcionário não pode ser vazio")
-    private String cpfFuncionario;
+    private String codigoFuncionario;
 
 }
