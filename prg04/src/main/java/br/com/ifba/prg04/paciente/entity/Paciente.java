@@ -16,8 +16,9 @@ import java.util.Set;
 @Table(name = "Pacientes")
 public class Paciente extends PersistenceEntity {
 
-    @Column(name = "nome", insertable = false, updatable = false)
+    @Column(name = "nome", insertable = true, updatable = true)
     private String nome;
+    @Column(updatable = false)
     private String cpf;
     private LocalDate dataNascimento;
     private String genero;

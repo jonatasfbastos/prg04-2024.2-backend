@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,12 +21,14 @@ public class Prontuario extends PersistenceEntity {
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
 
+    @Column(name = "data_criacao", nullable = false)
+    private LocalDate dataCriacao;
+
+
     @OneToMany(mappedBy = "prontuario", cascade = CascadeType.ALL)
     private List<Anamnese> anamneses;
 
     @OneToMany(mappedBy = "prontuario", cascade = CascadeType.ALL)
     private List<Documento> documentos;
-
-    private LocalDateTime dataCriacao;
 
 }
