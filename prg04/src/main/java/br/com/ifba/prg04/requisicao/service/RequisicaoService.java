@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RequisicaoService {
+public class RequisicaoService implements RequisicaoIService {
 
     private final RequisicaoRepository requisicaoRepository;
 
@@ -17,22 +17,36 @@ public class RequisicaoService {
         this.requisicaoRepository = requisicaoRepository;
     }
 
+    @Override
     @Transactional
-    public RequisicaoEntity salvar(RequisicaoEntity requisicao) {
+    public RequisicaoEntity findBySalvar(RequisicaoEntity requisicao) {
         return requisicaoRepository.save(requisicao);
     }
 
-    public List<RequisicaoEntity> listarTodas() {
+    @Override
+    public List<RequisicaoEntity> findByListarTodas() {
         return requisicaoRepository.findAll();
     }
 
-    public RequisicaoEntity buscarPorId(Long id) {
+    @Override
+    public RequisicaoEntity findById(Long id) {
         return requisicaoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Requisição não encontrada!"));
     }
 
+    @Override
+    public List<RequisicaoEntity> findByPacienteNome(String nome) {
+        return requisicaoRepository.findByPacienteNome(nome);
+    }
+
+    @Override
+    public List<RequisicaoEntity> findByPacienteCpf(String cpf) {
+        return requisicaoRepository.findByPacienteCpf(cpf);
+    }
+
+    @Override
     @Transactional
-    public void deletar(Long id) {
+    public void findByDeletar(Long id) {
         if (!requisicaoRepository.existsById(id)) {
             throw new EntityNotFoundException("Requisição não encontrada!");
         }

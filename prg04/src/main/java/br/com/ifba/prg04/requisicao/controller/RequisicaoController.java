@@ -1,6 +1,7 @@
 package br.com.ifba.prg04.requisicao.controller;
+
 import br.com.ifba.prg04.requisicao.entity.RequisicaoEntity;
-import br.com.ifba.prg04.requisicao.service.RequisicaoService;
+import br.com.ifba.prg04.requisicao.service.RequisicaoIService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,30 +12,40 @@ import java.util.List;
 @RequestMapping("/requisicoes")
 public class RequisicaoController {
 
-    private final RequisicaoService requisicaoService;
+    private final RequisicaoIService requisicaoService;
 
-    public RequisicaoController(RequisicaoService requisicaoService) {
+    public RequisicaoController(RequisicaoIService requisicaoService) {
         this.requisicaoService = requisicaoService;
     }
 
     @PostMapping
-    public ResponseEntity<RequisicaoEntity> criarRequisicao(@Valid @RequestBody RequisicaoEntity requisicao) {
-        return ResponseEntity.ok(requisicaoService.salvar(requisicao));
+    public ResponseEntity<RequisicaoEntity> findByCriarRequisicao(@Valid @RequestBody RequisicaoEntity requisicao) {
+        return ResponseEntity.ok(requisicaoService.findBySalvar(requisicao));
     }
 
     @GetMapping
-    public ResponseEntity<List<RequisicaoEntity>> listarRequisicoes() {
-        return ResponseEntity.ok(requisicaoService.listarTodas());
+    public ResponseEntity<List<RequisicaoEntity>> findByListarRequisicoes() {
+        return ResponseEntity.ok(requisicaoService.findByListarTodas());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RequisicaoEntity> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(requisicaoService.buscarPorId(id));
+    public ResponseEntity<RequisicaoEntity> findByBuscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(requisicaoService.findById(id));
+    }
+
+    @GetMapping("/buscar/nome/{nome}")
+    public ResponseEntity<List<RequisicaoEntity>> findByBuscarPorNome(@PathVariable String nome) {
+        return ResponseEntity.ok(requisicaoService.findByPacienteNome(nome));
+    }
+
+    @GetMapping("/buscar/cpf/{cpf}")
+    public ResponseEntity<List<RequisicaoEntity>> findByBuscarPorCpf(@PathVariable String cpf) {
+        return ResponseEntity.ok(requisicaoService.findByPacienteCpf(cpf));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarRequisicao(@PathVariable Long id) {
-        requisicaoService.deletar(id);
+    public ResponseEntity<Void> findByDeletarRequisicao(@PathVariable Long id) {
+        requisicaoService.findByDeletar(id);
         return ResponseEntity.noContent().build();
     }
 }
