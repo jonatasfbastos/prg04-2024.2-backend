@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UnidadeSaudeSaveRequestDto {
+public class UnidadeSaudeDeleteResquestDto {
 
     @JsonProperty("nome")
     @NotBlank(message = "O nome da unidade de saúde não pode estar vazio.")

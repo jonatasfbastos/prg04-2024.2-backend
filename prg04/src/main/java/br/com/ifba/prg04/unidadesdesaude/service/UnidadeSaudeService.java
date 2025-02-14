@@ -1,5 +1,6 @@
 package br.com.ifba.prg04.unidadesdesaude.service;
 
+import br.com.ifba.prg04.endereco.entity.EnderecoId;
 import br.com.ifba.prg04.infrastructure.exception.BusinessException;
 import br.com.ifba.prg04.unidadesdesaude.entity.UnidadesSaude;
 import br.com.ifba.prg04.unidadesdesaude.repository.UnidadesSaudeRepository;
@@ -34,19 +35,28 @@ public class UnidadeSaudeService implements UnidadeSaudeIService{
 
     @Transactional
     @Override
-    public void delete(Long id) {
-        unidadesSaudeRepository.deleteById(id);
+    public void delete(String telefone) {
+        UnidadesSaude unidadeDelete = unidadesSaudeRepository.findByTelefone(telefone).orElseThrow(() -> new BusinessException("Unidade de telefone " + telefone + " não encontrado"));
+        unidadesSaudeRepository.deleteById(unidadeDelete.getId());
     }
 
     @Transactional
     @Override
     public UnidadesSaude update(UnidadesSaude unidadesSaude) {
-        UnidadesSaude unidadesSaudeAtual = findById(unidadesSaude.getId());
+        UnidadesSaude unidadesSaudeAtual = unidadesSaudeRepository.findByTelefone(unidadesSaude.getTelefone()).orElseThrow(() -> new BusinessException("Unidade de telefone " + unidadesSaude.getTelefone() + " não encontrado"));
         if (unidadesSaudeAtual != null) {
+//            unidadesSaudeAtual.setNome(unidadesSaude.getNome());
+//            unidadesSaudeAtual.setTelefone(unidadesSaude.getTelefone());
+//            unidadesSaudeAtual.setTipo(unidadesSaude.getTipo());
+//            unidadesSaudeAtual.setStatus(unidadesSaude.getStatus());
+//            unidadesSaudeAtual.setCapacidadeAtendimento(unidadesSaude.getCapacidadeAtendimento());
+//            unidadesSaudeAtual.setHorarioFuncionamento(unidadesSaude.getHorarioFuncionamento());
+            unidadesSaude.setId(unidadesSaudeAtual.getId());
+            unidadesSaude.setEndereco(unidadesSaudeAtual.getEndereco());
             return unidadesSaudeRepository.save(unidadesSaude);
         }
         // Lança uma exceção caso o usuário não seja encontrado
-        throw new BusinessException("Unidade de Saúde com ID: " + unidadesSaude.getId() + " não encontrado");
+        throw new BusinessException("Unidade de Saúde com telefone: " + unidadesSaude.getTelefone() + " não encontrado");
     }
 
     @Override

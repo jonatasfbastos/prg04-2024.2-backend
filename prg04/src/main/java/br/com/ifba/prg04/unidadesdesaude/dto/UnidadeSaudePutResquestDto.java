@@ -15,8 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UnidadeSaudeSaveRequestDto {
-
+public class UnidadeSaudePutResquestDto {
     @JsonProperty("nome")
     @NotBlank(message = "O nome da unidade de saúde não pode estar vazio.")
     @Size(max = 255, message = "O nome da unidade de saúde deve ter no máximo 255 caracteres.")
@@ -25,11 +24,6 @@ public class UnidadeSaudeSaveRequestDto {
     @JsonProperty("tipo")
     @NotNull(message = "O tipo da unidade de saúde deve ser especificado.")
     private TiposUnidades tipo;
-
-    @JsonProperty("endereco")
-    @Valid
-    @NotNull(message = "O endereço da unidade de saúde deve ser especificado.")
-    private EnderecoDto endereco;
 
     @JsonProperty("telefone")
     @NotBlank(message = "O telefone da unidade de saúde não pode estar vazio.")
