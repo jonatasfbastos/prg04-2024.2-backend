@@ -1,9 +1,10 @@
 package br.com.ifba.prg04.agenda.service;
 
+import br.com.ifba.prg04.agenda.dto.AgendaPostRequestDto;
 import br.com.ifba.prg04.agenda.entity.Agenda;
 import br.com.ifba.prg04.agenda.repository.AgendaRepository;
 import br.com.ifba.prg04.infrastructure.exception.BusinessException;
-import br.com.ifba.prg04.usuario.repository.UsuarioRepository;
+import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -48,17 +49,20 @@ public class AgendaService implements AgendaIService {
     }
 
     //Atualizando Agenda com ID
-    public Agenda update(Long id, Agenda agenda) {
-        Agenda agendaSalva = agendaRepository.findById(id).orElseThrow(() -> new BusinessException("Agenda não encontrada"));
-        agendaSalva.setTitulo(agenda.getTitulo());
-        agendaSalva.setDescricao(agenda.getDescricao());
-        agendaSalva.setDataHoraInicio(agenda.getDataHoraInicio());
-        agendaSalva.setDataHoraFim(agenda.getDataHoraFim());
-        agendaSalva.setCancelado(agenda.isCancelado());
-        return agendaRepository.save(agendaSalva);
+    public Agenda update(Long id, AgendaPostRequestDto agendaPostRequestDto) {
+        Agenda agendaExistente = agendaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Agenda não encontrada"));
+
+        agendaExistente.setTitulo(agendaPostRequestDto.getTitulo());
+        agendaExistente.setDescricao(agendaPostRequestDto.getDescricao());
+        agendaExistente.setDataHoraInicio(agendaPostRequestDto.getDataHoraInicio());
+        agendaExistente.setDataHoraFim(agendaPostRequestDto.getDataHoraFim());
+        agendaExistente.setCancelado(agendaPostRequestDto.isCancelado());
+
+        return agendaRepository.save(agendaExistente);
     }
 
-    //Cancelando Agenda com ID (Verificar depois se é necessário deixar implementada
+    //Cancelando Agenda com ID (Verificar depois se é necessário deixar implementada)
     @Transactional
     public Agenda cancelar(Long id) {
         Agenda agenda = agendaRepository.findById(id)
