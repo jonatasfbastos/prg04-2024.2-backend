@@ -1,14 +1,14 @@
 package br.com.ifba.prg04.requisicao.entity;
 
-import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.prg04.paciente.entity.Paciente;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import java.util.List;
 
 @Entity
 @Table(name = "requisicoes_exames")
@@ -25,17 +25,16 @@ public class RequisicaoEntity {
     private LocalDateTime dataRequisicao;
 
     @ManyToOne
-    @JoinColumn(name = "medico_id", nullable = false)
-    @NotNull(message = "O médico é obrigatório")
-    private Medico medico;
-
-    @ManyToOne
     @JoinColumn(name = "paciente_id", nullable = false)
     @NotNull(message = "O paciente é obrigatório")
     private Paciente paciente;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_exame_id", nullable = false)
-    @NotNull(message = "O tipo de exame é obrigatório")
-    private TipoExame tipoExame;
+    @ElementCollection
+    @CollectionTable(
+            name = "requisicao_exames", // Nome da tabela que armazenará os exames
+            joinColumns = @JoinColumn(name = "requisicao_id") // Coluna que referencia a requisição
+    )
+    @Column(name = "exame") // Nome da coluna que armazenará cada exame
+    @NotNull(message = "A lista de exames não pode ser nula")
+    private List<String> exames;
 }

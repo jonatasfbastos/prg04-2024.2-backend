@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface RequisicaoRepository extends JpaRepository<RequisicaoEntity, Long> {
-    List<RequisicaoEntity> findByPacienteNome(String nome);
+    List<RequisicaoEntity> findByPacienteNome(String nome); // Busca por nome do paciente
     List<RequisicaoEntity> findByPacienteCpf(String cpf);
 }

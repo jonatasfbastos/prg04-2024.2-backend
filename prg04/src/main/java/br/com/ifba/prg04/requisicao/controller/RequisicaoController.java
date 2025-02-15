@@ -1,51 +1,69 @@
 package br.com.ifba.prg04.requisicao.controller;
 
-import br.com.ifba.prg04.requisicao.entity.RequisicaoEntity;
+import br.com.ifba.prg04.requisicao.dto.RequisicaoGetResponseDto;
+import br.com.ifba.prg04.requisicao.dto.RequisicaoPostRequestDto;
 import br.com.ifba.prg04.requisicao.service.RequisicaoIService;
 import jakarta.validation.Valid;
+import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/requisicoes")
+@RequiredArgsConstructor
 public class RequisicaoController {
 
     private final RequisicaoIService requisicaoService;
-
-    public RequisicaoController(RequisicaoIService requisicaoService) {
-        this.requisicaoService = requisicaoService;
-    }
+    private final ObjectMapperUtil objectMapperUtil;
 
     @PostMapping
-    public ResponseEntity<RequisicaoEntity> findByCriarRequisicao(@Valid @RequestBody RequisicaoEntity requisicao) {
-        return ResponseEntity.ok(requisicaoService.findBySalvar(requisicao));
+    public ResponseEntity<RequisicaoGetResponseDto> saveRequisicao(@Valid @RequestBody RequisicaoPostRequestDto requisicaoDto) {
+        var requisicao = requisicaoService.save(requisicaoDto);
+        RequisicaoGetResponseDto responseDto = objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class);
+        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<RequisicaoEntity>> findByListarRequisicoes() {
-        return ResponseEntity.ok(requisicaoService.findByListarTodas());
+    public ResponseEntity<List<RequisicaoGetResponseDto>> findAllRequisicoes() {
+        var requisicoes = requisicaoService.findAll();
+        List<RequisicaoGetResponseDto> responseDtos = requisicoes.stream()
+                .map(requisicao -> objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RequisicaoEntity> findByBuscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(requisicaoService.findById(id));
+    public ResponseEntity<RequisicaoGetResponseDto> findRequisicaoById(@PathVariable Long id) {
+        var requisicao = requisicaoService.findById(id);
+        RequisicaoGetResponseDto responseDto = objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class);
+        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/buscar/nome/{nome}")
-    public ResponseEntity<List<RequisicaoEntity>> findByBuscarPorNome(@PathVariable String nome) {
-        return ResponseEntity.ok(requisicaoService.findByPacienteNome(nome));
+    public ResponseEntity<List<RequisicaoGetResponseDto>> findRequisicoesByPacienteNome(@PathVariable String nome) {
+        var requisicoes = requisicaoService.findByPacienteNome(nome);
+        List<RequisicaoGetResponseDto> responseDtos = requisicoes.stream()
+                .map(requisicao -> objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDtos);
     }
 
     @GetMapping("/buscar/cpf/{cpf}")
-    public ResponseEntity<List<RequisicaoEntity>> findByBuscarPorCpf(@PathVariable String cpf) {
-        return ResponseEntity.ok(requisicaoService.findByPacienteCpf(cpf));
+    public ResponseEntity<List<RequisicaoGetResponseDto>> findRequisicoesByPacienteCpf(@PathVariable String cpf) {
+        var requisicoes = requisicaoService.findByPacienteCpf(cpf);
+        List<RequisicaoGetResponseDto> responseDtos = requisicoes.stream()
+                .map(requisicao -> objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDtos);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> findByDeletarRequisicao(@PathVariable Long id) {
-        requisicaoService.findByDeletar(id);
+    public ResponseEntity<Void> deleteRequisicaoById(@PathVariable Long id) {
+        requisicaoService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
