@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+
+/*Arquivo Recebido para o front-end*/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
