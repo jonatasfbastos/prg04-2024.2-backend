@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.GestaoFuncionario.repositories.projection;
+package br.com.ifba.prg04.gestaofuncionario.repositories.projection;
 
 public interface FuncionarioProjection {
 

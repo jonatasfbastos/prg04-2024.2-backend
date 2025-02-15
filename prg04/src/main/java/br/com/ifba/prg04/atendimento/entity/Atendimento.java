@@ -18,7 +18,6 @@ public class Atendimento {
     @ManyToOne
     @JoinColumn(name = "paciente_id", referencedColumnName = "id", nullable = false)
     private Paciente paciente;
-
     private String tipoAtendimento;
     private LocalDateTime dataHoraInicio;
     private LocalDateTime dataHoraTermino;

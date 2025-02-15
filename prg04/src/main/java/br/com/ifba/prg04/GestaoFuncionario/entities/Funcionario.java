@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.GestaoFuncionario.entities;
+package br.com.ifba.prg04.gestaofuncionario.entities;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.prg04.termoconsentimento.entity.TermoConsentimento;

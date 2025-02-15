@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.GestaoFuncionario.dto;
+package br.com.ifba.prg04.gestaofuncionario.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

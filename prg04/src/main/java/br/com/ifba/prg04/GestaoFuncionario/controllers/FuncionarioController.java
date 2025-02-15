@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.GestaoFuncionario.controllers;
+package br.com.ifba.prg04.gestaofuncionario.controllers;
 
 public class FuncionarioController {
 

@@ -1,6 +1,6 @@
 package br.com.ifba.prg04.termoconsentimento.entity;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
+import br.com.ifba.prg04.gestaofuncionario.entities.Funcionario;
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.prg04.paciente.entity.Paciente;
 import jakarta.persistence.*;

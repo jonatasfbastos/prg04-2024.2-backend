@@ -1,7 +1,7 @@
-package br.com.ifba.prg04.GestaoFuncionario.services;
+package br.com.ifba.prg04.gestaofuncionario.services;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
-import br.com.ifba.prg04.GestaoFuncionario.repositories.FuncionarioRepository;
+import br.com.ifba.prg04.gestaofuncionario.entities.Funcionario;
+import br.com.ifba.prg04.gestaofuncionario.repositories.FuncionarioRepository;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

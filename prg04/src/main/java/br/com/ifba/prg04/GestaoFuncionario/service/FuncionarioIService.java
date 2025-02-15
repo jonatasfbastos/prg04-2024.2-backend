@@ -1,8 +1,9 @@
-package br.com.ifba.prg04.GestaoFuncionario.service;
+package br.com.ifba.prg04.gestaofuncionario.service;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import br.com.ifba.prg04.gestaofuncionario.entities.Funcionario;
 
 public interface FuncionarioIService {
     Funcionario update(Long id, Funcionario funcionario);
