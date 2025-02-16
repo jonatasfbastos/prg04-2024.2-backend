@@ -1,5 +1,7 @@
 package br.com.ifba.prg04.usuario.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +24,7 @@ public class Usuario extends PersistenceEntity {
     private String email;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String senha;
 
     @Column(nullable = false)

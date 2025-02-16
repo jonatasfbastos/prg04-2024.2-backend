@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/gestaoatendimento")
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class GestaoAtendimentoController {
     private final GestaoAtendimentoService gestaoAtendimentoService;// objeto service
@@ -60,7 +62,8 @@ public class GestaoAtendimentoController {
     }
     @PostMapping("/save")
     public ResponseEntity<DtoAtendimentoResponse> save(@RequestBody  @Valid DtoAtendimentoPost body) {
-       Usuario user = usuarioRepository.findByNome(body.getUsuarioNome());// estou buscando o usuario pois meu dto estou pegando apenas o nome do usuario
+       Usuario user = usuarioRepository.findByNome(body.getUsuarioNome());// buscando usuario
+       if(user!= null){
         GestaoAtendimento atendimento = new GestaoAtendimento(); // instancia entidade
         // abaixo estou passando os valores do dto para o objeto
         atendimento.setCode(body.getCode());
@@ -70,11 +73,16 @@ public class GestaoAtendimentoController {
         atendimento = gestaoAtendimentoService.save(atendimento);
         
         return ResponseEntity.ok(mapper.map(atendimento, DtoAtendimentoResponse.class));
+
+       }
+       DtoAtendimentoResponse dtoReponse = mapper.map(body,DtoAtendimentoResponse.class);
+       return ResponseEntity.badRequest().body(dtoReponse);
     }
+
     @PutMapping("/update/{code}")
     public ResponseEntity<DtoAtendimentoResponse> update(@RequestBody  @Valid DtoAtendimentoPost body, @PathVariable String code) {
 
-        Usuario user = usuarioRepository.findByNome(body.getUsuarioNome());// estou buscando o usuario pois meu dto estou pegando apenas o nome do usuario
+        Usuario user = usuarioRepository.findByNome(body.getUsuarioNome());// estou buscando o usuario
         GestaoAtendimento atendimento = new GestaoAtendimento(); // instancia entidade
         // abaixo estou passando os valores do dto para o objeto
         atendimento.setCode(body.getCode());

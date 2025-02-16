@@ -57,5 +57,4 @@ public class GestaoAtendimentoService {
     gestaoAtendimentoRepository.deleteAtendimentoByCode(code);
  }
 
-
 }
