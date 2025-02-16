@@ -14,7 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequestMapping("/campanha")
 @RestController
@@ -39,11 +43,16 @@ public class CampanhaController {
     public ResponseEntity<?> findall(Pageable pageable) {
         Page<Campanha> campanhas = campanhaR.findAll(pageable);
 
-        Page<CampanhaGetResponseDto> campanhasDto = campanhas.map(
-                c -> objectMapperUtil.map(c, CampanhaGetResponseDto.class)
+        List<CampanhaGetResponseDto> campanhasDto = campanhas.stream()
+                .map(c -> objectMapperUtil.map(c, CampanhaGetResponseDto.class))
+                .collect(Collectors.toList());
+
+        Map<String, Object> response = Map.of(
+                "campanhas", campanhasDto,
+                "total", campanhas.getTotalElements()
         );
 
-        return ResponseEntity.status(HttpStatus.OK).body(campanhasDto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,6 +76,17 @@ public class CampanhaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Campanha com ID " + id + " não encontrada.");
         }
+    }
+
+    @GetMapping(path = "/findbyvacina/{vacina}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findbyvacina(@PathVariable String vacina, Pageable pageable) {
+        Page<Campanha> campanhas = campanhaR.findByVacina(vacina, pageable);
+
+        Page<CampanhaGetResponseDto> campanhasDto = campanhas.map(
+                campanha -> objectMapperUtil.map(campanha, CampanhaGetResponseDto.class)
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(campanhasDto);
     }
 
 }
