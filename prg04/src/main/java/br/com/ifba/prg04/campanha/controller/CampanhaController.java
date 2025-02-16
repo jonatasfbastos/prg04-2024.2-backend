@@ -1,44 +1,72 @@
 package br.com.ifba.prg04.campanha.controller;
 
+import br.com.ifba.prg04.campanha.dto.CampanhaGetResponseDto;
+import br.com.ifba.prg04.campanha.dto.CampanhaPostRequestDto;
+import br.com.ifba.prg04.campanha.dto.CampanhaPutRequestDto;
 import br.com.ifba.prg04.campanha.entity.Campanha;
 import br.com.ifba.prg04.campanha.repository.CampanhaRepository;
+import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/campanha")
 @RestController
+@RequiredArgsConstructor
 public class CampanhaController {
 
     @Autowired
-    private CampanhaRepository campanhaR;
+    private final CampanhaRepository campanhaR;
+    private final ObjectMapperUtil objectMapperUtil;
 
+    @PostMapping(path = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> save(@RequestBody CampanhaPostRequestDto campanhaPostRequestDto) {
+        Campanha campanha = objectMapperUtil.map(campanhaPostRequestDto, Campanha.class);
+        Campanha savedCampanha = campanhaR.save(campanha);
+        CampanhaGetResponseDto responseDto = objectMapperUtil.map(savedCampanha, CampanhaGetResponseDto.class);
 
-    @PostMapping("/save")
-    public Campanha save(@RequestBody Campanha campanha) {
-        return campanhaR.save(campanha);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
-    @GetMapping("/findall")
-    public List<Campanha> findall() {
-        return (List<Campanha>)campanhaR.findAll();
+
+    @GetMapping(path = "/findall", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findall(Pageable pageable) {
+        Page<Campanha> campanhas = campanhaR.findAll(pageable);
+
+        Page<CampanhaGetResponseDto> campanhasDto = campanhas.map(
+                c -> objectMapperUtil.map(c, CampanhaGetResponseDto.class)
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(campanhasDto);
     }
 
-    @PutMapping("/update")
-    public Campanha update(@RequestBody Campanha campanha) {
-        return campanhaR.save(campanha);
+    @PutMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@RequestBody CampanhaPutRequestDto campanhaPutRequestDto) {
+        Campanha campanha = objectMapperUtil.map(campanhaPutRequestDto, Campanha.class);
+        Campanha updatedCampanha = campanhaR.save(campanha);
+        CampanhaGetResponseDto responseDto = objectMapperUtil.map(updatedCampanha, CampanhaGetResponseDto.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
+
 
     @DeleteMapping("/delete/{id}")
-    public Optional<Campanha> delete (@PathVariable Long id) {
-        Optional <Campanha> campanha = campanhaR.findById(id);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Optional<Campanha> campanha = campanhaR.findById(id);
+
         if (campanha.isPresent()) {
             campanhaR.deleteById(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();  // 204 No Content - deletado com sucesso
         } else {
-            return Optional.empty();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Campanha com ID " + id + " não encontrada.");
         }
-        return campanha;
     }
+
 }
