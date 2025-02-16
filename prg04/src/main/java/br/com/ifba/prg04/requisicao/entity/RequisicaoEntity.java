@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "requisicoes_exames")
@@ -21,20 +20,17 @@ public class RequisicaoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "A data da requisição não pode ser nula")
+    @Column
     private LocalDateTime dataRequisicao;
 
+    // Ajuste para enviar apenas o nome do paciente
     @ManyToOne
     @JoinColumn(name = "paciente_id", nullable = false)
     @NotNull(message = "O paciente é obrigatório")
     private Paciente paciente;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "requisicao_exames", // Nome da tabela que armazenará os exames
-            joinColumns = @JoinColumn(name = "requisicao_id") // Coluna que referencia a requisição
-    )
-    @Column(name = "exame") // Nome da coluna que armazenará cada exame
+    // Armazenar exames como uma string separada por vírgulas
+    @Column(name = "exames", nullable = false)
     @NotNull(message = "A lista de exames não pode ser nula")
-    private List<String> exames;
+    private String exames;  // Exemplo: "exame1, exame2, exame3"
 }

@@ -11,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,26 +30,25 @@ public class RequisicaoService implements RequisicaoIService {
     @Override
     @Transactional
     public RequisicaoGetResponseDto save(RequisicaoPostRequestDto dto) {
-        // Busca o paciente pelo ID
-        Paciente paciente = pacienteRepository.findById(dto.getPacienteId())
-                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado!"));
+        Paciente paciente = pacienteRepository.findByCpf(dto.getCpfPaciente())
+                .orElseThrow(() -> new EntityNotFoundException("Paciente com CPF " + dto.getCpfPaciente() + " não encontrado!"));
 
-        // Cria a entidade RequisicaoEntity com a lista de exames
         RequisicaoEntity requisicao = new RequisicaoEntity();
         requisicao.setDataRequisicao(dto.getDataRequisicao());
         requisicao.setPaciente(paciente);
-        requisicao.setExames(dto.getExames()); // Define a lista de exames
 
-        // Salva a requisição no banco de dados
-        requisicao = requisicaoRepository.save(requisicao);
+        // Se houver exames, salvar corretamente no formato string
+        if (dto.getExames() != null && !dto.getExames().isEmpty()) {
+            requisicao.setExames(String.join(",", dto.getExames()));
+        } else {
+            requisicao.setExames("");  // Garante que o banco não armazene null
+        }
 
-        // Converte a entidade para DTO de resposta
-        return toDto(requisicao);
+        return toDto(requisicaoRepository.save(requisicao));
     }
 
     @Override
     public List<RequisicaoGetResponseDto> findAll() {
-        // Busca todas as requisições e converte para DTO
         return requisicaoRepository.findAll().stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
@@ -55,25 +56,22 @@ public class RequisicaoService implements RequisicaoIService {
 
     @Override
     public RequisicaoGetResponseDto findById(Long id) {
-        // Busca uma requisição pelo ID e converte para DTO
-        RequisicaoEntity requisicao = requisicaoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Requisição não encontrada!"));
-        return toDto(requisicao);
+        return requisicaoRepository.findById(id)
+                .map(this::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Requisição com ID " + id + " não encontrada!"));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        // Verifica se a requisição existe antes de deletar
         if (!requisicaoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Requisição não encontrada!");
+            throw new EntityNotFoundException("Requisição com ID " + id + " não encontrada!");
         }
         requisicaoRepository.deleteById(id);
     }
 
     @Override
     public List<RequisicaoGetResponseDto> findByPacienteNome(String nome) {
-        // Busca requisições pelo nome do paciente e converte para DTO
         return requisicaoRepository.findByPacienteNome(nome).stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
@@ -81,13 +79,11 @@ public class RequisicaoService implements RequisicaoIService {
 
     @Override
     public List<RequisicaoGetResponseDto> findByPacienteCpf(String cpf) {
-        // Busca requisições pelo CPF do paciente e converte para DTO
         return requisicaoRepository.findByPacienteCpf(cpf).stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
-    // Método auxiliar para converter RequisicaoEntity para RequisicaoGetResponseDto
     private RequisicaoGetResponseDto toDto(RequisicaoEntity requisicao) {
         PacienteGetResponseDto pacienteDto = new PacienteGetResponseDto(
                 requisicao.getPaciente().getNome(),
@@ -96,11 +92,16 @@ public class RequisicaoService implements RequisicaoIService {
                 requisicao.getPaciente().getGenero()
         );
 
+        // Se a string de exames for vazia, retorna uma lista vazia em vez de tentar split()
+        List<String> examesList = (requisicao.getExames() == null || requisicao.getExames().isEmpty())
+                ? Collections.emptyList()
+                : Arrays.asList(requisicao.getExames().split(","));
+
         return new RequisicaoGetResponseDto(
                 requisicao.getId(),
                 requisicao.getDataRequisicao(),
                 pacienteDto,
-                requisicao.getExames() // Passa a lista de exames
+                examesList
         );
     }
 }
