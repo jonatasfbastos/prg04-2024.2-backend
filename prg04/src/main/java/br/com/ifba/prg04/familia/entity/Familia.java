@@ -15,14 +15,15 @@ public class Familia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+    private String nome;
     private String endereco;
+
     @ManyToMany
     @JoinTable(
         name = "familia_paciente",
         joinColumns = @JoinColumn(name = "familia_id"),
-        inverseJoinColumns = @JoinColumn(name = "paciente_id")
-    )
+        inverseJoinColumns = @JoinColumn(name = "paciente_id"))
     private List<Paciente> membros;
 
     @ManyToOne

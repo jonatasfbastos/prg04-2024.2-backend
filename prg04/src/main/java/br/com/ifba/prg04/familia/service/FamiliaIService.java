@@ -1,13 +1,18 @@
 package br.com.ifba.prg04.familia.service;
 
 import br.com.ifba.prg04.familia.entity.Familia;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public interface FamiliaIService {
 
-   public abstract Familia salvar(Familia familia);
-   public abstract Familia update(int id, Familia familia);
-   public abstract Familia findById(int id);
-   public abstract List<Familia> findAll();
+   Familia save(Familia familia);
+   Familia update(Long id, Familia familia);
+   Familia findById(Long id);
+   Page<Familia> findAll(Pageable pageable);
 }
