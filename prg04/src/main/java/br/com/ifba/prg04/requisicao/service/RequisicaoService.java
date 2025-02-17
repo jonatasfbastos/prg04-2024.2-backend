@@ -86,10 +86,10 @@ public class RequisicaoService implements RequisicaoIService {
 
     private RequisicaoGetResponseDto toDto(RequisicaoEntity requisicao) {
         PacienteGetResponseDto pacienteDto = new PacienteGetResponseDto(
-                requisicao.getPaciente().getNome(),
-                requisicao.getPaciente().getCpf(),
-                requisicao.getPaciente().getDataNascimento(),
-                requisicao.getPaciente().getGenero()
+//                requisicao.getPaciente().getNome(),
+//                requisicao.getPaciente().getCpf(),
+//                requisicao.getPaciente().getDataNascimento(),
+//                requisicao.getPaciente().getGenero()
         );
 
         // Se a string de exames for vazia, retorna uma lista vazia em vez de tentar split()
