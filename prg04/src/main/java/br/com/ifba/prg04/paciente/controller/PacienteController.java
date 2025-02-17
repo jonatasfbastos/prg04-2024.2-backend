@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/paciente")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PacienteController {
 
     private final PacienteIService pacienteService;
@@ -38,6 +39,11 @@ public class PacienteController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    //Mudar para paciente PUT
+
+    @GetMapping("/find-by-cpf/{cpf}")
+    public ResponseEntity<Paciente> findByCpf(@PathVariable String cpf) {
+        Paciente paciente = pacienteService.findByCpf(cpf);
+        return ResponseEntity.ok(paciente);
+    }
 
 }

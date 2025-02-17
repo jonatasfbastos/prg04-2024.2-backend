@@ -49,6 +49,7 @@ public class PacienteService implements PacienteIService{
             novosDados.setResponsavel(paciente.getResponsavel());
             novosDados.setTelefone(paciente.getTelefone());
             novosDados.setEstadoCivil(paciente.getEstadoCivil());
+            novosDados.setResponsavel(paciente.getResponsavel());
 
 
             if(paciente.getId() != null) {
@@ -84,15 +85,6 @@ public class PacienteService implements PacienteIService{
                 });
     }
 
-    //
-//    @Transactional
-//    @Override
-//    public Prontuario findByPaciente(Paciente paciente) {
-//        try {
-//            return prontuarioRepository.findByNomeOrCpf(paciente.getNome(), paciente.getCpf());
-//        } catch (Exception e) {
-//            throw new BusinessException("Erro ao tentar buscar os dados",e);
-//        }
-//    }
+
 
 }

@@ -1,5 +1,6 @@
 package br.com.ifba.prg04.paciente.dto;
 
+import br.com.ifba.prg04.paciente.entity.Responsavel;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,4 +41,6 @@ public class PacientePostResponseDto {
 
     @Email(message = "O email deve ser válido")
     private String email;
+
+    private Responsavel responsavel;
 }
