@@ -34,7 +34,15 @@ public class AgendaService implements AgendaIService {
     //Salvando agenda com transação e vinculando a usuario
     @Transactional
     public Agenda save(Agenda agenda) {
-        LOGGER.info("Salvando Agenda");
+        LOGGER.info("Verificando conflito de horários para a agenda");
+
+        //Verificando conflito de horário por meio do método
+        boolean existeConflito = agendaRepository.existsByDataHoraConflito(agenda.getDataHoraInicio(), agenda.getDataHoraFim());
+        if (existeConflito) {
+            throw new BusinessException("já existe uma agenda neste horário.");
+        }
+
+        LOGGER.info("Salvando agenda");
         return agendaRepository.save(agenda);
     }
 
