@@ -12,24 +12,24 @@ public class Campanha {
     @Column(name="id")
     private Long id;
 
-    @Column(name="nomec")
+    @Column(name="nomec", length = 100)
     @NotNull
     private String nomec;
 
     @NotNull
-    @Column(name="vacina")
+    @Column(name="vacina", length = 100)
     private String vacina;
 
     @NotNull
-    @Column(name="publico_alvo")
+    @Column(name="publico_alvo", length = 100)
     private String publicoAlvo;
 
     @NotNull
-    @Column(name="data_inicio")
+    @Column(name="data_inicio", length = 45)
     private String dataInicio;
 
     @NotNull
-    @Column(name="data_fim")
+    @Column(name="data_fim", length = 45)
     private String dataFim;
 
     //Get e Set

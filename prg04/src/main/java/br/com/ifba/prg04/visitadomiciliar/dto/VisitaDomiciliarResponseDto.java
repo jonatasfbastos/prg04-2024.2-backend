@@ -1,7 +1,6 @@
 package br.com.ifba.prg04.visitadomiciliar.dto;
 
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Getter
@@ -18,5 +17,14 @@ public class VisitaDomiciliarResponseDto {
     private String cbo;
     private String cnes;
     private String ine;
+    private String motivoVisita;
+    private String acompanhamento;
+    private String controleAmbiental;
+    private String antropometria;
+    private String sinaisVitais;
+    private String glicemia;
+    private String desfecho;
 }
+
+
 
