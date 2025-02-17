@@ -35,6 +35,7 @@ public class UnidadesSaude extends PersistenceEntity {
     private Endereco endereco;
 
     // Telefone de contato da unidade
+    @Column(unique = true)
     private String telefone;
 
     // Horário de funcionamento (ex: "08:00 - 18:00")

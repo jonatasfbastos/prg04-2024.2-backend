@@ -12,8 +12,4 @@ public class Responsavel {
     @Column(name = "Contato_Responsavel", nullable = true)
     private String contatoResponsavel;
 
-    public Responsavel() {
-        this.nomeResponsavel = "Não possui";
-        this.contatoResponsavel = "N/A";
-    }
 }

@@ -32,8 +32,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class GestaoAtendimentoController {
-    private final GestaoAtendimentoService gestaoAtendimentoService;// objeto service
-    private final UsuarioRepository usuarioRepository;// usuario service para buscar o usuario
+    private final GestaoAtendimentoService gestaoAtendimentoService;
     private final ObjectMapperUtil mapper;// classe mapeamento
 
     @GetMapping("/findall")
@@ -62,34 +61,16 @@ public class GestaoAtendimentoController {
     }
     @PostMapping("/save")
     public ResponseEntity<DtoAtendimentoResponse> save(@RequestBody  @Valid DtoAtendimentoPost body) {
-       Usuario user = usuarioRepository.findByNome(body.getUsuarioNome());// buscando usuario
-       if(user!= null){
-        GestaoAtendimento atendimento = new GestaoAtendimento(); // instancia entidade
-        // abaixo estou passando os valores do dto para o objeto
-        atendimento.setCode(body.getCode());
-        atendimento.setDataHora(body.getDataHora());
-        atendimento.setEspecialidadeMedica(body.getEspecialidadeMedica());
-        atendimento.setUsuario(user);
-        atendimento = gestaoAtendimentoService.save(atendimento);
+
+      GestaoAtendimento atendimento = gestaoAtendimentoService.save(body);
         
         return ResponseEntity.ok(mapper.map(atendimento, DtoAtendimentoResponse.class));
-
-       }
-       DtoAtendimentoResponse dtoReponse = mapper.map(body,DtoAtendimentoResponse.class);
-       return ResponseEntity.badRequest().body(dtoReponse);
+       
     }
 
     @PutMapping("/update/{code}")
     public ResponseEntity<DtoAtendimentoResponse> update(@RequestBody  @Valid DtoAtendimentoPost body, @PathVariable String code) {
-
-        Usuario user = usuarioRepository.findByNome(body.getUsuarioNome());// estou buscando o usuario
-        GestaoAtendimento atendimento = new GestaoAtendimento(); // instancia entidade
-        // abaixo estou passando os valores do dto para o objeto
-        atendimento.setCode(body.getCode());
-        atendimento.setDataHora(body.getDataHora());
-        atendimento.setEspecialidadeMedica(body.getEspecialidadeMedica());
-        atendimento.setUsuario(user);
-        atendimento = gestaoAtendimentoService.update(atendimento, code);
+        GestaoAtendimento atendimento = gestaoAtendimentoService.update(body,code);
         
         return ResponseEntity.ok(mapper.map(atendimento, DtoAtendimentoResponse.class));
     }

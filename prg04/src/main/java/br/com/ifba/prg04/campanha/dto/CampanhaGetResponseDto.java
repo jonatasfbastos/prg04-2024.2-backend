@@ -1,0 +1,27 @@
+package br.com.ifba.prg04.campanha.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CampanhaGetResponseDto {
+
+    @JsonProperty("nomec")
+    private String nomec;
+
+    @JsonProperty("vacina")
+    private String vacina;
+
+    @JsonProperty("publico_alvo")
+    private String publicoAlvo;
+
+    @JsonProperty("data_inicio")
+    private String dataInicio;
+
+    @JsonProperty("data_fim")
+    private String dataFim;
+}

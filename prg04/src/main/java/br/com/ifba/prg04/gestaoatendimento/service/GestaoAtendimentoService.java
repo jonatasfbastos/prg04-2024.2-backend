@@ -2,8 +2,12 @@ package br.com.ifba.prg04.gestaoatendimento.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import br.com.ifba.prg04.gestaoatendimento.dto.DtoAtendimentoPost;
 import br.com.ifba.prg04.gestaoatendimento.entity.GestaoAtendimento;
 import br.com.ifba.prg04.gestaoatendimento.repository.GestaoAtendimentoRepository;
+import br.com.ifba.prg04.usuario.entity.Usuario;
+import br.com.ifba.prg04.usuario.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -11,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GestaoAtendimentoService {
  private final GestaoAtendimentoRepository gestaoAtendimentoRepository;
+ private final UsuarioRepository usuarioRepository;
 
  
  public Page<GestaoAtendimento> findall(Pageable pageable){
@@ -25,7 +30,16 @@ public class GestaoAtendimentoService {
  }
  // metodo para salvar
  @Transactional
- public GestaoAtendimento save(GestaoAtendimento atendimento){
+ public GestaoAtendimento save(DtoAtendimentoPost dto){
+   Usuario usuario = usuarioRepository.findByNome(dto.getUsuarioNome());
+   GestaoAtendimento atendimento = new GestaoAtendimento();
+   if(usuario!=null){
+   atendimento.setCode(dto.getCode());
+   atendimento.setDataHora(dto.getDataHora());
+   atendimento.setEspecialidadeMedica(dto.getEspecialidadeMedica());
+   atendimento.setUsuario(usuario);
+   return gestaoAtendimentoRepository.save(atendimento);
+   }
    if(gestaoAtendimentoRepository.existsAtendimentoByCode(atendimento.getCode())){
     throw new RuntimeException("O código não pode ser duplicado.");
    }
@@ -33,11 +47,11 @@ public class GestaoAtendimentoService {
       throw new RuntimeException("Já tem um agendamento no mesmo horario e data");
    }
 
-    return gestaoAtendimentoRepository.save(atendimento);
+   throw new RuntimeException("Erro ao atualizar");
  }
 // metodo update
 @Transactional
- public GestaoAtendimento update(GestaoAtendimento update, String code) {
+ public GestaoAtendimento update(DtoAtendimentoPost update, String code) {
    if(gestaoAtendimentoRepository.existsAtendimentoBydataHora(update.getDataHora())){
       throw new RuntimeException("Já tem um agendamento no mesmo horario e data");
    }

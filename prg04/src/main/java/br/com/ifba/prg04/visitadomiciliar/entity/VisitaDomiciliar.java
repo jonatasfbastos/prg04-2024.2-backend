@@ -1,26 +1,72 @@
 package br.com.ifba.prg04.visitadomiciliar.entity;
 
-import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
+import br.com.ifba.prg04.gestaofuncionario.entities.Funcionario;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "visitas_domiciliares")
-@Getter @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class VisitaDomiciliar extends PersistenceEntity {
+@NoArgsConstructor
+@Data
+public class VisitaDomiciliar {
 
-    private String digitadoPor;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private LocalDate data;
-    private String conferidoPor;
+
+    @Column(nullable = false)
     private String numeroFolha;
+
+    @Column(nullable = false)
     private String cns;
+
+    @Column(nullable = false)
     private String cbo;
+
+    @Column(nullable = false)
     private String cnes;
+
+    @Column(nullable = false)
     private String ine;
+
+    @Column(nullable = false)
+    private String motivoVisita;
+
+    @Column(nullable = false)
+    private String acompanhamento;
+
+    @Column(nullable = false)
+    private String controleAmbiental;
+
+    @Column(nullable = false)
+    private String antropometria;
+
+    @Column(nullable = false)
+    private String sinaisVitais;
+
+    @Column(nullable = false)
+    private String glicemia;
+
+    @Column(nullable = false)
+    private String desfecho;
+
+    @ManyToOne
+    @JoinColumn(name = "digitado_por_id", referencedColumnName = "id", nullable = false)
+    private Funcionario digitadoPor;
+
+    @ManyToOne
+    @JoinColumn(name = "conferido_por_id", referencedColumnName = "id", nullable = false)
+    private Funcionario conferidoPor;
 }
+
+
+
 

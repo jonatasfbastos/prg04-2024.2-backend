@@ -8,6 +8,8 @@ import br.com.ifba.prg04.visitadomiciliar.dto.VisitaDomiciliarRequestDto;
 import br.com.ifba.prg04.visitadomiciliar.dto.VisitaDomiciliarResponseDto;
 import br.com.ifba.prg04.visitadomiciliar.entity.VisitaDomiciliar;
 import br.com.ifba.prg04.visitadomiciliar.repository.VisitaDomiciliarRepository;
+import br.com.ifba.prg04.gestaofuncionario.repositories.FuncionarioRepository;
+import br.com.ifba.prg04.gestaofuncionario.entities.Funcionario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -22,15 +24,33 @@ import java.util.List;
 public class VisitaDomiciliarService implements VisitaDomiciliarIService {
 
     private final VisitaDomiciliarRepository repository;
+    private final FuncionarioRepository funcionarioRepository;
     private final ObjectMapperUtil objectMapperUtil;
 
     @Override
     @Transactional
     public VisitaDomiciliarResponseDto salvar(VisitaDomiciliarRequestDto dto) {
         try {
+            // Buscando os funcionários pelo ID
+            Funcionario digitadoPor = funcionarioRepository.findById(dto.getDigitadoPorId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + dto.getDigitadoPorId()));
+            Funcionario conferidoPor = funcionarioRepository.findById(dto.getConferidoPorId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + dto.getConferidoPorId()));
+
+            // Mapeando o DTO para a entidade VisitaDomiciliar
             VisitaDomiciliar visita = objectMapperUtil.map(dto, VisitaDomiciliar.class);
+            visita.setDigitadoPor(digitadoPor);
+            visita.setConferidoPor(conferidoPor);
+
+            // Salvando a visita domiciliar
             visita = repository.save(visita);
-            return objectMapperUtil.map(visita, VisitaDomiciliarResponseDto.class);
+
+            // Mapeando a visita salva de volta para o DTO de resposta
+            VisitaDomiciliarResponseDto responseDto = objectMapperUtil.map(visita, VisitaDomiciliarResponseDto.class);
+            responseDto.setDigitadoPor(digitadoPor.getNome());  // Definindo o nome do digitadoPor
+            responseDto.setConferidoPor(conferidoPor.getNome());  // Definindo o nome do conferidoPor
+
+            return responseDto;
         } catch (DataIntegrityViolationException e) {
             throw new UniqueViolationException("Já existe uma visita domiciliar com os mesmos dados cadastrados.");
         } catch (Exception e) {
@@ -66,18 +86,36 @@ public class VisitaDomiciliarService implements VisitaDomiciliarIService {
         VisitaDomiciliar visita = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Visita domiciliar não encontrada com o ID: " + id));
 
-        visita.setDigitadoPor(dto.getDigitadoPor());
+        // Buscando os funcionários pelo ID
+        Funcionario digitadoPor = funcionarioRepository.findById(dto.getDigitadoPorId())
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + dto.getDigitadoPorId()));
+        Funcionario conferidoPor = funcionarioRepository.findById(dto.getConferidoPorId())
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + dto.getConferidoPorId()));
+
+        // Atualizando os dados da visita domiciliar
+        visita.setDigitadoPor(digitadoPor);
         visita.setData(dto.getData());
-        visita.setConferidoPor(dto.getConferidoPor());
+        visita.setConferidoPor(conferidoPor);
         visita.setNumeroFolha(dto.getNumeroFolha());
         visita.setCns(dto.getCns());
         visita.setCbo(dto.getCbo());
         visita.setCnes(dto.getCnes());
         visita.setIne(dto.getIne());
+        visita.setMotivoVisita(dto.getMotivoVisita());
+        visita.setAcompanhamento(dto.getAcompanhamento());
+        visita.setControleAmbiental(dto.getControleAmbiental());
+        visita.setAntropometria(dto.getAntropometria());
+        visita.setSinaisVitais(dto.getSinaisVitais());
+        visita.setGlicemia(dto.getGlicemia());
+        visita.setDesfecho(dto.getDesfecho());
+
 
         try {
             visita = repository.save(visita);
-            return objectMapperUtil.map(visita, VisitaDomiciliarResponseDto.class);
+            VisitaDomiciliarResponseDto responseDto = objectMapperUtil.map(visita, VisitaDomiciliarResponseDto.class);
+            responseDto.setDigitadoPor(digitadoPor.getNome());  // Definindo o nome do digitadoPor
+            responseDto.setConferidoPor(conferidoPor.getNome());  // Definindo o nome do conferidoPor
+            return responseDto;
         } catch (DataIntegrityViolationException e) {
             throw new UniqueViolationException("Já existe uma visita domiciliar com os mesmos dados cadastrados.");
         } catch (Exception e) {
@@ -98,3 +136,5 @@ public class VisitaDomiciliarService implements VisitaDomiciliarIService {
         }
     }
 }
+
+

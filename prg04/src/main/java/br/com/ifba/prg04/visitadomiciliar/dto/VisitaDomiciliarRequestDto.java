@@ -10,14 +10,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VisitaDomiciliarRequestDto {
-    @NotBlank(message = "O campo 'digitadoPor' é obrigatório.")
-    private String digitadoPor;
+
+    @NotNull(message = "O ID do 'digitadoPor' é obrigatório.")
+    @Positive(message = "O ID do 'digitadoPor' deve ser um número positivo.")
+    private Long digitadoPorId;
 
     @NotNull(message = "A data da visita é obrigatória.")
     private LocalDate data;
 
-    @NotBlank(message = "O campo 'conferidoPor' é obrigatório.")
-    private String conferidoPor;
+    @NotNull(message = "O ID do 'conferidoPor' é obrigatório.")
+    @Positive(message = "O ID do 'conferidoPor' deve ser um número positivo.")
+    private Long conferidoPorId;
 
     @NotBlank(message = "O número da folha é obrigatório.")
     @Pattern(regexp = "\\d+", message = "O número da folha deve conter apenas números.")
@@ -35,5 +38,27 @@ public class VisitaDomiciliarRequestDto {
 
     @NotBlank(message = "O INE do profissional é obrigatório.")
     private String ine;
+
+    @NotBlank(message = "O motivo da visita é obrigatório.")
+    private String motivoVisita;
+
+    @NotBlank(message = "O acompanhamento é obrigatório.")
+    private String acompanhamento;
+
+    @NotBlank(message = "O controle ambiental é obrigatório.")
+    private String controleAmbiental;
+
+    @NotBlank(message = "A antropometria é obrigatória.")
+    private String antropometria;
+
+    @NotBlank(message = "Os sinais vitais são obrigatórios.")
+    private String sinaisVitais;
+
+    @NotBlank(message = "A glicemia é obrigatória.")
+    private String glicemia;
+
+    @NotBlank(message = "O desfecho é obrigatório.")
+    private String desfecho;
+
 }
 

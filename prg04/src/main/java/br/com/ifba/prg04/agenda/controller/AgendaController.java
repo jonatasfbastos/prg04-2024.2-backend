@@ -22,7 +22,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/agenda")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class AgendaController {
 
@@ -54,10 +53,15 @@ public class AgendaController {
     @PutMapping(path = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody AgendaPostRequestDto agendaPostRequestDto) {
-        Agenda agendaAtualizada = agendaService.update(id, objectMapperUtil.map(agendaPostRequestDto, Agenda.class));
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(objectMapperUtil.map(agendaAtualizada, AgendaGetResponseDto.class));
+        Agenda agendaAtualizada = agendaService.update(id, agendaPostRequestDto);
+
+        AgendaGetResponseDto responseDto = objectMapperUtil.map(agendaAtualizada, AgendaGetResponseDto.class);
+        responseDto.setNomeUsuario(agendaAtualizada.getUsuario() != null ? agendaAtualizada.getUsuario().getNome() : null);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
+
+
 
     //Deletando agenda com ID
     @DeleteMapping(path = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
