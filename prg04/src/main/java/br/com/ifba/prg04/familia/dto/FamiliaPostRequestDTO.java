@@ -23,5 +23,5 @@ public class FamiliaPostRequestDTO {
 
     @NotEmpty(message = "A lista de membros nao pode ser nula")
     @Valid
-    private List<MembroPostRequestDTO> membros;
+    private List<String> membros;
 }

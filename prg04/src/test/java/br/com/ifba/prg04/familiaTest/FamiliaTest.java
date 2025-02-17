@@ -88,4 +88,45 @@ public class FamiliaTest {
         assertEquals("Família Silvaaa", familiaEncontrada.getNome(), "O nome da família deve ser o mesmo");
         assertEquals(responsavel, familiaEncontrada.getResponsavel(), "O responsável da família deve ser o mesmo");
     }
+
+    @Test
+    public void testAtualizarFamilia() {
+        // Busca a família criada no setUp
+        Familia familiaExistente = familiaRepository.findById(familia.getId())
+                .orElseThrow(() -> new RuntimeException("Família não encontrada."));
+
+        // Dados atualizados
+        String novoNome = "Família Oliveira";
+        String novoEndereco = "Rua Z, 789";
+        Funcionario novoResponsavel = new Funcionario();
+        novoResponsavel.setCodigo("987654321");
+        novoResponsavel.setLogin("maria123");
+        novoResponsavel.setSenha("senha123");
+        novoResponsavel.setCategoria("User");
+        novoResponsavel.setNome("Maria Oliveira");
+        novoResponsavel.setCpf("987654321");
+        novoResponsavel.setEndereco("Rua W, 456");
+        novoResponsavel.setTelefone("888888888");
+
+        // Salva o novo responsável no banco de dados
+        novoResponsavel = funcionarioRepository.save(novoResponsavel);
+
+        // Atualiza os dados da família
+        familiaExistente.setNome(novoNome);
+        familiaExistente.setEndereco(novoEndereco);
+        familiaExistente.setResponsavel(novoResponsavel);
+
+        // Salva a família atualizada
+        Familia familiaAtualizada = familiaRepository.save(familiaExistente);
+
+        // Busca a família atualizada no banco de dados
+        Familia familiaRecuperada = familiaRepository.findById(familiaAtualizada.getId())
+                .orElseThrow(() -> new RuntimeException("Família não encontrada após a atualização."));
+
+        // Verifica se os dados foram atualizados corretamente
+        assertNotNull(familiaRecuperada, "A família atualizada não deve ser nula.");
+        assertEquals(novoNome, familiaRecuperada.getNome(), "O nome da família deve ser atualizado.");
+        assertEquals(novoEndereco, familiaRecuperada.getEndereco(), "O endereço da família deve ser atualizado.");
+        assertEquals(novoResponsavel, familiaRecuperada.getResponsavel(), "O responsável da família deve ser atualizado.");
+    }
 }

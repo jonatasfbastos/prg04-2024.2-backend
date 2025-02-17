@@ -11,5 +11,5 @@ public class FamiliaGetResponseDTO {
     private String nome;
     private String endereco;
     private String responsavel;
-    private List<MembroPostRequestDTO> membros;
+    private List<String> membros;
 }

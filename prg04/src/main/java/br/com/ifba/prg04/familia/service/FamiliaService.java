@@ -2,12 +2,15 @@ package br.com.ifba.prg04.familia.service;
 
 import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.repository.FamiliaRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +28,16 @@ public class FamiliaService implements FamiliaIService {
     }
 
     @Override
+    @Transactional
     public Familia update(Long id, Familia familia) {
+        //busca familia existente no banco
         Familia familiaAtual = familiaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Familia nao encontrada."));
+
+        //verifica se a familia nao eh nula
+        if (familia == null) {
+            throw new RuntimeException("Dados da familia nao podem ser nulos");
+        }
 
         familiaAtual.setNome(familia.getNome());
         familiaAtual.setMembros(familia.getMembros());
@@ -49,5 +59,9 @@ public class FamiliaService implements FamiliaIService {
     @Override
     public Page<Familia> findAll(Pageable pageable) {
         return familiaRepository.findAll(pageable);
+    }
+
+    public List<Familia> findByName(String nome) {
+        return familiaRepository.findByNome(nome);
     }
 }
