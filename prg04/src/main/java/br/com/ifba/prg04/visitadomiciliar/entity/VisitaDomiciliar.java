@@ -1,12 +1,13 @@
 package br.com.ifba.prg04.visitadomiciliar.entity;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
 
 @Entity
 @Table(name = "visitas_domiciliares")

@@ -1,10 +1,11 @@
 package br.com.ifba.prg04.familiaTest;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import br.com.ifba.prg04.familia.controller.FamiliaController;
 import br.com.ifba.prg04.familia.dto.FamiliaPostRequestDTO;
 import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.service.FamiliaService;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

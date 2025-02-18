@@ -1,5 +1,7 @@
 package br.com.ifba.prg04.visitadomiciliar.service;
 
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import br.com.ifba.prg04.infrastructure.exception.UniqueViolationException;
@@ -8,8 +10,6 @@ import br.com.ifba.prg04.visitadomiciliar.dto.VisitaDomiciliarRequestDto;
 import br.com.ifba.prg04.visitadomiciliar.dto.VisitaDomiciliarResponseDto;
 import br.com.ifba.prg04.visitadomiciliar.entity.VisitaDomiciliar;
 import br.com.ifba.prg04.visitadomiciliar.repository.VisitaDomiciliarRepository;
-import br.com.ifba.prg04.GestaoFuncionario.repositories.FuncionarioRepository;
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;

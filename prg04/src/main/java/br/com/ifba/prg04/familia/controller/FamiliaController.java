@@ -1,12 +1,12 @@
 package br.com.ifba.prg04.familia.controller;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
-import br.com.ifba.prg04.GestaoFuncionario.repositories.FuncionarioRepository;
 import br.com.ifba.prg04.familia.dto.FamiliaGetResponseDTO;
 import br.com.ifba.prg04.familia.dto.FamiliaPostRequestDTO;
 import br.com.ifba.prg04.familia.dto.FamiliaPutResquestDTO;
 import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.service.FamiliaService;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

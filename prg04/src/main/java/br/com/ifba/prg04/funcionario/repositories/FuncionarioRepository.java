@@ -1,7 +1,8 @@
-package br.com.ifba.prg04.GestaoFuncionario.repositories;
+package br.com.ifba.prg04.funcionario.repositories;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;

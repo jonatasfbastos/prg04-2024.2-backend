@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.GestaoFuncionario.dto;
+package br.com.ifba.prg04.funcionario.dto;
 
 import lombok.Data;
 

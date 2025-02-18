@@ -1,9 +1,9 @@
 package br.com.ifba.prg04.familiaTest;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
-import br.com.ifba.prg04.GestaoFuncionario.repositories.FuncionarioRepository;
 import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.repository.FamiliaRepository;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

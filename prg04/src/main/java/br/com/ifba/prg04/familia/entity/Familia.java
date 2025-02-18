@@ -1,6 +1,6 @@
 package br.com.ifba.prg04.familia.entity;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
 import br.com.ifba.prg04.paciente.entity.Paciente;
 import br.com.ifba.prg04.paciente.entity.Responsavel;
 import br.com.ifba.prg04.usuario.entity.Usuario;
