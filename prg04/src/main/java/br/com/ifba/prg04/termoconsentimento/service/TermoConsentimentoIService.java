@@ -9,7 +9,6 @@ public interface TermoConsentimentoIService {
 
     TermoConsentimento create(TermoConsentimento termoConsentimento, String cpfPaciente, String cpfFuncionario);
     TermoConsentimento findById(Long id);
-    Page<TermoConsentimentoProjection> findByIdPaciente(Long idPaciente, Pageable pageable);
     Page<TermoConsentimentoProjection> findByCpfPaciente(String cpf, Pageable pageable);
     Page<TermoConsentimentoProjection> findAll(Pageable pageable);
     void delete(Long id);

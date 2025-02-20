@@ -43,4 +43,7 @@ public class Funcionario extends PersistenceEntity {
     @Column(nullable = false)
     private String telefone;
 
+    @OneToMany(mappedBy = "funcionario")
+    private Set<TermoConsentimento> termosConsentimento = new HashSet<>();
+
 }

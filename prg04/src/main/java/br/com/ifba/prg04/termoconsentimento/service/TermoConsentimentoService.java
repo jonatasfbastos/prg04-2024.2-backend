@@ -75,22 +75,6 @@ public class TermoConsentimentoService implements TermoConsentimentoIService {
 
     /**
      * Autor: Rafael Andrade
-     * Busca termos de consentimento associados a um paciente.
-     * @param idPaciente Id do paciente.
-     * @param pageable Configuração de paginação.
-     * @return Página de termos de consentimento filtrados pelo paciente.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<TermoConsentimentoProjection> findByIdPaciente(Long idPaciente, Pageable pageable) {
-        Paciente paciente = pacienteService.findById(idPaciente);
-
-        log.info("Buscando termos de consentimento para o paciente com id: {}", idPaciente);
-        return repository.findByPacienteId(paciente.getId(), pageable);
-    }
-
-    /**
-     * Autor: Rafael Andrade
      * Busca termos de consentimento associados a um paciente pelo CPF (consulta incompleta permitida).
      * @param cpf Prefixo do CPF do paciente (ex: "123" retorna todos os CPFs que começam com "123").
      * @param pageable Configuração de paginação.
