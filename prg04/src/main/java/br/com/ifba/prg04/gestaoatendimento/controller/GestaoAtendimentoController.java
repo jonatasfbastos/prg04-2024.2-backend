@@ -6,12 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifba.prg04.gestaoatendimento.dto.DtoAtendimentoPost;
 import br.com.ifba.prg04.gestaoatendimento.dto.DtoAtendimentoResponse;
 import br.com.ifba.prg04.gestaoatendimento.entity.GestaoAtendimento;
+import br.com.ifba.prg04.gestaoatendimento.mapper.GestaoAtendimentoMapper;
 import br.com.ifba.prg04.gestaoatendimento.service.GestaoAtendimentoService;
 import br.com.ifba.prg04.infrastructure.dto.PageableDtoGeneric;
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
-import br.com.ifba.prg04.usuario.entity.Usuario;
-import br.com.ifba.prg04.usuario.repository.UsuarioRepository;
-import br.com.ifba.prg04.usuario.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -27,8 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 @RestController
@@ -37,69 +33,64 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class GestaoAtendimentoController {
     private final GestaoAtendimentoService gestaoAtendimentoService;
-    private final ObjectMapperUtil mapper;// classe mapeamento
 
-    @GetMapping("/findall")
-    public ResponseEntity<PageableDtoGeneric<DtoAtendimentoResponse>> findAll(Pageable pageable) {
-        // Obtenha a página original com os dados da entidade GestaoAtendimento
-        Page<GestaoAtendimento> page = gestaoAtendimentoService.findall(pageable);
-    
-        // Mapeie cada item da página para o tipo DtoAtendimentoResponse
-        Page<DtoAtendimentoResponse> pageDto = page.map(gestaoAtendimento -> mapper.map(gestaoAtendimento, DtoAtendimentoResponse.class));
-    
-        // Crie o PageableDtoGeneric a partir da página mapeada
-        PageableDtoGeneric<DtoAtendimentoResponse> pageableDto = PageableDtoGeneric.fromPage(pageDto);
-    
-        // Retorne a resposta com a lista paginada
-        return ResponseEntity.ok(pageableDto);
-    }
-    // rota para buscar agendamento no nome do usuario
-    @GetMapping("/findatendimentonome/{nome}")
-    public ResponseEntity<List<DtoAtendimentoResponse>> findatendimentosbynome(@PathVariable String nome){
-        List<GestaoAtendimento> atendimentos = gestaoAtendimentoService.findAtendimentos(nome);
-        List<DtoAtendimentoResponse> listDto = mapper.mapAll(atendimentos, DtoAtendimentoResponse.class);
+   @GetMapping("/findall")
+public ResponseEntity<PageableDtoGeneric<DtoAtendimentoResponse>> findAll(Pageable pageable) {
+    // Obtenha a página original com os dados da entidade GestaoAtendimento
+    Page<GestaoAtendimento> page = gestaoAtendimentoService.findall(pageable);
 
-        return ResponseEntity.ok(listDto);
-    }
-    
-    
+    // Mapeie cada item da página para o tipo DtoAtendimentoResponse usando o mapper estático
+    Page<DtoAtendimentoResponse> pageDto = GestaoAtendimentoMapper.toDtoAtendimentoResponsePage(page);
 
-    // metodo para buscar por codigo
+    // Crie o PageableDtoGeneric a partir da página mapeada
+    PageableDtoGeneric<DtoAtendimentoResponse> pageableDto = PageableDtoGeneric.fromPage(pageDto);
+
+    // Retornando a resposta com a lista paginada
+    return ResponseEntity.ok(pageableDto);
+}
+@GetMapping("/findatendimentonome/{nomeUsuario}")
+public ResponseEntity<List<DtoAtendimentoResponse>> findAtendimentosByNome(@PathVariable String nomeUsuario) {
+    // Buscar a lista de atendimentos com base no nome do usuário
+    List<GestaoAtendimento> atendimentos = gestaoAtendimentoService.findAtendimentos(nomeUsuario);
+    
+    // Usando o método estático do mapper para mapear a lista de GestaoAtendimento para DtoAtendimentoResponse
+    List<DtoAtendimentoResponse> listDto = GestaoAtendimentoMapper.toDtoAtendimentoResponseList(atendimentos);
+    
+    // Retornar a lista mapeada
+    return ResponseEntity.ok(listDto);
+}
+
+
+    // metodo para buscar um atendimento por codigo
     @GetMapping("/findatendimento/{code}")
     public ResponseEntity<DtoAtendimentoResponse> findbycode(@PathVariable String code){
         GestaoAtendimento atendimento = gestaoAtendimentoService.findbycode(code);
-        DtoAtendimentoResponse dtoAtendimento = mapper.map(atendimento, DtoAtendimentoResponse.class);
+        DtoAtendimentoResponse dtoAtendimento = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento);
 
         return ResponseEntity.ok(dtoAtendimento);
     }
+    // metodo save
     @PostMapping("/save")
     public ResponseEntity<DtoAtendimentoResponse> save(@RequestBody  @Valid DtoAtendimentoPost body) {
-        DtoAtendimentoPost post = new DtoAtendimentoPost();
-        post.setCode(body.getCode());
-        post.setDataHora(body.getDataHora());
-        post.setEspecialidadeMedica(body.getEspecialidadeMedica());
-        post.setUsuarioNome(body.getUsuarioNome());
-
-      GestaoAtendimento atendimento = gestaoAtendimentoService.save(post);
+      GestaoAtendimento atendimento = gestaoAtendimentoService.save(body);
+      DtoAtendimentoResponse dtoAtendimento = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento); 
         
-        return ResponseEntity.ok(mapper.map(atendimento, DtoAtendimentoResponse.class));
+        return ResponseEntity.ok(dtoAtendimento);
        
     }
 
     @PutMapping("/update/{code}")
     public ResponseEntity<DtoAtendimentoResponse> update(@RequestBody  @Valid DtoAtendimentoPost body, @PathVariable String code) {
-        DtoAtendimentoPost post = new DtoAtendimentoPost();
-        post.setCode(body.getCode());
-        post.setDataHora(body.getDataHora());
-        post.setEspecialidadeMedica(body.getEspecialidadeMedica());
-        post.setUsuarioNome(body.getUsuarioNome());
-        GestaoAtendimento atendimento = gestaoAtendimentoService.update(post,code);
+        GestaoAtendimento atendimento = gestaoAtendimentoService.update(body,code);
         
-        return ResponseEntity.ok(mapper.map(atendimento, DtoAtendimentoResponse.class));
+        DtoAtendimentoResponse dtoAtendimento = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento);
+        return ResponseEntity.ok(dtoAtendimento);
     }
+    // metodo para deletar
      @DeleteMapping("/delete/{code}")
      public ResponseEntity<Void> delete(@PathVariable String code){
         gestaoAtendimentoService.delete(code);
+        
         return ResponseEntity.ok().build();
      }
 

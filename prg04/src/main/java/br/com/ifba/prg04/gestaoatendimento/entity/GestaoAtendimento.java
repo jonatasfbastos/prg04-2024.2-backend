@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,12 +15,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Gestao_de_Atendimentos", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"usuario_id", "dataHora"})// não permitir que o usuario marque na mesma data e horario
-    })
+@Table(name = "Gestao_de_Atendimentos")
 @AllArgsConstructor
 public class GestaoAtendimento extends PersistenceEntity {
-    @Column
+    @Column(nullable = false, unique=true)
     private String code;
     private LocalDateTime dataHora;
     private String especialidadeMedica;

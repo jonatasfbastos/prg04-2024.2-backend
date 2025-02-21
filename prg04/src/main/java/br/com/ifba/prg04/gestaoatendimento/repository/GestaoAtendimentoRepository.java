@@ -12,9 +12,9 @@ import java.util.List;
 
 @Repository
 public interface GestaoAtendimentoRepository extends JpaRepository<GestaoAtendimento, Long> {
-    GestaoAtendimento findAtendimentoByCode(String code);
-    void deleteAtendimentoByCode(String code);
-    boolean existsAtendimentoByCode(String code);
-    boolean existsAtendimentoBydataHora(LocalDateTime dataHora);
-     List<GestaoAtendimento> findByUsuarioNome(String usuarioNome);
+    GestaoAtendimento findAtendimentoByCode(String code);// buscar por codigo
+    void deleteAtendimentoByCode(String code);// deletar por codigo e retornar
+    boolean existsAtendimentoByCode(String code);// verificar se existe por codigo
+    boolean existsAtendimentoBydataHora(LocalDateTime dataHora);// verificar se ja foi agendado no mesmo horario e data
+     List<GestaoAtendimento> findByUsuarioNome(String usuarioNome);// buscar agendamentos por um usuario especifico
 }

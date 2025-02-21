@@ -15,7 +15,7 @@ public class DtoAtendimentoResponse {
     private String code;
     private LocalDateTime dataHora;
     private String especialidadeMedica;
-    private Usuario usuario;
+    private UsuarioResponseDto usuarioDto;
 
     public DtoAtendimentoResponse(){}
 }

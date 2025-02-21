@@ -19,7 +19,7 @@ public class DtoAtendimentoPost {
     private LocalDateTime dataHora;
     @NotBlank
     private String especialidadeMedica;
-    @NotNull
+    @NotBlank
     private String usuarioNome;
 
     public DtoAtendimentoPost(){}

@@ -35,8 +35,8 @@ build/
 
 ### VS Code ###
 .vscode/
-prg04-2024.2-backend/prg04/src/main/resources/application.properties
-/src/main/resources/application.properties
+
+
 prg04/src/main/resources/application.yml
 prg04/src/main/resources/application.properties
 **/*application.properties
