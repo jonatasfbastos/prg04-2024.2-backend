@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+// Interface de serviço para a gestão de visitas domiciliares, definindo os métodos de CRUD e paginação
 public interface VisitaDomiciliarIService {
     VisitaDomiciliarResponseDto salvar(VisitaDomiciliarRequestDto dto);
     List<VisitaDomiciliarResponseDto> listarTodas();

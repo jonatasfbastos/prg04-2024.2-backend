@@ -23,9 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VisitaDomiciliarService implements VisitaDomiciliarIService {
 
-    private final VisitaDomiciliarRepository repository;
-    private final FuncionarioRepository funcionarioRepository;
-    private final ObjectMapperUtil objectMapperUtil;
+    private final VisitaDomiciliarRepository repository; // Repositório de Visita Domiciliar para manipulação de dados
+    private final FuncionarioRepository funcionarioRepository; // Repositório de Funcionários
+    private final ObjectMapperUtil objectMapperUtil; // Utilitário para mapeamento de objetos entre DTOs e entidades
 
     @Override
     @Transactional

@@ -7,6 +7,9 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+// Classe utilizada para retornar os dados de uma visita domiciliar
+// após o processamento, encapsulando as informações relevantes da resposta
 public class VisitaDomiciliarResponseDto {
     private Long id;
     private String digitadoPor;

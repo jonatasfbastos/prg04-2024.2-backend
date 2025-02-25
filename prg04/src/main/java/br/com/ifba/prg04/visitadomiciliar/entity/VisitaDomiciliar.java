@@ -14,6 +14,9 @@ import br.com.ifba.prg04.funcionario.entities.Funcionario;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
+// Entidade JPA que representa uma visita domiciliar,
+// mapeando suas informações e relacionamentos no banco de dados
 public class VisitaDomiciliar {
 
     @Id

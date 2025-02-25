@@ -9,6 +9,9 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+// Classe usada para receber os dados de uma solicitação de criação de visita domiciliar
+// garante validações e integridade das informações fornecidas pelo usuário
 public class VisitaDomiciliarRequestDto {
 
     @NotNull(message = "O ID do 'digitadoPor' é obrigatório.")
