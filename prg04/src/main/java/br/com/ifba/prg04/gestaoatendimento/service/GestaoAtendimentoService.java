@@ -1,5 +1,4 @@
 package br.com.ifba.prg04.gestaoatendimento.service;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,8 +11,6 @@ import br.com.ifba.prg04.gestaoatendimento.exceptions.SchedulingDuplicateExcepti
 import br.com.ifba.prg04.gestaoatendimento.exceptions.SchedulingNotFoundException;
 import br.com.ifba.prg04.gestaoatendimento.exceptions.UniqueCodeViolationException;
 import br.com.ifba.prg04.gestaoatendimento.repository.GestaoAtendimentoRepository;
-import br.com.ifba.prg04.usuario.entity.Usuario;
-import br.com.ifba.prg04.usuario.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -21,22 +18,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GestaoAtendimentoService {
  private final GestaoAtendimentoRepository gestaoAtendimentoRepository;
- private final UsuarioRepository usuarioRepository;
-
- 
  public Page<GestaoAtendimento> findall(Pageable pageable){
     return gestaoAtendimentoRepository.findAll(pageable);
  }
- // metodo para listar agendamentos marcados por um mesmo usuario
- public List<GestaoAtendimento> findAtendimentos(String nomeUser){
-   List<GestaoAtendimento> list = gestaoAtendimentoRepository.findByUsuarioNome(nomeUser);
-   if(list==null){
-      throw new SchedulingNotFoundException("Agendamentos não econtrados");
-   }
-   return list;
- }
- public GestaoAtendimento findbycode(String code){
-    GestaoAtendimento atendimento = gestaoAtendimentoRepository.findAtendimentoByCode(code);
+ public GestaoAtendimento findbycodigo(String code){
+    GestaoAtendimento atendimento = gestaoAtendimentoRepository.findAtendimentoByCodigo(code);
     if(atendimento!= null){
       return atendimento;
     }
@@ -45,15 +31,11 @@ public class GestaoAtendimentoService {
  // metodo para salvar
  @Transactional
  public GestaoAtendimento save(DtoAtendimentoPost dto){
-   Usuario usuario = usuarioRepository.findByNome(dto.getUsuarioNome());
    GestaoAtendimento atendimento = new GestaoAtendimento();
-   if(usuario!=null){
-      // setando dados do atendimento
-   atendimento.setCode(dto.getCode());
+   atendimento.setCodigo(dto.getCodigo());
    atendimento.setDataHora(dto.getDataHora());
    atendimento.setEspecialidadeMedica(dto.getEspecialidadeMedica());
-   atendimento.setUsuario(usuario);
-    if(gestaoAtendimentoRepository.existsAtendimentoByCode(atendimento.getCode())){
+    if(gestaoAtendimentoRepository.existsAtendimentoByCodigo(atendimento.getCodigo())){
       throw new UniqueCodeViolationException("O codigo nao pode ser duplicado");
     }
      if(gestaoAtendimentoRepository.existsAtendimentoBydataHora(atendimento.getDataHora())){
@@ -62,9 +44,8 @@ public class GestaoAtendimentoService {
   // se passar nas verificações salva o atendimento
    return gestaoAtendimentoRepository.save(atendimento);
    }
-  // senao lança uma excecao
-   throw new HandleGenericException("Erro ao salvar");
- }
+  
+ 
 // metodo update
 @Transactional
  public GestaoAtendimento update(DtoAtendimentoPost update, String code) {
@@ -73,7 +54,7 @@ public class GestaoAtendimentoService {
       throw new SchedulingDuplicateException("Ja tem um agendamento no mesmo horario e data");
    }
    // busco o agendamento na base de dados para atualizacao
-   GestaoAtendimento atual = gestaoAtendimentoRepository.findAtendimentoByCode(code);
+   GestaoAtendimento atual = gestaoAtendimentoRepository.findAtendimentoByCodigo(code);
    if(atual!= null){
       // so podera atualizar a data horario e especialidade medica
       atual.setDataHora(update.getDataHora());
@@ -86,7 +67,7 @@ public class GestaoAtendimentoService {
 //metodo delete
 @Transactional
  public void delete(String code){
-   gestaoAtendimentoRepository.deleteAtendimentoByCode(code);
+   gestaoAtendimentoRepository.deleteAtendimentoByCodigo(code);
     
  }
 

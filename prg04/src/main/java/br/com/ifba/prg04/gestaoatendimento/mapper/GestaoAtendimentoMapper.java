@@ -6,21 +6,21 @@ import org.springframework.data.domain.Page;
 
 import br.com.ifba.prg04.gestaoatendimento.dto.DtoAtendimentoResponse;
 import br.com.ifba.prg04.gestaoatendimento.entity.GestaoAtendimento;
+import br.com.ifba.prg04.paciente.entity.Paciente;
 import br.com.ifba.prg04.usuario.dto.UsuarioResponseDto;
 import java.util.List;
 
 public class GestaoAtendimentoMapper {
      // Método estático para mapear GestaoAtendimento para DtoAtendimentoResponse
     public static DtoAtendimentoResponse toDtoAtendimentoResponse(GestaoAtendimento gestaoAtendimento) {
-        // Mapeando o usuário para UsuarioDTO (omitindo a senha)
-        UsuarioResponseDto usuarioDTO = new UsuarioResponseDto(gestaoAtendimento.getUsuario().getId(),gestaoAtendimento.getUsuario().getNome(),gestaoAtendimento.getUsuario().getEmail(), gestaoAtendimento.getUsuario().getNivelAcesso());
+        
 
         // Mapeando o GestaoAtendimento para DtoAtendimentoResponse
         return new DtoAtendimentoResponse(
-            gestaoAtendimento.getCode(),
+            gestaoAtendimento.getCodigo(),
             gestaoAtendimento.getDataHora(),
             gestaoAtendimento.getEspecialidadeMedica(),
-            usuarioDTO // Adiciona o UsuarioDTO (sem a senha)
+            gestaoAtendimento.getPaciente()
         );
     }
 

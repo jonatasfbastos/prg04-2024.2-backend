@@ -13,14 +13,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DtoAtendimentoPost {
     @NotBlank
-    private String code;
+    private String codigo;
     @NotNull
     @FutureOrPresent
     private LocalDateTime dataHora;
     @NotBlank
     private String especialidadeMedica;
-    @NotBlank
-    private String usuarioNome;
+    private String Usuario;
 
     public DtoAtendimentoPost(){}
 

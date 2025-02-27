@@ -9,11 +9,8 @@ import br.com.ifba.prg04.gestaoatendimento.entity.GestaoAtendimento;
 import br.com.ifba.prg04.gestaoatendimento.mapper.GestaoAtendimentoMapper;
 import br.com.ifba.prg04.gestaoatendimento.service.GestaoAtendimentoService;
 import br.com.ifba.prg04.infrastructure.dto.PageableDtoGeneric;
-import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,48 +45,35 @@ public ResponseEntity<PageableDtoGeneric<DtoAtendimentoResponse>> findAll(Pageab
     // Retornando a resposta com a lista paginada
     return ResponseEntity.ok(pageableDto);
 }
-@GetMapping("/findatendimentonome/{nomeUsuario}")
-public ResponseEntity<List<DtoAtendimentoResponse>> findAtendimentosByNome(@PathVariable String nomeUsuario) {
-    // Buscar a lista de atendimentos com base no nome do usuário
-    List<GestaoAtendimento> atendimentos = gestaoAtendimentoService.findAtendimentos(nomeUsuario);
-    
-    // Usando o método estático do mapper para mapear a lista de GestaoAtendimento para DtoAtendimentoResponse
-    List<DtoAtendimentoResponse> listDto = GestaoAtendimentoMapper.toDtoAtendimentoResponseList(atendimentos);
-    
-    // Retornar a lista mapeada
-    return ResponseEntity.ok(listDto);
-}
-
-
     // metodo para buscar um atendimento por codigo
-    @GetMapping("/findatendimento/{code}")
-    public ResponseEntity<DtoAtendimentoResponse> findbycode(@PathVariable String code){
-        GestaoAtendimento atendimento = gestaoAtendimentoService.findbycode(code);
-        DtoAtendimentoResponse dtoAtendimento = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento);
+    @GetMapping("/findatendimento/{codigo}")
+    public ResponseEntity<DtoAtendimentoResponse> findbycodigo(@PathVariable String codigo){
+        GestaoAtendimento atendimento = gestaoAtendimentoService.findbycodigo(codigo);
+        DtoAtendimentoResponse dtoAtendimentoResponse = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento);
 
-        return ResponseEntity.ok(dtoAtendimento);
+        return ResponseEntity.ok(dtoAtendimentoResponse);
     }
     // metodo save
     @PostMapping("/save")
-    public ResponseEntity<DtoAtendimentoResponse> save(@RequestBody  @Valid DtoAtendimentoPost body) {
-      GestaoAtendimento atendimento = gestaoAtendimentoService.save(body);
-      DtoAtendimentoResponse dtoAtendimento = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento); 
+    public ResponseEntity<DtoAtendimentoResponse> save(@RequestBody  @Valid DtoAtendimentoPost dtoAtendimentoPost) {
+      GestaoAtendimento atendimento = gestaoAtendimentoService.save(dtoAtendimentoPost);
+      DtoAtendimentoResponse dtoAtendimentoResponse = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento); 
         
-        return ResponseEntity.ok(dtoAtendimento);
+        return ResponseEntity.ok(dtoAtendimentoResponse);
        
     }
 
-    @PutMapping("/update/{code}")
-    public ResponseEntity<DtoAtendimentoResponse> update(@RequestBody  @Valid DtoAtendimentoPost body, @PathVariable String code) {
-        GestaoAtendimento atendimento = gestaoAtendimentoService.update(body,code);
+    @PutMapping("/update/{codigo}")
+    public ResponseEntity<DtoAtendimentoResponse> update(@RequestBody  @Valid DtoAtendimentoPost dtoAtendimentoPost, @PathVariable String code) {
+        GestaoAtendimento atendimento = gestaoAtendimentoService.update(dtoAtendimentoPost,code);
         
-        DtoAtendimentoResponse dtoAtendimento = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento);
-        return ResponseEntity.ok(dtoAtendimento);
+        DtoAtendimentoResponse dtoAtendimentoResponse = GestaoAtendimentoMapper.toDtoAtendimentoResponse(atendimento);
+        return ResponseEntity.ok(dtoAtendimentoResponse);
     }
     // metodo para deletar
-     @DeleteMapping("/delete/{code}")
-     public ResponseEntity<Void> delete(@PathVariable String code){
-        gestaoAtendimentoService.delete(code);
+     @DeleteMapping("/delete/{codigo}")
+     public ResponseEntity<Void> delete(@PathVariable String codigo){
+        gestaoAtendimentoService.delete(codigo);
         
         return ResponseEntity.ok().build();
      }

@@ -2,6 +2,7 @@ package br.com.ifba.prg04.gestaoatendimento.entity;
 
 import java.time.LocalDateTime;
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
+import br.com.ifba.prg04.paciente.entity.Paciente;
 import br.com.ifba.prg04.usuario.entity.Usuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,13 +19,11 @@ import lombok.Setter;
 @Table(name = "Gestao_de_Atendimentos")
 @AllArgsConstructor
 public class GestaoAtendimento extends PersistenceEntity {
-    @Column(nullable = false, unique=true)
-    private String code;
+    private String codigo;
     private LocalDateTime dataHora;
     private String especialidadeMedica;
-    @ManyToOne // relacao com usuario muitos para um
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
-
+    @ManyToOne    
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
     public GestaoAtendimento(){}
 }

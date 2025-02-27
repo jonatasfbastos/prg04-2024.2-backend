@@ -2,6 +2,7 @@ package br.com.ifba.prg04.gestaoatendimento.dto;
 
 import java.time.LocalDateTime;
 
+import br.com.ifba.prg04.paciente.entity.Paciente;
 import br.com.ifba.prg04.usuario.dto.UsuarioResponseDto;
 import br.com.ifba.prg04.usuario.entity.Usuario;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ public class DtoAtendimentoResponse {
     private String code;
     private LocalDateTime dataHora;
     private String especialidadeMedica;
-    private UsuarioResponseDto usuarioDto;
+    private Paciente paciente;
 
     public DtoAtendimentoResponse(){}
 }
