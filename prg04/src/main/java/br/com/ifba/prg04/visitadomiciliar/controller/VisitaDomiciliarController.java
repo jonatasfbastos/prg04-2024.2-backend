@@ -19,22 +19,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VisitaDomiciliarController {
 
-    private final VisitaDomiciliarService service; // Injeção de dependência automática
+    private final VisitaDomiciliarService service;// Injeção de dependência automática
 
-    @PostMapping // Mapeia requisições HTTP POST para este metodo
+    @PostMapping
     public ResponseEntity<VisitaDomiciliarResponseDto> criar(@Valid @RequestBody VisitaDomiciliarRequestDto dto) {
-        return ResponseEntity.ok(service.salvar(dto)); // Chama o serviço para salvar a visita e retorna a resposta
+        return ResponseEntity.ok(service.salvar(dto));
     }
 
-    @GetMapping // Mapeia requisições HTTP GET para listar todas as visitas
+    @GetMapping
     public ResponseEntity<List<VisitaDomiciliarResponseDto>> listarTodas() {
-        return ResponseEntity.ok(service.listarTodas()); // Retorna a lista de visitas domiciliarias
+        return ResponseEntity.ok(service.listarTodas());
     }
 
-    @GetMapping("/paginado") // Endpoint para listar visitas de forma paginada
+    @GetMapping("/paginado")
     public ResponseEntity<PageableDto> listarPaginado(Pageable pageable) {
-        Page<VisitaDomiciliarResponseDto> page = service.listarTodas(pageable); // Obtém a lista paginada
-        return ResponseEntity.ok(PageableMapper.toDto(page)); // Converte para DTO e retorna a resposta
+        Page<VisitaDomiciliarResponseDto> page = service.listarTodas(pageable);
+        return ResponseEntity.ok(PageableMapper.toDto(page));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<VisitaDomiciliarResponseDto> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.buscarPorId(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }
 

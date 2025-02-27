@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
-
 import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.paciente.entity.Paciente;
+import br.com.ifba.prg04.unidadesdesaude.entity.UnidadesSaude;
+
 
 @Entity
 @Table(name = "visitas_domiciliares")
@@ -69,6 +70,14 @@ public class VisitaDomiciliar {
     @ManyToOne
     @JoinColumn(name = "conferido_por_id", referencedColumnName = "id", nullable = false)
     private Funcionario conferidoPor;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id", referencedColumnName = "id", nullable = false)
+    private Paciente paciente;
+
+    @ManyToOne
+    @JoinColumn(name = "unidade_saude_id", referencedColumnName = "id", nullable = false)
+    private UnidadesSaude unidadesSaude;
 }
 
 
