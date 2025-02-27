@@ -1,6 +1,6 @@
 package br.com.ifba.prg04.termoconsentimento.service;
 
-import br.com.ifba.prg04.funcionario.services.FuncionarioServices;
+import br.com.ifba.prg04.funcionario.service.FuncionarioService;
 import br.com.ifba.prg04.funcionario.entities.Funcionario;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class TermoConsentimentoService implements TermoConsentimentoIService {
 
     private final TermoConsentimentoRepository repository;
-    private final FuncionarioServices funcionarioService;
+    private final FuncionarioService funcionarioService;
     private final PacienteIService pacienteService;
 
     /**
