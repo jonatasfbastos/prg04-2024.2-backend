@@ -37,8 +37,6 @@ public class FamiliaTest {
         Funcionario funcionario = new Funcionario();
         funcionario.setCodigo("12348955");
         funcionario.setLogin("joao12");
-        funcionario.setSenha("senha12");
-        funcionario.setCategoria("Admin");
         funcionario.setNome("Joãoo");
         funcionario.setCpf("123456788");
         funcionario.setEndereco("Rua X, 122");
@@ -101,8 +99,6 @@ public class FamiliaTest {
         Funcionario novoResponsavel = new Funcionario();
         novoResponsavel.setCodigo("987654321");
         novoResponsavel.setLogin("maria123");
-        novoResponsavel.setSenha("senha123");
-        novoResponsavel.setCategoria("User");
         novoResponsavel.setNome("Maria Oliveira");
         novoResponsavel.setCpf("987654321");
         novoResponsavel.setEndereco("Rua W, 456");

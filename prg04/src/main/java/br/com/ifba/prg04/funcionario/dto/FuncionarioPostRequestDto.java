@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class FuncionarioCreateDto {
+public class FuncionarioPostRequestDto {
     @NotBlank
     private String codigo;
 

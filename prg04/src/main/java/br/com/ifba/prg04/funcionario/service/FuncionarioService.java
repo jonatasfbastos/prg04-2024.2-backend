@@ -5,6 +5,8 @@ import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +23,8 @@ public class FuncionarioService {
         return funcionarioRepository.save(funcionario);
     }
 
-    public List<Funcionario> getAllFuncionarios() {
-        return funcionarioRepository.findAll();
+    public Page<Funcionario> getAllFuncionarios(Pageable pageable) {
+        return funcionarioRepository.findAll(pageable);
     }
 
     public Funcionario getFuncionarioById(Long id) {
@@ -40,7 +42,15 @@ public class FuncionarioService {
                     return new ResourceNotFoundException("Não foi encontrado nenhum funcionário com o CPF: " + cpf);
                 });
     }
-
+    @Transactional(readOnly = true)
+    public Funcionario getFuncionarioByCodigo(String codigo) {
+        log.info("Buscando funcionário com CPF: {}", codigo);
+        return funcionarioRepository.findByCodigo(codigo)
+                .orElseThrow(() -> {
+                    log.warn("Funcionário não encontrado para o CPF: {}", codigo);
+                    return new ResourceNotFoundException("Não foi encontrado nenhum funcionário com o CPF: " + codigo);
+                });
+    }
     public void deleteFuncionario(Long id) {
         // Verificando se o funcionário existe antes de tentar deletá-lo
         funcionarioRepository.findById(id)
@@ -55,9 +65,7 @@ public class FuncionarioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + id));
 
         // Atualiza apenas os campos permitidos se os valores não forem nulos
-        if (funcionarioAtualizado.getSenha() != null) {
-            funcionarioExistente.setSenha(funcionarioAtualizado.getSenha());
-        }
+    
         if (funcionarioAtualizado.getEndereco() != null) {
             funcionarioExistente.setEndereco(funcionarioAtualizado.getEndereco());
         }
