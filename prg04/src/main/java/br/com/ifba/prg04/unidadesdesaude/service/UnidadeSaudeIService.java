@@ -1,6 +1,5 @@
 package br.com.ifba.prg04.unidadesdesaude.service;
 
-import br.com.ifba.prg04.endereco.entity.EnderecoId;
 import br.com.ifba.prg04.unidadesdesaude.entity.UnidadesSaude;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
