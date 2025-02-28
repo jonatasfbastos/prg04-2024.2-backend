@@ -2,7 +2,6 @@ package br.com.ifba.prg04.visitadomiciliar.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Getter
@@ -66,8 +65,4 @@ public class VisitaDomiciliarRequestDto {
     @NotNull(message = "O ID do 'paciente' é obrigatório.")
     @Positive(message = "O ID do 'paciente' deve ser um número positivo.")
     private Long pacienteId;
-
-    @NotNull(message = "O ID da 'unidade de saúde' é obrigatório.")
-    @Positive(message = "O ID da 'unidade de saúde' deve ser um número positivo.")
-    private Long unidadeSaudeId;
 }

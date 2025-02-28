@@ -28,7 +28,6 @@ public class VisitaDomiciliarResponseDto {
     private String glicemia;
     private String desfecho;
     private String pacienteNome;
-    private String unidadeSaudeNome;
 }
 
 
