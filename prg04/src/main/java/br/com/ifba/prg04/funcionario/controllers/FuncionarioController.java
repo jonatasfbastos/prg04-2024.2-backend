@@ -1,5 +1,6 @@
 package br.com.ifba.prg04.funcionario.controllers;
 
+<<<<<<< HEAD
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
 import br.com.ifba.prg04.funcionario.dto.FuncionarioPostRequestDto;
 import br.com.ifba.prg04.funcionario.dto.FuncionarioGetResponseDto;
@@ -101,3 +102,8 @@ public class FuncionarioController {
         */
 }
 
+=======
+public class FuncionarioController {
+
+}
+>>>>>>> parent of 0dca0b5 (Update FuncionarioController.java)
