@@ -12,8 +12,8 @@ import java.util.List;
 
 @Repository
 public interface GestaoAtendimentoRepository extends JpaRepository<GestaoAtendimento, Long> {
-    GestaoAtendimento findAtendimentoByCodigo(String code);// buscar por codigo
-    void deleteAtendimentoByCodigo(String code);// deletar por codigo e retornar
-    boolean existsAtendimentoByCodigo(String code);// verificar se existe por codigo
-    boolean existsAtendimentoBydataHora(LocalDateTime dataHora);// verificar se ja foi agendado no mesmo horario e data
+    GestaoAtendimento findGestaoAtendimentoByCodigo(String code);// buscar por codigo
+    void deleteGestaoAtendimentoByCodigo(String code);// deletar por codigo e retornar
+    boolean existsGestaoAtendimentoByCodigo(String code);// verificar se existe por codigo
+    boolean existsGestaoAtendimentoBydataHora(LocalDateTime dataHora);// verificar se ja foi agendado no mesmo horario e data
 }

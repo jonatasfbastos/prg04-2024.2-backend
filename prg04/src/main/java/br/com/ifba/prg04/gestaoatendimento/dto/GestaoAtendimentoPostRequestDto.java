@@ -3,8 +3,9 @@ package br.com.ifba.prg04.gestaoatendimento.dto;
 import java.time.LocalDateTime;
 
 import br.com.ifba.prg04.paciente.entity.Paciente;
-import br.com.ifba.prg04.usuario.dto.UsuarioResponseDto;
-import br.com.ifba.prg04.usuario.entity.Usuario;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,11 +13,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class DtoAtendimentoResponse {
-    private String code;
+public class GestaoAtendimentoPostRequestDto {
+    @NotBlank
+    private String codigo;
+    @NotNull
+    @FutureOrPresent
     private LocalDateTime dataHora;
+    @NotBlank
     private String especialidadeMedica;
     private Paciente paciente;
 
-    public DtoAtendimentoResponse(){}
+    public GestaoAtendimentoPostRequestDto(){}
+
 }

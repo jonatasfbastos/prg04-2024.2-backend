@@ -3,8 +3,6 @@ package br.com.ifba.prg04.gestaoatendimento.entity;
 import java.time.LocalDateTime;
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.prg04.paciente.entity.Paciente;
-import br.com.ifba.prg04.usuario.entity.Usuario;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
