@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -43,5 +44,5 @@ public class LotePostRequestDto {
     @JsonProperty(value = "vacina")
     @NotBlank(message = "Este é um campo obrigatorio")
     @NotNull(message = "Este campo nao pode ser nulo")
-    private Vacina vacina;
+    private Set<Vacina> vacinas;
 }

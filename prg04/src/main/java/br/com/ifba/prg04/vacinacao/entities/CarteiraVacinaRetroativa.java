@@ -2,6 +2,7 @@ package br.com.ifba.prg04.vacinacao.entities;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.prg04.paciente.entity.Paciente;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -19,8 +20,11 @@ import java.time.LocalDate;
 @Data
 @ToString
 public class CarteiraVacinaRetroativa extends PersistenceEntity {
+    @Column(name = "nomeComum")
     private String nomeComum;
+    @Column(name = "dataAplicacao")
     private LocalDate dataAplicacao;
+    @Column(name = "observacao")
     private String observacao;
 
     @ManyToOne

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "vacinas")
@@ -17,13 +19,36 @@ import java.time.LocalDate;
 @ToString
 public class Vacina extends PersistenceEntity {
 
+    @Column(name = "nomeCientifico")
     private String nomeCientifico;
+
+    @Column(name = "nomeComum")
     private String nomeComum;
+
+    @Column(name = "nomeLaboratorio")
     private String nomeLaboratorio;
+
+    @Column(name = "idadeFoco")
     private Integer idadeFoco;
+
+    @Column(name = "doencaCombatida")
     private String doencaCombatida;
+
+    @Column(name = "observacao")
     private String observacao;
+
+    @Column(name = "metodoAplicacao")
     private String metodoAplicacao;
+
+    @Column(name = "dataVencimento")
     private LocalDate dataVencimento;
+
+    @ManyToMany
+    @JoinTable(
+            name = "vacina_lote",
+            joinColumns = @JoinColumn(name = "vacina_id"),
+            inverseJoinColumns = @JoinColumn(name = "lote_id")
+    )
+    private Set<Lote> lotes;
 
 }

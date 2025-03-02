@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -50,4 +51,7 @@ public class VacinaPostRequestDto {
     @NotBlank(message = "Este é um campo obrigatorio")
     @NotNull(message = "Este campo nao pode ser nulo")
     private LocalDate dataVencimento;
+
+    @JsonProperty(value = "lotes")
+    private Set<Lote> lotes;
 }
