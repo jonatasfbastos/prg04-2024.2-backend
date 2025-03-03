@@ -1,9 +1,9 @@
-package br.com.ifba.prg04.vacinacao.controllers;
+package br.com.ifba.prg04.lote.controller;
 
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
-import br.com.ifba.prg04.vacinacao.dto.LotePostRequestDto;
-import br.com.ifba.prg04.vacinacao.entities.Lote;
-import br.com.ifba.prg04.vacinacao.services.LoteIservice;
+import br.com.ifba.prg04.lote.dto.LotePostRequestDto;
+import br.com.ifba.prg04.lote.entity.Lote;
+import br.com.ifba.prg04.lote.service.LoteIservice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

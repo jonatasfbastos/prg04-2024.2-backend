@@ -1,12 +1,11 @@
-package br.com.ifba.prg04.vacinacao.repositories;
+package br.com.ifba.prg04.vacina.repository;
 
-import br.com.ifba.prg04.vacinacao.entities.Vacina;
+import br.com.ifba.prg04.vacina.entity.Vacina;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface VacinaIRepository extends JpaRepository<Vacina, Long> {
     Page<Vacina> findByDoencaCombatida(String doencaCombatida, Pageable pageable);

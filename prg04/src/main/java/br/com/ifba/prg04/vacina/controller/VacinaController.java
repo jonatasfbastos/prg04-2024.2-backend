@@ -1,11 +1,11 @@
-package br.com.ifba.prg04.vacinacao.controllers;
+package br.com.ifba.prg04.vacina.controller;
 
 
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
-import br.com.ifba.prg04.vacinacao.dto.VacinaGetResponseDto;
-import br.com.ifba.prg04.vacinacao.dto.VacinaPostRequestDto;
-import br.com.ifba.prg04.vacinacao.entities.Vacina;
-import br.com.ifba.prg04.vacinacao.services.VacinaIService;
+import br.com.ifba.prg04.vacina.dto.VacinaGetResponseDto;
+import br.com.ifba.prg04.vacina.dto.VacinaPostRequestDto;
+import br.com.ifba.prg04.vacina.entity.Vacina;
+import br.com.ifba.prg04.vacina.service.VacinaIService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

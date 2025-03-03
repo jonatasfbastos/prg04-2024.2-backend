@@ -1,6 +1,6 @@
-package br.com.ifba.prg04.vacinacao.services;
+package br.com.ifba.prg04.vacina.service;
 
-import br.com.ifba.prg04.vacinacao.entities.Vacina;
+import br.com.ifba.prg04.vacina.entity.Vacina;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

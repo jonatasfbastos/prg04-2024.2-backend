@@ -1,11 +1,9 @@
-package br.com.ifba.prg04.vacinacao.services;
+package br.com.ifba.prg04.vacina.service;
 
-import br.com.ifba.prg04.infrastructure.exception.BusinessException;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
-import br.com.ifba.prg04.infrastructure.exception.ErrorMessage;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
-import br.com.ifba.prg04.vacinacao.entities.Vacina;
-import br.com.ifba.prg04.vacinacao.repositories.VacinaIRepository;
+import br.com.ifba.prg04.vacina.entity.Vacina;
+import br.com.ifba.prg04.vacina.repository.VacinaIRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -20,7 +18,7 @@ import java.time.LocalDate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class VacinaService implements VacinaIService{
+public class VacinaService implements VacinaIService {
     private final VacinaIRepository vacinaIRepository;
 
     @Override

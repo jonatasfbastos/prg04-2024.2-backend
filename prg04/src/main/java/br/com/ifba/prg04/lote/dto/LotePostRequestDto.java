@@ -1,6 +1,6 @@
-package br.com.ifba.prg04.vacinacao.dto;
+package br.com.ifba.prg04.lote.dto;
 
-import br.com.ifba.prg04.vacinacao.entities.Lote;
+import br.com.ifba.prg04.vacina.entity.Vacina;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,50 +9,39 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VacinaPostRequestDto {
+public class LotePostRequestDto {
 
-    @JsonProperty(value = "nomeCientifico")
-    private String nomeCientifico;
-
-    @JsonProperty(value = "nomeComum")
+    @JsonProperty(value = "nome")
     @NotBlank(message = "Este é um campo obrigatorio")
     @NotNull(message = "Este campo nao pode ser nulo")
-    private String nomeComum;
+    private String nome;
 
-    @JsonProperty(value = "nomeLaboratorio")
+    @JsonProperty(value = "dataProducao")
     @NotBlank(message = "Este é um campo obrigatorio")
     @NotNull(message = "Este campo nao pode ser nulo")
-    private String nomeLaboratorio;
-
-    @JsonProperty(value = "idadeFoco")
-    private Integer idadeFoco;
-
-    @JsonProperty(value = "doencaCombatida")
-    @NotBlank(message = "Este é um campo obrigatorio")
-    @NotNull(message = "Este campo nao pode ser nulo")
-    private String doencaCombatida;
-
-    @JsonProperty(value = "observacao")
-    @NotBlank(message = "Este é um campo obrigatorio")
-    @NotNull(message = "Este campo nao pode ser nulo")
-    private String observacao;
-
-    @JsonProperty(value = "metodoAplicacao")
-    @NotBlank(message = "Este é um campo obrigatorio")
-    @NotNull(message = "Este campo nao pode ser nulo")
-    private String metodoAplicacao;
+    private LocalDate dataProducao;
 
     @JsonProperty(value = "dataVencimento")
     @NotBlank(message = "Este é um campo obrigatorio")
     @NotNull(message = "Este campo nao pode ser nulo")
     private LocalDate dataVencimento;
 
-    @JsonProperty(value = "lotes")
-    private List<Long> loteIds;
+    @JsonProperty(value = "quantidadeVacinas")
+    @NotBlank(message = "Este é um campo obrigatorio")
+    @NotNull(message = "Este campo nao pode ser nulo")
+    private Integer quantidadeVacinas;
+
+    @JsonProperty(value = "Laboratorio")
+    @NotBlank(message = "Este é um campo obrigatorio")
+    @NotNull(message = "Este campo nao pode ser nulo")
+    private String Laboratorio;
+
+    @JsonProperty(value = "vacina")
+    @NotBlank(message = "Este é um campo obrigatorio")
+    @NotNull(message = "Este campo nao pode ser nulo")
+    private Vacina vacina;
 }

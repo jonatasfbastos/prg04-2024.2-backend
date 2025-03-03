@@ -1,10 +1,9 @@
-package br.com.ifba.prg04.vacinacao.services;
+package br.com.ifba.prg04.lote.service;
 
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
-import br.com.ifba.prg04.vacinacao.entities.Lote;
-import br.com.ifba.prg04.vacinacao.entities.Vacina;
-import br.com.ifba.prg04.vacinacao.repositories.LoteIRepository;
-import br.com.ifba.prg04.vacinacao.repositories.VacinaIRepository;
+import br.com.ifba.prg04.lote.entity.Lote;
+import br.com.ifba.prg04.lote.repository.LoteIRepository;
+import br.com.ifba.prg04.vacina.repository.VacinaIRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -13,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
 @Service

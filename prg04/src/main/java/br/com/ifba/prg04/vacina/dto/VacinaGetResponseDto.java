@@ -1,6 +1,5 @@
-package br.com.ifba.prg04.vacinacao.dto;
+package br.com.ifba.prg04.vacina.dto;
 
-import br.com.ifba.prg04.vacinacao.entities.Lote;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

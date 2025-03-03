@@ -1,6 +1,7 @@
-package br.com.ifba.prg04.vacinacao.entities;
+package br.com.ifba.prg04.vacina.entity;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
+import br.com.ifba.prg04.lote.entity.Lote;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,6 @@ import lombok.ToString;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "vacinas")

@@ -1,8 +1,8 @@
-package br.com.ifba.prg04.vacinacao.controllers;
+package br.com.ifba.prg04.carteiravacinaretroativa.controller;
 
 
-import br.com.ifba.prg04.vacinacao.entities.CarteiraVacinaRetroativa;
-import br.com.ifba.prg04.vacinacao.services.CarteiraVacinaRetroativaIService;
+import br.com.ifba.prg04.carteiravacinaretroativa.entity.CarteiraVacinaRetroativa;
+import br.com.ifba.prg04.carteiravacinaretroativa.service.CarteiraVacinaRetroativaIService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

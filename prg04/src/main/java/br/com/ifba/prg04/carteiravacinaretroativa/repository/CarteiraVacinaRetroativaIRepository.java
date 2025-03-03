@@ -1,6 +1,6 @@
-package br.com.ifba.prg04.vacinacao.repositories;
+package br.com.ifba.prg04.carteiravacinaretroativa.repository;
 
-import br.com.ifba.prg04.vacinacao.entities.CarteiraVacinaRetroativa;
+import br.com.ifba.prg04.carteiravacinaretroativa.entity.CarteiraVacinaRetroativa;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,8 +1,8 @@
-package br.com.ifba.prg04.vacinacao.services;
+package br.com.ifba.prg04.carteiravacinaretroativa.service;
 
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
-import br.com.ifba.prg04.vacinacao.entities.CarteiraVacinaRetroativa;
-import br.com.ifba.prg04.vacinacao.repositories.CarteiraVacinaRetroativaIRepository;
+import br.com.ifba.prg04.carteiravacinaretroativa.entity.CarteiraVacinaRetroativa;
+import br.com.ifba.prg04.carteiravacinaretroativa.repository.CarteiraVacinaRetroativaIRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;

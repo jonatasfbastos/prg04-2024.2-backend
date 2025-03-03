@@ -1,4 +1,4 @@
-package br.com.ifba.prg04.vacinacao.entities;
+package br.com.ifba.prg04.carteiravacinaretroativa.entity;
 
 import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.prg04.paciente.entity.Paciente;
