@@ -78,28 +78,8 @@ public class FuncionarioController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
-    /**
-     * Endpoint para buscar funcionários por nome.
-     */
-    /* 
-    @GetMapping(path = "/findbynome/{nome}")
-    public ResponseEntity<Page<FuncionarioGetResponseDto>> findByNome(@PathVariable("nome") String nome, Pageable pageable) {
-        Page<Funcionario> funcionarios = this.service.findByNome(nome, pageable);
-        Page<FuncionarioGetResponseDto> response = funcionarios.map(funcionario -> objectMapperUtil.map(funcionario, FuncionarioGetResponseDto.class));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
 
-    /**
-     * Endpoint para buscar funcionários por CPF.
-     */
-    /* 
-    @GetMapping(path = "/findbycpf/{cpf}")
-    public ResponseEntity<FuncionarioGetResponseDto> findByCpf(@PathVariable("cpf") String cpf) {
-        Funcionario funcionario = this.service.findByCpf(cpf);
-        FuncionarioGetResponseDto responseDto = objectMapperUtil.map(funcionario, FuncionarioGetResponseDto.class);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-    }
-        */
+        
 }
 
 
