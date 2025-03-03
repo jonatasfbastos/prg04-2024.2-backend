@@ -20,25 +20,13 @@ import java.util.Set;
 public class Funcionario extends PersistenceEntity {
 
     @Column(nullable = false, unique = true)
-    private String codigo;
-
-    @Column(nullable = false, unique = true)
     private String login;
-
-    @Column(nullable = false)
-    private String senha;
-
-    @Column(nullable = false)
-    private String categoria;
 
     @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false, unique = true)
     private String cpf;
-
-    @Column(nullable = false)
-    private String endereco;
 
     @Column(nullable = false)
     private String telefone;
