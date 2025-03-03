@@ -1,16 +1,15 @@
 package br.com.ifba.prg04.funcionario.service;
 
-import br.com.ifba.prg04.funcionario.entities.Funcionario;
-import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
-import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
+import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -65,10 +64,6 @@ public class FuncionarioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + id));
 
         // Atualiza apenas os campos permitidos se os valores não forem nulos
-    
-        if (funcionarioAtualizado.getEndereco() != null) {
-            funcionarioExistente.setEndereco(funcionarioAtualizado.getEndereco());
-        }
         if (funcionarioAtualizado.getTelefone() != null) {
             funcionarioExistente.setTelefone(funcionarioAtualizado.getTelefone());
         }
