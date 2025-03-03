@@ -9,7 +9,6 @@ public class FuncionarioMapper {
 
     public Funcionario toEntity(FuncionarioUpdateDto dto) {
         Funcionario funcionario = new Funcionario();
-        funcionario.setEndereco(dto.getEndereco());
         funcionario.setTelefone(dto.getTelefone());
         return funcionario;
     }
