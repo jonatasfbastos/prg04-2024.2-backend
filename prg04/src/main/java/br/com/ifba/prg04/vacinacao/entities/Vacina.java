@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -43,12 +44,7 @@ public class Vacina extends PersistenceEntity {
     @Column(name = "dataVencimento")
     private LocalDate dataVencimento;
 
-    @ManyToMany
-    @JoinTable(
-            name = "vacina_lote",
-            joinColumns = @JoinColumn(name = "vacina_id"),
-            inverseJoinColumns = @JoinColumn(name = "lote_id")
-    )
-    private Set<Lote> lotes;
+    @OneToMany(mappedBy = "vacina")
+    private List<Lote> lotes = new ArrayList<>();
 
 }

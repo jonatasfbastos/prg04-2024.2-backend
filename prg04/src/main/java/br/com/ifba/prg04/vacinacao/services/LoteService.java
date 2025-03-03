@@ -4,6 +4,7 @@ import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import br.com.ifba.prg04.vacinacao.entities.Lote;
 import br.com.ifba.prg04.vacinacao.entities.Vacina;
 import br.com.ifba.prg04.vacinacao.repositories.LoteIRepository;
+import br.com.ifba.prg04.vacinacao.repositories.VacinaIRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -20,15 +21,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoteService implements LoteIservice{
     private final LoteIRepository loteIRepository;
+    private final VacinaIRepository vacinaIRepository;
 
     @Override
     @Transactional
     public Lote saveLote(Lote lote) {
         log.info("Salvando lote");
-        if (lote.getVacina() == null ) {
-            log.warn("Nenhuma vacina encontrada");
-            throw new ResourceNotFoundException("Nenhuma vacina encontrada");
-        }
 
         try {
             log.info("Salvando lote com ID: " + lote.getId());

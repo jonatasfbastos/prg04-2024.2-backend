@@ -44,5 +44,5 @@ public class LotePostRequestDto {
     @JsonProperty(value = "vacina")
     @NotBlank(message = "Este é um campo obrigatorio")
     @NotNull(message = "Este campo nao pode ser nulo")
-    private Set<Vacina> vacinas;
+    private Vacina vacina;
 }
