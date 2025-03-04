@@ -12,6 +12,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -74,7 +76,7 @@ public class FamiliaController {
     }
 
     @GetMapping(path = "/findAll")
-    public ResponseEntity<Page<Familia>> findAll(Pageable pageable){
+    public ResponseEntity<Page<Familia>> findAll(@PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC) Pageable pageable){
         Page<Familia> familiaList = familiaService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(familiaList);
     }
