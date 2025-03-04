@@ -1,9 +1,9 @@
 package br.com.ifba.prg04.familiaTest;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
-import br.com.ifba.prg04.GestaoFuncionario.repositories.FuncionarioRepository;
 import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.repository.FamiliaRepository;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,8 +37,6 @@ public class FamiliaTest {
         Funcionario funcionario = new Funcionario();
         funcionario.setCodigo("12348955");
         funcionario.setLogin("joao12");
-        funcionario.setSenha("senha12");
-        funcionario.setCategoria("Admin");
         funcionario.setNome("Joãoo");
         funcionario.setCpf("123456788");
         funcionario.setEndereco("Rua X, 122");
@@ -101,8 +99,6 @@ public class FamiliaTest {
         Funcionario novoResponsavel = new Funcionario();
         novoResponsavel.setCodigo("987654321");
         novoResponsavel.setLogin("maria123");
-        novoResponsavel.setSenha("senha123");
-        novoResponsavel.setCategoria("User");
         novoResponsavel.setNome("Maria Oliveira");
         novoResponsavel.setCpf("987654321");
         novoResponsavel.setEndereco("Rua W, 456");

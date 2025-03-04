@@ -2,13 +2,15 @@ package br.com.ifba.prg04.visitadomiciliar.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+// Classe usada para receber os dados de uma solicitação de criação de visita domiciliar
+// garante validações e integridade das informações fornecidas pelo usuário
 public class VisitaDomiciliarRequestDto {
 
     @NotNull(message = "O ID do 'digitadoPor' é obrigatório.")
@@ -60,5 +62,7 @@ public class VisitaDomiciliarRequestDto {
     @NotBlank(message = "O desfecho é obrigatório.")
     private String desfecho;
 
+    @NotNull(message = "O ID do 'paciente' é obrigatório.")
+    @Positive(message = "O ID do 'paciente' deve ser um número positivo.")
+    private Long pacienteId;
 }
-

@@ -1,18 +1,21 @@
 package br.com.ifba.prg04.visitadomiciliar.entity;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.paciente.entity.Paciente;
 
 @Entity
 @Table(name = "visitas_domiciliares")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
+// Entidade JPA que representa uma visita domiciliar,
+// mapeando suas informações e relacionamentos no banco de dados
 public class VisitaDomiciliar {
 
     @Id
@@ -65,6 +68,10 @@ public class VisitaDomiciliar {
     @ManyToOne
     @JoinColumn(name = "conferido_por_id", referencedColumnName = "id", nullable = false)
     private Funcionario conferidoPor;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id", referencedColumnName = "id", nullable = false)
+    private Paciente paciente;
 }
 
 

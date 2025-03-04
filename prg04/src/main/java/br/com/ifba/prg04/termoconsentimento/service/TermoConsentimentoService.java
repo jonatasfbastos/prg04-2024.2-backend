@@ -1,7 +1,7 @@
 package br.com.ifba.prg04.termoconsentimento.service;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
-import br.com.ifba.prg04.GestaoFuncionario.services.FuncionarioServices;
+import br.com.ifba.prg04.funcionario.services.FuncionarioServices;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
 import br.com.ifba.prg04.infrastructure.exception.DatabaseException;
 import br.com.ifba.prg04.infrastructure.exception.ResourceNotFoundException;
 import br.com.ifba.prg04.paciente.entity.Paciente;
@@ -71,22 +71,6 @@ public class TermoConsentimentoService implements TermoConsentimentoIService {
                     log.warn("Termo de consentimento não encontrado para o ID: {}", id);
                     return new ResourceNotFoundException("Não foi encontrado nenhum termo de consentimento com o id: " + id);
                 });
-    }
-
-    /**
-     * Autor: Rafael Andrade
-     * Busca termos de consentimento associados a um paciente.
-     * @param idPaciente Id do paciente.
-     * @param pageable Configuração de paginação.
-     * @return Página de termos de consentimento filtrados pelo paciente.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<TermoConsentimentoProjection> findByIdPaciente(Long idPaciente, Pageable pageable) {
-        Paciente paciente = pacienteService.findById(idPaciente);
-
-        log.info("Buscando termos de consentimento para o paciente com id: {}", idPaciente);
-        return repository.findByPacienteId(paciente.getId(), pageable);
     }
 
     /**

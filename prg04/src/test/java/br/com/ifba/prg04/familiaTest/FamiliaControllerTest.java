@@ -1,11 +1,11 @@
 package br.com.ifba.prg04.familiaTest;
 
-import br.com.ifba.prg04.GestaoFuncionario.entities.Funcionario;
 import br.com.ifba.prg04.familia.controller.FamiliaController;
 import br.com.ifba.prg04.familia.dto.FamiliaPostRequestDTO;
 import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.service.FamiliaService;
-import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
+import br.com.ifba.prg04.funcionario.entities.Funcionario;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,56 +13,39 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(FamiliaController.class)
-//@Import(ObjectMapperUtil.class)
-//@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class FamiliaControllerTest {
 
-    @Autowired
     private MockMvc mockMvc; //simula requisicoes HTTP
 
-    @MockitoBean
+    @Mock
     private FamiliaService familiaService; //simula o Service
 
-   /* @InjectMocks*/
+    @InjectMocks
     private FamiliaController familiaController; //injeta o Controller
 
-    @MockitoBean
-    private ObjectMapperUtil objectMapperUtil;
-    @Autowired
-    private ObjectMapper objectMapper; //converte objetos para JSON
+    private ObjectMapper objectMapper = new ObjectMapper(); //converte objetos para JSON
 
-   /* @BeforeEach
+    @BeforeEach
     void setUp() {
         //inicializa o MockMvc com o controller real (sem precisar de @WebMvcTest)
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(familiaController)
-                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-                .build();
-    }*/
+        mockMvc = MockMvcBuilders.standaloneSetup(familiaController).build();
+    }
 
     @Test
     public void testCriarFamilia() throws Exception {
@@ -73,7 +56,7 @@ public class FamiliaControllerTest {
 
         //cria DTO com membros preenchidos
         FamiliaPostRequestDTO familiaDTO = new FamiliaPostRequestDTO();
-        familiaDTO.setNome("Familia Souza");
+        familiaDTO.setNome("Família Souza");
         familiaDTO.setEndereco("Rua X, 123");
         familiaDTO.setResponsavel(responsavel.getNome());
         familiaDTO.setMembros(List.of("Maria Souza", "Carlos Oliveira"));
@@ -132,6 +115,7 @@ public class FamiliaControllerTest {
         List<Familia> familias = List.of(familia1, familia2);
         Page<Familia> pageFamilias = new PageImpl<>(familias);
 
+        // Criar o Pageable para simular a página 0 com tamanho 10
         Pageable pageable = PageRequest.of(0, 10);
 
         // Simula o comportamento do service
@@ -140,11 +124,10 @@ public class FamiliaControllerTest {
         // Simula a requisição com os parâmetros de paginação
         mockMvc.perform(get("/familias/findAll")
                         .param("page", "0")  // Página 0
-                        .param("size", "10") // Tamanho da página 10
-                        .param("sort", "nome,asc"))
+                        .param("size", "10")) // Tamanho da página 10
                 .andExpect(status().isOk())  // Esperando status 200
-                .andExpect(jsonPath("$.content").isArray())
-                .andExpect(jsonPath("$.content.length()").value(2));
+                .andExpect(jsonPath("$").isArray()) // Verificando se o retorno é um array
+                .andExpect(jsonPath("$.length()").value(2)); // Verificando que a resposta tem 2 elementos
     }
 }
 

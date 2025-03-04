@@ -35,12 +35,6 @@ public class TermoConsentimentoController {
         return ResponseEntity.ok(TermoConsentimentoMapper.toDto(termo));
     }
 
-    @GetMapping(value = "/find-by-paciente", params = "id-paciente")
-    public ResponseEntity<PageableDto> findByIdPaciente(@RequestParam("id-paciente") Long idPaciente, Pageable pageable) {
-        Page<TermoConsentimentoProjection> page = service.findByIdPaciente(idPaciente, pageable);
-        return ResponseEntity.ok(PageableMapper.toDto(page));
-    }
-
     @GetMapping(value = "/find-by-paciente", params = "cpf-paciente")
     public ResponseEntity<PageableDto> findByCpfPaciente(@RequestParam("cpf-paciente") String cpf, Pageable pageable) {
         Page<TermoConsentimentoProjection> page = service.findByCpfPaciente(cpf, pageable);

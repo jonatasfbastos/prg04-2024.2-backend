@@ -29,4 +29,7 @@ public class Paciente extends PersistenceEntity {
 
     @Embedded
     private Responsavel responsavel;
+
+    @OneToMany(mappedBy = "paciente")
+    private Set<TermoConsentimento> termosConsentimento = new HashSet<>();
 }
