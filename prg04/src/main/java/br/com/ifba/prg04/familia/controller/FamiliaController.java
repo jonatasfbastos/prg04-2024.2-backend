@@ -1,6 +1,5 @@
 package br.com.ifba.prg04.familia.controller;
 
-import br.com.ifba.prg04.familia.dto.FamiliaGetResponseDTO;
 import br.com.ifba.prg04.familia.dto.FamiliaPostRequestDTO;
 import br.com.ifba.prg04.familia.dto.FamiliaPutResquestDTO;
 import br.com.ifba.prg04.familia.entity.Familia;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -105,11 +103,17 @@ public class FamiliaController {
     @GetMapping(path = "/findByName/{nome}")
     public ResponseEntity<List<Familia>> findByName(@PathVariable String nome){
         List<Familia> familias = familiaService.findByName(nome);
+        //retorna 404 se nenhuma familia for encontrada
+        if(familias.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        //retornar 200 e a familia
         return ResponseEntity.status(HttpStatus.OK).body(familias);
     }
 
     @GetMapping(path = "/findAll")
     public ResponseEntity<Page<Familia>> findAll(@PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC) Pageable pageable){
+        //chama o finAll com a paginacao
         Page<Familia> familiaList = familiaService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(familiaList);
     }
