@@ -10,6 +10,6 @@ public class FamiliaGetResponseDTO {
     private Long id;
     private String nome;
     private String endereco;
-    private String responsavel;
+    private Long responsavelId;
     private List<String> membros;
 }

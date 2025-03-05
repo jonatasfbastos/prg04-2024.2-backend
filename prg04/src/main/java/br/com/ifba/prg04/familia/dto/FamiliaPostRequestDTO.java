@@ -4,6 +4,7 @@ import br.com.ifba.prg04.familia.entity.Familia;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class FamiliaPostRequestDTO {
     @NotBlank(message = "O endereco eh obrigatorio")
     private String endereco;
 
-    @NotBlank(message = "O responsavel eh obrigatorio")
-    private String responsavel;
+    @NotNull(message = "O responsavel eh obrigatorio")
+    private Long responsavel_id;
 
     @NotEmpty(message = "A lista de membros nao pode ser nula")
     @Valid

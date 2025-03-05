@@ -7,6 +7,7 @@ import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.service.FamiliaService;
 import br.com.ifba.prg04.funcionario.entities.Funcionario;
 import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
+import br.com.ifba.prg04.funcionario.service.FuncionarioService;
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,9 @@ public class FamiliaController {
     private final FamiliaService familiaService;
     private final ObjectMapperUtil objectMapper;
     private final FuncionarioRepository funcionarioRepository;
+    private final FuncionarioService funcionarioService;
 
-    @PostMapping(path = "/save",consumes = MediaType.APPLICATION_JSON_VALUE,
+    /*@PostMapping(path = "/save",consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FamiliaPostRequestDTO> save(@Valid @RequestBody FamiliaPostRequestDTO familiaPost ) {
         Familia familia = objectMapper.map(familiaPost, Familia.class);
@@ -39,16 +41,47 @@ public class FamiliaController {
 
         FamiliaPostRequestDTO familiaResponse = objectMapper.map(familiaSalva, FamiliaPostRequestDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(familiaResponse);
+    }*/
+
+    @PostMapping(path = "/save", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FamiliaPostRequestDTO> save(@Valid @RequestBody FamiliaPostRequestDTO familiaPost) {
+        // Busca o funcionário pelo ID
+        Funcionario responsavel = funcionarioService.getFuncionarioById(familiaPost.getResponsavel_id());
+
+        if (responsavel == null) {
+            throw new RuntimeException("Funcionario nao encontrado");
+        }
+
+        // Mapeia o DTO para a entidade
+        Familia familia = new Familia();
+        familia.setNome(familiaPost.getNome());
+        familia.setEndereco(familiaPost.getEndereco());
+        familia.setResponsavel(responsavel); // Atribui o objeto Funcionario
+        familia.setMembros(familiaPost.getMembros());
+
+        // Salva a família
+        Familia familiaSalva = familiaService.save(familia);
+
+        // Mapeia a entidade salva para o DTO de resposta
+        FamiliaPostRequestDTO familiaResponse = new FamiliaPostRequestDTO();
+        familiaResponse.setNome(familiaSalva.getNome());
+        familiaResponse.setEndereco(familiaSalva.getEndereco());
+        familiaResponse.setResponsavel_id(familiaSalva.getResponsavel().getId()); // Retorna o ID do responsável
+        familiaResponse.setMembros(familiaSalva.getMembros());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(familiaResponse);
     }
 
     @PutMapping(path = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FamiliaPutResquestDTO> familiaUpdate(@PathVariable Long id, @RequestBody FamiliaPutResquestDTO familiaPut) {
-        Familia familia = new Familia();
+        Familia familia = familiaService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Familia nao encontrada"));
+
         familia.setNome(familiaPut.getNome());
         familia.setEndereco(familiaPut.getEndereco());
-        familia.setResponsavel(familia.getResponsavel());
-        familia.setMembros(familia.getMembros());
+        familia.setMembros(familiaPut.getMembros());
 
         if (familiaPut.getResponsavelId() != null) {
             Funcionario responsavel = funcionarioRepository.findById(familiaPut.getResponsavelId())

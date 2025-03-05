@@ -2,21 +2,27 @@ package br.com.ifba.prg04.familia.service;
 
 import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.repository.FamiliaRepository;
+import jakarta.persistence.metamodel.SingularAttribute;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j //logger
 public class FamiliaService implements FamiliaIService {
 
+    @Autowired
     private final FamiliaRepository familiaRepository;
 
     @Override
@@ -51,9 +57,8 @@ public class FamiliaService implements FamiliaIService {
     }
 
     @Override
-    public Familia findById(Long id) {
-        return familiaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Familia com o id " + id + "nao encontrada"));
+    public Optional<Familia> findById(Long id) {
+        return familiaRepository.findById(id);
     }
 
     @Override
@@ -64,4 +69,5 @@ public class FamiliaService implements FamiliaIService {
     public List<Familia> findByName(String nome) {
         return familiaRepository.findByNome(nome);
     }
+
 }

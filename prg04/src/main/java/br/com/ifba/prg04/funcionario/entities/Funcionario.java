@@ -25,6 +25,9 @@ public class Funcionario extends PersistenceEntity {
     @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
+    private String codigo;
+
     @Column(nullable = false, unique = true)
     private String cpf;
 

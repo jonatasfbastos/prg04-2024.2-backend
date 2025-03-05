@@ -13,7 +13,7 @@ public interface FamiliaIService {
 
    Familia save(Familia familia);
    Familia update(Long id, Familia familia);
-   Familia findById(Long id);
+   Optional<Familia> findById(Long id);
    Page<Familia> findAll(Pageable pageable);
    List<Familia> findByName(String name);
 }
