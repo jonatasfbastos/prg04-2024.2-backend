@@ -39,7 +39,6 @@ public class FamiliaTest {
         funcionario.setLogin("joao12");
         funcionario.setNome("Joãoo");
         funcionario.setCpf("123456788");
-        funcionario.setEndereco("Rua X, 122");
         funcionario.setTelefone("9999999998");
 
         funcionarioRepository.save(funcionario);
@@ -101,7 +100,6 @@ public class FamiliaTest {
         novoResponsavel.setLogin("maria123");
         novoResponsavel.setNome("Maria Oliveira");
         novoResponsavel.setCpf("987654321");
-        novoResponsavel.setEndereco("Rua W, 456");
         novoResponsavel.setTelefone("888888888");
 
         // Salva o novo responsável no banco de dados

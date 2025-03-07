@@ -58,7 +58,7 @@ public class FamiliaControllerTest {
         FamiliaPostRequestDTO familiaDTO = new FamiliaPostRequestDTO();
         familiaDTO.setNome("Família Souza");
         familiaDTO.setEndereco("Rua X, 123");
-        familiaDTO.setResponsavel(responsavel.getNome());
+        familiaDTO.setResponsavel_id(responsavel.getId());
         familiaDTO.setMembros(List.of("Maria Souza", "Carlos Oliveira"));
 
         Familia familia = new Familia();

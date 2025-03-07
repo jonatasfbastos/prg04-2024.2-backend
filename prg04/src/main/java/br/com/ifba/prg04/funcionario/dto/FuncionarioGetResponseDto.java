@@ -16,6 +16,5 @@ public class FuncionarioGetResponseDto {
     private String categoria;
     private String nome;
     private String cpf;
-    private String endereco;
     private String telefone;
 }

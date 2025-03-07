@@ -22,10 +22,6 @@ public class FuncionarioPostRequestDto {
 
     @NotBlank
     private String cpf;
-
-    @NotBlank
-    private String endereco;
-
     @NotBlank
     private String telefone;
 }
