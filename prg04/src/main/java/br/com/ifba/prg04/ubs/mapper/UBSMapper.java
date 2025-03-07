@@ -5,6 +5,7 @@ import br.com.ifba.prg04.endereco.entity.Endereco;
 import br.com.ifba.prg04.endereco.entity.EnderecoId;
 import br.com.ifba.prg04.ubs.dto.UBSDto;
 import br.com.ifba.prg04.ubs.dto.UBSGetDto;
+import br.com.ifba.prg04.ubs.dto.UBSPutDto;
 import br.com.ifba.prg04.ubs.entity.UBS;
 import br.com.ifba.prg04.unidadesdesaude.dto.UnidadeSaudeGetResponseDto;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,20 @@ public class UBSMapper {
         ubs.setEndereco(endereco);
 
         // Retorna a entidade UBS preenchida
+        return ubs;
+    }
+
+    public UBS toEntity(UBSPutDto dto){
+        UBS ubs = new UBS();
+
+        // Preenche os campos da ubs a partir do DTO da unidade de saúde
+        ubs.setNome(dto.getUnidadeSaudePutResquestDto().getNome());
+        ubs.setTipo(dto.getUnidadeSaudePutResquestDto().getTipo());
+        ubs.setTelefone(dto.getUnidadeSaudePutResquestDto().getTelefone());
+        ubs.setHorarioFuncionamento(dto.getUnidadeSaudePutResquestDto().getHorarioFuncionamento());
+        ubs.setCapacidadeAtendimento(dto.getUnidadeSaudePutResquestDto().getCapacidadeAtendimento());
+        ubs.setStatus(dto.getUnidadeSaudePutResquestDto().getStatus());
+
         return ubs;
     }
 

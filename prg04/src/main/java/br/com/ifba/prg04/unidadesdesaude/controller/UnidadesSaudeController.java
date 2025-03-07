@@ -80,7 +80,7 @@ public class UnidadesSaudeController {
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@RequestBody @Valid UnidadeSaudePutResquestDto unidadeSaudePutRequestDto) {
         // Converte o DTO de requisição em entidade, atualiza e retorna como DTO de resposta
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(objectMapperUtil.map(
                         unidadeSaudeService.update(objectMapperUtil.map(unidadeSaudePutRequestDto, UnidadesSaude.class)),
                         UnidadeSaudeGetResponseDto.class));

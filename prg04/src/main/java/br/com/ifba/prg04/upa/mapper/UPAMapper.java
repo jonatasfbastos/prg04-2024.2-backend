@@ -4,6 +4,7 @@ import br.com.ifba.prg04.endereco.entity.Endereco;
 import br.com.ifba.prg04.endereco.entity.EnderecoId;
 import br.com.ifba.prg04.upa.dto.UPADto;
 import br.com.ifba.prg04.upa.dto.UPAGetDto;
+import br.com.ifba.prg04.upa.dto.UPAPutDto;
 import br.com.ifba.prg04.upa.entity.UPA;
 import br.com.ifba.prg04.unidadesdesaude.dto.UnidadeSaudeGetResponseDto;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,20 @@ public class UPAMapper{
 
         Endereco endereco = getEndereco(dto);
         upa.setEndereco(endereco);
+
+        return upa;
+    }
+
+    public UPA toEntity(UPAPutDto dto){
+        UPA upa = new UPA();
+
+        // Preenche os campos da upa a partir do DTO da unidade de saúde
+        upa.setNome(dto.getUnidadeSaudePutResquestDto().getNome());
+        upa.setTipo(dto.getUnidadeSaudePutResquestDto().getTipo());
+        upa.setTelefone(dto.getUnidadeSaudePutResquestDto().getTelefone());
+        upa.setHorarioFuncionamento(dto.getUnidadeSaudePutResquestDto().getHorarioFuncionamento());
+        upa.setCapacidadeAtendimento(dto.getUnidadeSaudePutResquestDto().getCapacidadeAtendimento());
+        upa.setStatus(dto.getUnidadeSaudePutResquestDto().getStatus());
 
         return upa;
     }

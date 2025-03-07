@@ -1,6 +1,7 @@
 package br.com.ifba.prg04.hospital.service;
 
 // Importações necessárias para o serviço
+import br.com.ifba.prg04.farmacia.entity.Farmacia;
 import br.com.ifba.prg04.hospital.entity.Hospital;
 import br.com.ifba.prg04.hospital.repository.HospitalRepository;
 import br.com.ifba.prg04.infrastructure.exception.BusinessException;
@@ -53,7 +54,12 @@ public class HospitalService implements HospitalIService {
     @Override
     @Transactional // Mantém a consistência durante a atualização
     public Hospital update(Hospital hospital) {
-        // Salva as alterações do hospital e retorna a entidade atualizada
+        Hospital hospitalFound = hospitalRepository.findHospitalByTelefone(hospital.getTelefone()).orElseThrow(() -> new BusinessException("Hospital de telefone " + hospital.getTelefone() + " não encontrada"));
+        if(hospitalFound != null) {
+            hospital.setId(hospitalFound.getId());
+            hospital.setEndereco(hospitalFound.getEndereco());
+        }
+            // Salva as alterações do hospital e retorna a entidade atualizada
         return hospitalRepository.save(hospital);
     }
 }

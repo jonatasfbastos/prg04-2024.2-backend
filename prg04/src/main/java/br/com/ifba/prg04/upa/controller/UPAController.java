@@ -3,6 +3,7 @@ package br.com.ifba.prg04.upa.controller;
 // Importações necessárias para o controlador
 import br.com.ifba.prg04.upa.dto.UPADto;
 import br.com.ifba.prg04.upa.dto.UPAGetDto;
+import br.com.ifba.prg04.upa.dto.UPAPutDto;
 import br.com.ifba.prg04.upa.entity.UPA;
 import br.com.ifba.prg04.upa.mapper.UPAMapper;
 import br.com.ifba.prg04.upa.service.UPAIService;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 // Marca a classe como um controlador REST do Spring
 @RestController
 // Define o caminho base para todas as rotas do controlador
-@RequestMapping("/upa")
+@RequestMapping("/upas")
 // Permite requisições de qualquer origem (CORS)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 // Gera automaticamente um construtor com os campos finais
@@ -59,7 +60,7 @@ public class UPAController {
 
     // Endpoint PUT para atualizar uma UPA existente
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@RequestBody @Valid UPADto upaDto) {
+    public ResponseEntity<?> update(@RequestBody @Valid UPAPutDto upaDto) {
         // Converte o DTO em entidade e atualiza via serviço
         UPA upa = this.upaMapper.toEntity(upaDto);
         // Retorna o DTO atualizado com status 201 (CREATED)

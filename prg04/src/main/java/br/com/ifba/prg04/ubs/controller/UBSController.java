@@ -3,6 +3,7 @@ package br.com.ifba.prg04.ubs.controller;
 // Importações necessárias para o controlador
 import br.com.ifba.prg04.ubs.dto.UBSDto;
 import br.com.ifba.prg04.ubs.dto.UBSGetDto;
+import br.com.ifba.prg04.ubs.dto.UBSPutDto;
 import br.com.ifba.prg04.ubs.entity.UBS;
 import br.com.ifba.prg04.ubs.mapper.UBSMapper;
 import br.com.ifba.prg04.ubs.service.UBSIService;
@@ -59,7 +60,7 @@ public class UBSController {
 
     // Endpoint PUT para atualizar uma UBS existente
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@RequestBody @Valid UBSDto ubsDto) {
+    public ResponseEntity<?> update(@RequestBody @Valid UBSPutDto ubsDto) {
         // Converte o DTO em entidade e atualiza via serviço
         UBS ubs = this.ubsMapper.toEntity(ubsDto);
         // Retorna o DTO atualizado com status 201 (CREATED)

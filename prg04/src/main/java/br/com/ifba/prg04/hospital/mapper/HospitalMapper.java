@@ -2,8 +2,11 @@ package br.com.ifba.prg04.hospital.mapper;
 
 import br.com.ifba.prg04.endereco.entity.Endereco;
 import br.com.ifba.prg04.endereco.entity.EnderecoId;
+import br.com.ifba.prg04.farmacia.dto.FarmaciaPutDto;
+import br.com.ifba.prg04.farmacia.entity.Farmacia;
 import br.com.ifba.prg04.hospital.dto.HospitalDto;
 import br.com.ifba.prg04.hospital.dto.HospitalGetDto;
+import br.com.ifba.prg04.hospital.dto.HospitalPutDto;
 import br.com.ifba.prg04.hospital.entity.Hospital;
 import br.com.ifba.prg04.unidadesdesaude.dto.UnidadeSaudeGetResponseDto;
 import org.springframework.stereotype.Component;
@@ -29,6 +32,20 @@ public class HospitalMapper {
 
         // Retorna a entidade Hospital preenchida
         return Hospital;
+    }
+
+    public Hospital toEntity(HospitalPutDto dto){
+        Hospital hospital = new Hospital();
+
+        // Preenche os campos da hospital a partir do DTO da unidade de saúde
+        hospital.setNome(dto.getUnidadeSaudePutResquestDto().getNome());
+        hospital.setTipo(dto.getUnidadeSaudePutResquestDto().getTipo());
+        hospital.setTelefone(dto.getUnidadeSaudePutResquestDto().getTelefone());
+        hospital.setHorarioFuncionamento(dto.getUnidadeSaudePutResquestDto().getHorarioFuncionamento());
+        hospital.setCapacidadeAtendimento(dto.getUnidadeSaudePutResquestDto().getCapacidadeAtendimento());
+        hospital.setStatus(dto.getUnidadeSaudePutResquestDto().getStatus());
+
+        return hospital;
     }
 
     // Método auxiliar privado para criar o objeto Endereco a partir do DTO

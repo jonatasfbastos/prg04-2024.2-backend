@@ -5,6 +5,7 @@ import br.com.ifba.prg04.endereco.entity.Endereco;
 import br.com.ifba.prg04.endereco.entity.EnderecoId;
 import br.com.ifba.prg04.farmacia.dto.FarmaciaDto;
 import br.com.ifba.prg04.farmacia.dto.FarmaciaGetDto;
+import br.com.ifba.prg04.farmacia.dto.FarmaciaPutDto;
 import br.com.ifba.prg04.farmacia.entity.Farmacia;
 import br.com.ifba.prg04.unidadesdesaude.dto.UnidadeSaudeGetResponseDto;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,20 @@ public class FarmaciaMapper {
         farmacia.setEndereco(endereco);
 
         // Retorna a entidade Farmacia preenchida
+        return farmacia;
+    }
+
+    public Farmacia toEntity(FarmaciaPutDto dto){
+        Farmacia farmacia = new Farmacia();
+
+        // Preenche os campos da farmácia a partir do DTO da unidade de saúde
+        farmacia.setNome(dto.getUnidadeSaudePutResquestDto().getNome());
+        farmacia.setTipo(dto.getUnidadeSaudePutResquestDto().getTipo());
+        farmacia.setTelefone(dto.getUnidadeSaudePutResquestDto().getTelefone());
+        farmacia.setHorarioFuncionamento(dto.getUnidadeSaudePutResquestDto().getHorarioFuncionamento());
+        farmacia.setCapacidadeAtendimento(dto.getUnidadeSaudePutResquestDto().getCapacidadeAtendimento());
+        farmacia.setStatus(dto.getUnidadeSaudePutResquestDto().getStatus());
+
         return farmacia;
     }
 

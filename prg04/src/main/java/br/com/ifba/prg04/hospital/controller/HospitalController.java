@@ -3,6 +3,7 @@ package br.com.ifba.prg04.hospital.controller;
 // Importações necessárias para o controlador
 import br.com.ifba.prg04.hospital.dto.HospitalDto;
 import br.com.ifba.prg04.hospital.dto.HospitalGetDto;
+import br.com.ifba.prg04.hospital.dto.HospitalPutDto;
 import br.com.ifba.prg04.hospital.entity.Hospital;
 import br.com.ifba.prg04.hospital.mapper.HospitalMapper;
 import br.com.ifba.prg04.hospital.service.HospitalIService;
@@ -59,7 +60,7 @@ public class HospitalController {
 
     // Endpoint PUT para atualizar um hospital existente
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@RequestBody @Valid HospitalDto hospitalDto) {
+    public ResponseEntity<?> update(@RequestBody @Valid HospitalPutDto hospitalDto) {
         // Converte o DTO em entidade e atualiza via serviço
         Hospital hospital = this.hospitalMapper.toEntity(hospitalDto);
         // Retorna o DTO atualizado com status 201 (CREATED)

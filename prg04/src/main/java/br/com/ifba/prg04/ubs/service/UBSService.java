@@ -1,6 +1,7 @@
 package br.com.ifba.prg04.ubs.service;
 
 // Importações necessárias para o serviço
+import br.com.ifba.prg04.farmacia.entity.Farmacia;
 import br.com.ifba.prg04.infrastructure.exception.BusinessException;
 import br.com.ifba.prg04.ubs.entity.UBS;
 import br.com.ifba.prg04.ubs.repository.UBSRepository;
@@ -53,6 +54,11 @@ public class UBSService implements UBSIService {
     @Override
     @Transactional // Mantém a consistência durante a atualização
     public UBS update(UBS ubs) {
+        UBS ubsFound = ubsRepository.findUBSByTelefone(ubs.getTelefone()).orElseThrow(() -> new BusinessException("UBS de telefone " + ubs.getTelefone() + " não encontrada"));
+        if(ubsFound != null){
+            ubs.setId(ubsFound.getId());
+            ubs.setEndereco(ubsFound.getEndereco());
+        }
         // Salva as alterações da UBS e retorna a entidade atualizada
         return ubsRepository.save(ubs);
     }

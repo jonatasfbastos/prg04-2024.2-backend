@@ -3,6 +3,7 @@ package br.com.ifba.prg04.farmacia.controller;
 // Importações necessárias para o controlador
 import br.com.ifba.prg04.farmacia.dto.FarmaciaDto;
 import br.com.ifba.prg04.farmacia.dto.FarmaciaGetDto;
+import br.com.ifba.prg04.farmacia.dto.FarmaciaPutDto;
 import br.com.ifba.prg04.farmacia.entity.Farmacia;
 import br.com.ifba.prg04.farmacia.mapper.FarmaciaMapper;
 import br.com.ifba.prg04.farmacia.service.FarmaciaIService;
@@ -59,7 +60,7 @@ public class FarmaciaController {
 
     // Endpoint PUT para atualizar uma farmácia existente
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@RequestBody @Valid FarmaciaDto farmaciaDto) {
+    public ResponseEntity<?> update(@RequestBody @Valid FarmaciaPutDto farmaciaDto) {
         // Converte o DTO em entidade e atualiza via serviço
         Farmacia farmacia = this.farmaciaMapper.toEntity(farmaciaDto);
         // Retorna o DTO atualizado com status 201 (CREATED)

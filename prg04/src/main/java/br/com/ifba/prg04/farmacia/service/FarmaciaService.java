@@ -37,6 +37,11 @@ public class FarmaciaService implements FarmaciaIService{
     @Override
     @Transactional // Garante que a operação seja executada em uma transação
     public Farmacia save(Farmacia farmacia) {
+        Farmacia farmaciaFound = farmaciaRepository.findFarmaciaByTelefone(farmacia.getTelefone()).orElseThrow(() -> new BusinessException("Farmacia de telefone " + farmacia.getTelefone() + " não encontrada"));
+        if(farmaciaFound != null){
+            farmacia.setId(farmaciaFound.getId());
+            farmacia.setEndereco(farmaciaFound.getEndereco());
+        }
         // Persiste a farmácia no banco de dados e retorna a entidade salva
         return farmaciaRepository.save(farmacia);
     }
@@ -53,6 +58,7 @@ public class FarmaciaService implements FarmaciaIService{
     @Override
     @Transactional // Mantém a consistência dos dados durante a atualização
     public Farmacia update(Farmacia farmacia) {
+
         // Salva as alterações da farmácia e retorna a entidade atualizada
         return farmaciaRepository.save(farmacia);
     }
