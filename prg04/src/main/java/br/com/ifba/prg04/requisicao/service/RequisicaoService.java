@@ -3,7 +3,7 @@ package br.com.ifba.prg04.requisicao.service;
 import br.com.ifba.prg04.paciente.dto.PacienteGetResponseDto;
 import br.com.ifba.prg04.requisicao.dto.RequisicaoGetResponseDto;
 import br.com.ifba.prg04.requisicao.dto.RequisicaoPostRequestDto;
-import br.com.ifba.prg04.requisicao.entity.RequisicaoEntity;
+import br.com.ifba.prg04.requisicao.entity.Requisicao;
 import br.com.ifba.prg04.requisicao.repository.RequisicaoRepository;
 import br.com.ifba.prg04.paciente.entity.Paciente;
 import br.com.ifba.prg04.paciente.repository.PacienteRepository;
@@ -33,7 +33,7 @@ public class RequisicaoService implements RequisicaoIService {
         Paciente paciente = pacienteRepository.findByCpf(dto.getCpfPaciente())
                 .orElseThrow(() -> new EntityNotFoundException("Paciente com CPF " + dto.getCpfPaciente() + " não encontrado!"));
 
-        RequisicaoEntity requisicao = new RequisicaoEntity();
+        Requisicao requisicao = new Requisicao();
         requisicao.setDataRequisicao(dto.getDataRequisicao());
         requisicao.setPaciente(paciente);
 
@@ -84,7 +84,7 @@ public class RequisicaoService implements RequisicaoIService {
                 .collect(Collectors.toList());
     }
 
-    private RequisicaoGetResponseDto toDto(RequisicaoEntity requisicao) {
+    private RequisicaoGetResponseDto toDto(Requisicao requisicao) {
         PacienteGetResponseDto pacienteDto = new PacienteGetResponseDto(
 //                requisicao.getPaciente().getNome(),
 //                requisicao.getPaciente().getCpf(),
