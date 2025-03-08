@@ -15,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController // Indica que esta classe é um controlador REST
 @RequestMapping(path = "/medicamentos") // Define o caminho base para todas as requisições
 @RequiredArgsConstructor
@@ -46,6 +48,23 @@ public class MedicamentoController {
     }
 
     /**
+     * Endpoint para buscar Nome e Categoria dos medicamentos Digitados no front-end, pegando pela URL.
+     */
+    @GetMapping(path = "/findall/{name}")
+    public ResponseEntity<List<Medicamento>> findbyname(@Valid @PathVariable("name") String name) {
+        List<Medicamento> medicamentos = (List<Medicamento>) service.findByNome(name);
+       if (medicamentos == null || medicamentos.isEmpty()) {
+           medicamentos = (List<Medicamento>) service.findByCategoria(name);
+       }
+
+       /*Operação ternária, caso encontre mostres os medicamentos caso contrário mostrar um 404 na requisição*/
+
+       ResponseEntity<List<Medicamento>> response = medicamentos == null ?  ResponseEntity.status(HttpStatus.NOT_FOUND).build() :  ResponseEntity.status(HttpStatus.OK).body(medicamentos);
+
+       return response;
+    };
+
+    /**
      * Endpoint para deletar um medicamento pelo ID.
      */
     @DeleteMapping(path = "/delete/{id}")
@@ -64,4 +83,6 @@ public class MedicamentoController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(objectMapperUtil.map(novoMedicamento, MedicamentoGetResponseDtos.class));
     }
+
+
 }
