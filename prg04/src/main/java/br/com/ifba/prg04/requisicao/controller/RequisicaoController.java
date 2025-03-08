@@ -22,7 +22,7 @@ public class RequisicaoController {
 
     @PostMapping
     public ResponseEntity<RequisicaoGetResponseDto> saveRequisicao(@Valid @RequestBody RequisicaoPostRequestDto requisicaoDto) {
-        var requisicao = requisicaoService.save(requisicaoDto);
+        var requisicao = requisicaoService.save(requisicaoDto); // O DTO agora deve conter List<Exame> ou IDs de exames
         RequisicaoGetResponseDto responseDto = objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class);
         return ResponseEntity.ok(responseDto);
     }
