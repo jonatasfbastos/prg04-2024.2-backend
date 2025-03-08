@@ -1,18 +1,19 @@
-package br.com.ifba.prg04.requisicao.entity;
+package br.com.ifba.prg04.exames.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "medicos")
+@Table(name = "exames")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Medico {
+public class Exame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    @Column(nullable = false)
+    private String descricao;
 }

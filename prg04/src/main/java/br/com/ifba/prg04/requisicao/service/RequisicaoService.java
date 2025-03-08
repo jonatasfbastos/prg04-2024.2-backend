@@ -1,9 +1,11 @@
 package br.com.ifba.prg04.requisicao.service;
 
+import br.com.ifba.prg04.exames.entity.Exame; // Novo import para a entidade Exame
+import br.com.ifba.prg04.exames.repository.ExameRepository; // Novo import para o repositório de Exame
 import br.com.ifba.prg04.paciente.dto.PacienteGetResponseDto;
 import br.com.ifba.prg04.requisicao.dto.RequisicaoGetResponseDto;
 import br.com.ifba.prg04.requisicao.dto.RequisicaoPostRequestDto;
-import br.com.ifba.prg04.requisicao.entity.RequisicaoEntity;
+import br.com.ifba.prg04.requisicao.entity.Requisicao;
 import br.com.ifba.prg04.requisicao.repository.RequisicaoRepository;
 import br.com.ifba.prg04.paciente.entity.Paciente;
 import br.com.ifba.prg04.paciente.repository.PacienteRepository;
@@ -11,7 +13,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,10 +22,14 @@ public class RequisicaoService implements RequisicaoIService {
 
     private final RequisicaoRepository requisicaoRepository;
     private final PacienteRepository pacienteRepository;
+    private final ExameRepository exameRepository; // Novo campo para buscar Exames
 
-    public RequisicaoService(RequisicaoRepository requisicaoRepository, PacienteRepository pacienteRepository) {
+    public RequisicaoService(RequisicaoRepository requisicaoRepository,
+                             PacienteRepository pacienteRepository,
+                             ExameRepository exameRepository) {
         this.requisicaoRepository = requisicaoRepository;
         this.pacienteRepository = pacienteRepository;
+        this.exameRepository = exameRepository;
     }
 
     @Override
@@ -33,15 +38,19 @@ public class RequisicaoService implements RequisicaoIService {
         Paciente paciente = pacienteRepository.findByCpf(dto.getCpfPaciente())
                 .orElseThrow(() -> new EntityNotFoundException("Paciente com CPF " + dto.getCpfPaciente() + " não encontrado!"));
 
-        RequisicaoEntity requisicao = new RequisicaoEntity();
+        Requisicao requisicao = new Requisicao();
         requisicao.setDataRequisicao(dto.getDataRequisicao());
         requisicao.setPaciente(paciente);
 
-        // Se houver exames, salvar corretamente no formato string
-        if (dto.getExames() != null && !dto.getExames().isEmpty()) {
-            requisicao.setExames(String.join(",", dto.getExames()));
+        // Buscar os objetos Exame a partir dos IDs enviados no DTO
+        if (dto.getExameIds() != null && !dto.getExameIds().isEmpty()) {
+            List<Exame> exames = exameRepository.findAllById(dto.getExameIds());
+            if (exames.size() != dto.getExameIds().size()) {
+                throw new EntityNotFoundException("Um ou mais exames não foram encontrados!");
+            }
+            requisicao.setExames(exames); // Define a lista de Exame na entidade
         } else {
-            requisicao.setExames("");  // Garante que o banco não armazene null
+            requisicao.setExames(Collections.emptyList()); // Lista vazia se não houver exames
         }
 
         return toDto(requisicaoRepository.save(requisicao));
@@ -84,18 +93,20 @@ public class RequisicaoService implements RequisicaoIService {
                 .collect(Collectors.toList());
     }
 
-    private RequisicaoGetResponseDto toDto(RequisicaoEntity requisicao) {
+    private RequisicaoGetResponseDto toDto(Requisicao requisicao) {
         PacienteGetResponseDto pacienteDto = new PacienteGetResponseDto(
-//                requisicao.getPaciente().getNome(),
-//                requisicao.getPaciente().getCpf(),
-//                requisicao.getPaciente().getDataNascimento(),
-//                requisicao.getPaciente().getGenero()
+                // requisicao.getPaciente().getNome(),
+                // requisicao.getPaciente().getCpf(),
+                // requisicao.getPaciente().getDataNascimento(),
+                // requisicao.getPaciente().getGenero()
         );
 
-        // Se a string de exames for vazia, retorna uma lista vazia em vez de tentar split()
+        // Converter List<Exame> para List<String> com as descrições dos exames
         List<String> examesList = (requisicao.getExames() == null || requisicao.getExames().isEmpty())
                 ? Collections.emptyList()
-                : Arrays.asList(requisicao.getExames().split(","));
+                : requisicao.getExames().stream()
+                .map(Exame::getDescricao) // Extrai a descrição de cada Exame
+                .collect(Collectors.toList());
 
         return new RequisicaoGetResponseDto(
                 requisicao.getId(),

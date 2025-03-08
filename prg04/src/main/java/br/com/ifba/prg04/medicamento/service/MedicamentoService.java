@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -55,6 +57,31 @@ public class MedicamentoService implements IMedicamentoService{
     public Optional<Medicamento> findById(Long id) {
         LOGGER.info("Buscando medicamento : {}", id);
         return medicamentoDao.findById(id);
+    }
+
+    /**
+     * Autor: Henrique Martins
+     * Busca pelo Nome do Medicamento no Banco de Dados.
+     * @param Url Pegando o nome do medicamento para procura-lo.
+     * @return Medicamento finBynName.
+     */
+
+    @Override
+    public List<Medicamento> findByNome(String nome) {
+        LOGGER.info("Buscando medicamento : {}", nome);
+        return medicamentoDao.findByNomeContainingIgnoreCase(nome);
+    }
+
+    /**
+     * Autor: Henrique Martins
+     * Busca pelo Nome do Medicamento no Banco de Dados.
+     * @param Url Pegando o Categoria do medicamento para procura-lo.
+     * @return Medicamento finBynCategoria.
+     */
+
+    public List<Medicamento> findByCategoria(String nome) {
+        LOGGER.info("Buscando medicamento Na categoria: {}", nome);
+        return medicamentoDao.findByCategoriaContainingIgnoreCase(nome);
     }
 
     /**

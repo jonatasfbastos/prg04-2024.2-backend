@@ -12,8 +12,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequisicaoPostRequestDto {
+    @NotNull(message = "O nome do paciente é obrigatório")
     private String nomePaciente;
+
+    @NotNull(message = "O CPF do paciente é obrigatório")
     private String cpfPaciente;
-    private List<String> exames;
-    private LocalDateTime dataRequisicao;  // Pode ser nula
+
+    @NotNull(message = "A lista de exames não pode ser nula")
+    private List<Long> exameIds; // Ajustado de List<String> para List<Long>, representando IDs de Exame
+
+    private LocalDateTime dataRequisicao; // Pode ser nula
 }

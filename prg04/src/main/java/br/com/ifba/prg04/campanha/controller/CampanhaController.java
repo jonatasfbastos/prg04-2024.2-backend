@@ -6,6 +6,8 @@ import br.com.ifba.prg04.campanha.dto.CampanhaPutRequestDto;
 import br.com.ifba.prg04.campanha.entity.Campanha;
 import br.com.ifba.prg04.campanha.repository.CampanhaRepository;
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
+import br.com.ifba.prg04.vacina.entity.Vacina;
+import br.com.ifba.prg04.vacina.repository.VacinaIRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,9 @@ public class CampanhaController {
     @Autowired
     private final CampanhaRepository campanhaR;
     private final ObjectMapperUtil objectMapperUtil;
+    @Autowired
+    private final VacinaIRepository vacinaRepository; // Adicionando o repositório de Vacina
+
 
     @PostMapping(path = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@RequestBody CampanhaPostRequestDto campanhaPostRequestDto) {
@@ -79,15 +84,24 @@ public class CampanhaController {
         }
     }
 
-    @GetMapping(path = "/findbyvacina/{vacina}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findbyvacina(@PathVariable String vacina, Pageable pageable) {
-        Page<Campanha> campanhas = campanhaR.findByVacina(vacina, pageable);
+    @GetMapping(path = "/findbyvacina/{vacinaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findbyvacina(@PathVariable Long vacinaId, Pageable pageable) {
+        // Buscar a vacina pelo ID
+        Optional<Vacina> vacina = vacinaRepository.findById(vacinaId);
 
-        Page<CampanhaGetResponseDto> campanhasDto = campanhas.map(
-                campanha -> objectMapperUtil.map(campanha, CampanhaGetResponseDto.class)
-        );
+        if (vacina.isPresent()) {
+            // Agora chamamos o repositório de Campanha com o objeto Vacina
+            Page<Campanha> campanhas = campanhaR.findByVacinas(vacina.get(), pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(campanhasDto);
+            Page<CampanhaGetResponseDto> campanhasDto = campanhas.map(
+                    campanha -> objectMapperUtil.map(campanha, CampanhaGetResponseDto.class)
+            );
+
+            return ResponseEntity.status(HttpStatus.OK).body(campanhasDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Vacina com ID " + vacinaId + " não encontrada.");
+        }
     }
 
 }

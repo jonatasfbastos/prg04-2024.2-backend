@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class GestaoAtendimentoGetResponseDto {
-    private String code;
+    private String codigo;
     private LocalDateTime dataHora;
     private String especialidadeMedica;
     private Paciente paciente;
