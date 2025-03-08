@@ -31,37 +31,24 @@ public class FamiliaController {
     private final FuncionarioRepository funcionarioRepository;
     private final FuncionarioService funcionarioService;
 
-    /*@PostMapping(path = "/save",consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FamiliaPostRequestDTO> save(@Valid @RequestBody FamiliaPostRequestDTO familiaPost ) {
-        Familia familia = objectMapper.map(familiaPost, Familia.class);
-        Familia familiaSalva = familiaService.save(familia);
-
-        FamiliaPostRequestDTO familiaResponse = objectMapper.map(familiaSalva, FamiliaPostRequestDTO.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body(familiaResponse);
-    }*/
-
     @PostMapping(path = "/save", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FamiliaPostRequestDTO> save(@Valid @RequestBody FamiliaPostRequestDTO familiaPost) {
-        // Busca o funcionário pelo ID
+
         Funcionario responsavel = funcionarioService.getFuncionarioById(familiaPost.getResponsavel_id());
 
         if (responsavel == null) {
             throw new RuntimeException("Funcionario nao encontrado");
         }
 
-        // Mapeia o DTO para a entidade
         Familia familia = new Familia();
         familia.setNome(familiaPost.getNome());
         familia.setEndereco(familiaPost.getEndereco());
-        familia.setResponsavel(responsavel); // Atribui o objeto Funcionario
+        familia.setResponsavel(responsavel);
         familia.setMembros(familiaPost.getMembros());
 
-        // Salva a família
         Familia familiaSalva = familiaService.save(familia);
 
-        // Mapeia a entidade salva para o DTO de resposta
         FamiliaPostRequestDTO familiaResponse = new FamiliaPostRequestDTO();
         familiaResponse.setNome(familiaSalva.getNome());
         familiaResponse.setEndereco(familiaSalva.getEndereco());
@@ -116,5 +103,12 @@ public class FamiliaController {
         //chama o finAll com a paginacao
         Page<Familia> familiaList = familiaService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(familiaList);
+    }
+
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Familia> findById(@PathVariable Long id) {
+        Familia familia = familiaService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Família não encontrada"));
+        return ResponseEntity.status(HttpStatus.OK).body(familia);
     }
 }

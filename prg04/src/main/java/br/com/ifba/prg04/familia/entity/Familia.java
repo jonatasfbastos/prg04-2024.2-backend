@@ -17,7 +17,7 @@ public class Familia {
     private String endereco;
 
     @ElementCollection //mapeia uma colecao de tipos basicos como string ou integer
-    @CollectionTable(name = "familia_membros", joinColumns = @JoinColumn(name = "familia_nome"))
+    @CollectionTable(name = "familia_membros", joinColumns = @JoinColumn(name = "familia_id"))
     @Column(name = "membro") //coluna que armazena os valores
     private List<String> membros;
 
