@@ -6,9 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name="campanha")
 @Getter
@@ -17,21 +14,12 @@ public class Campanha {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="campanha_id")
     private Long id;
 
     @Column(name="nome", length = 100)
     @NotNull
     private String nome;
-
-    @ManyToMany
-    @JoinTable(
-            name = "campanha_vacina", // Nome da tabela associativa
-            joinColumns = @JoinColumn(name = "campanha_id"), // Coluna de referência para Campanha
-            inverseJoinColumns = @JoinColumn(name = "vacina_id") // Coluna de referência para Vacina
-    )
-    private List<Vacina> vacinas = new ArrayList<>();
-;
 
     @NotNull
     @Column(name="publico_alvo", length = 100)
@@ -44,5 +32,9 @@ public class Campanha {
     @NotNull
     @Column(name="data_fim", length = 45)
     private String dataFim;
+
+    @NotNull
+    @Column(name="vacina_id")
+    private Long vacinaId;
 
 }

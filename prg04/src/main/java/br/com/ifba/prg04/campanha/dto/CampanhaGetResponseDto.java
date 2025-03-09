@@ -1,6 +1,7 @@
 package br.com.ifba.prg04.campanha.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CampanhaGetResponseDto {
 
-    @JsonProperty("nomec")
-    private String nomec;
+    @JsonProperty("nome")
+    private String nome;
 
-    @JsonProperty("vacina")
-    private String vacina;
+    @JsonProperty("vacina_id")
+    private Long vacinaId;
 
     @JsonProperty("publico_alvo")
     private String publicoAlvo;
@@ -24,4 +25,9 @@ public class CampanhaGetResponseDto {
 
     @JsonProperty("data_fim")
     private String dataFim;
+
+    public void setVacinaNome(String nomeComum) {
+    }
 }
+
+

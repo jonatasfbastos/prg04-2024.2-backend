@@ -17,13 +17,13 @@ public class CampanhaPutRequestDto {
     @NotNull(message = "O ID da campanha é obrigatório")
     private Long id;
 
-    @JsonProperty("nomec")
+    @JsonProperty("nome")
     @NotBlank(message = "O nome da campanha é obrigatório")
-    private String nomec;
+    private String nome;
 
-    @JsonProperty("vacina")
-    @NotBlank(message = "A Vacina é obrigatória")
-    private String vacina;
+    @JsonProperty("vacina_id")
+    @NotNull(message = "O ID da vacina é obrigatório")
+    private Long vacinaId;
 
     @JsonProperty("publicoAlvo")
     @NotBlank(message = "O público-alvo é obrigatório")

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CampanhaRepository extends JpaRepository<Campanha, Long> {
 
-    Page<Campanha> findByVacinas(Vacina vacina, Pageable pageable);
+    Page<Campanha> findByVacinaId(Long vacinaId, Pageable pageable);
+
 
 }
