@@ -1,18 +1,17 @@
 package br.com.ifba.prg04.familia.entity;
 
 import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
-public class Familia {
+public class Familia extends PersistenceEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String nome;
     private String endereco;
 
