@@ -2,14 +2,14 @@ package br.com.ifba.prg04.requisicao.service;
 
 import br.com.ifba.prg04.requisicao.dto.RequisicaoGetResponseDto;
 import br.com.ifba.prg04.requisicao.dto.RequisicaoPostRequestDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface RequisicaoIService {
     RequisicaoGetResponseDto save(RequisicaoPostRequestDto dto);
-    List<RequisicaoGetResponseDto> findAll();
+    Page<RequisicaoGetResponseDto> findAll(Pageable pageable);
     RequisicaoGetResponseDto findById(Long id);
-    List<RequisicaoGetResponseDto> findByPacienteNome(String nome);
-    List<RequisicaoGetResponseDto> findByPacienteCpf(String cpf);
+    Page<RequisicaoGetResponseDto> findByPacienteNome(String nome, Pageable pageable);
+    Page<RequisicaoGetResponseDto> findByPacienteCpf(String cpf, Pageable pageable);
     void delete(Long id);
 }

@@ -1,7 +1,7 @@
 package br.com.ifba.prg04.requisicao.service;
 
-import br.com.ifba.prg04.exames.entity.Exame; // Novo import para a entidade Exame
-import br.com.ifba.prg04.exames.repository.ExameRepository; // Novo import para o repositório de Exame
+import br.com.ifba.prg04.exames.entity.Exame;
+import br.com.ifba.prg04.exames.repository.ExameRepository;
 import br.com.ifba.prg04.paciente.dto.PacienteGetResponseDto;
 import br.com.ifba.prg04.requisicao.dto.RequisicaoGetResponseDto;
 import br.com.ifba.prg04.requisicao.dto.RequisicaoPostRequestDto;
@@ -11,6 +11,8 @@ import br.com.ifba.prg04.paciente.entity.Paciente;
 import br.com.ifba.prg04.paciente.repository.PacienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -22,7 +24,7 @@ public class RequisicaoService implements RequisicaoIService {
 
     private final RequisicaoRepository requisicaoRepository;
     private final PacienteRepository pacienteRepository;
-    private final ExameRepository exameRepository; // Novo campo para buscar Exames
+    private final ExameRepository exameRepository;
 
     public RequisicaoService(RequisicaoRepository requisicaoRepository,
                              PacienteRepository pacienteRepository,
@@ -35,6 +37,7 @@ public class RequisicaoService implements RequisicaoIService {
     @Override
     @Transactional
     public RequisicaoGetResponseDto save(RequisicaoPostRequestDto dto) {
+        // Busca o paciente pelo CPF, lança exceção se não encontrado
         Paciente paciente = pacienteRepository.findByCpf(dto.getCpfPaciente())
                 .orElseThrow(() -> new EntityNotFoundException("Paciente com CPF " + dto.getCpfPaciente() + " não encontrado!"));
 
@@ -48,19 +51,18 @@ public class RequisicaoService implements RequisicaoIService {
             if (exames.size() != dto.getExameIds().size()) {
                 throw new EntityNotFoundException("Um ou mais exames não foram encontrados!");
             }
-            requisicao.setExames(exames); // Define a lista de Exame na entidade
+            requisicao.setExames(exames);
         } else {
-            requisicao.setExames(Collections.emptyList()); // Lista vazia se não houver exames
+            requisicao.setExames(Collections.emptyList());
         }
 
         return toDto(requisicaoRepository.save(requisicao));
     }
 
     @Override
-    public List<RequisicaoGetResponseDto> findAll() {
-        return requisicaoRepository.findAll().stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
+    public Page<RequisicaoGetResponseDto> findAll(Pageable pageable) {
+        return requisicaoRepository.findAll(pageable)
+                .map(this::toDto);
     }
 
     @Override
@@ -80,32 +82,40 @@ public class RequisicaoService implements RequisicaoIService {
     }
 
     @Override
-    public List<RequisicaoGetResponseDto> findByPacienteNome(String nome) {
-        return requisicaoRepository.findByPacienteNome(nome).stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
+    public Page<RequisicaoGetResponseDto> findByPacienteNome(String nome, Pageable pageable) {
+        return requisicaoRepository.findByPacienteNome(nome, pageable)
+                .map(this::toDto);
     }
 
     @Override
-    public List<RequisicaoGetResponseDto> findByPacienteCpf(String cpf) {
-        return requisicaoRepository.findByPacienteCpf(cpf).stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
+    public Page<RequisicaoGetResponseDto> findByPacienteCpf(String cpf, Pageable pageable) {
+        return requisicaoRepository.findByPacienteCpf(cpf, pageable)
+                .map(this::toDto);
     }
 
     private RequisicaoGetResponseDto toDto(Requisicao requisicao) {
-        PacienteGetResponseDto pacienteDto = new PacienteGetResponseDto(
-                // requisicao.getPaciente().getNome(),
-                // requisicao.getPaciente().getCpf(),
-                // requisicao.getPaciente().getDataNascimento(),
-                // requisicao.getPaciente().getGenero()
-        );
+        // Verifica se o paciente existe antes de criar o DTO
+        PacienteGetResponseDto pacienteDto = null;
+        if (requisicao.getPaciente() != null) {
+            pacienteDto = new PacienteGetResponseDto(
+                    requisicao.getPaciente().getId(),
+                    requisicao.getPaciente().getNome(),
+                    requisicao.getPaciente().getCpf(),
+                    requisicao.getPaciente().getDataNascimento(),
+                    requisicao.getPaciente().getGenero(),
+                    requisicao.getPaciente().getEstadoCivil(),
+                    requisicao.getPaciente().getEndereco(),
+                    requisicao.getPaciente().getTelefone(),
+                    requisicao.getPaciente().getEmail(),
+                    requisicao.getPaciente().getResponsavel()
+            );
+        }
 
         // Converter List<Exame> para List<String> com as descrições dos exames
         List<String> examesList = (requisicao.getExames() == null || requisicao.getExames().isEmpty())
                 ? Collections.emptyList()
                 : requisicao.getExames().stream()
-                .map(Exame::getDescricao) // Extrai a descrição de cada Exame
+                .map(Exame::getDescricao)
                 .collect(Collectors.toList());
 
         return new RequisicaoGetResponseDto(

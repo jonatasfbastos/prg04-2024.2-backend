@@ -6,11 +6,10 @@ import br.com.ifba.prg04.requisicao.service.RequisicaoIService;
 import jakarta.validation.Valid;
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/requisicoes")
@@ -22,43 +21,34 @@ public class RequisicaoController {
 
     @PostMapping
     public ResponseEntity<RequisicaoGetResponseDto> saveRequisicao(@Valid @RequestBody RequisicaoPostRequestDto requisicaoDto) {
-        var requisicao = requisicaoService.save(requisicaoDto); // O DTO agora deve conter List<Exame> ou IDs de exames
-        RequisicaoGetResponseDto responseDto = objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class);
+        var requisicao = requisicaoService.save(requisicaoDto);
+        var responseDto = objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<RequisicaoGetResponseDto>> findAllRequisicoes() {
-        var requisicoes = requisicaoService.findAll();
-        List<RequisicaoGetResponseDto> responseDtos = requisicoes.stream()
-                .map(requisicao -> objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(responseDtos);
+    public ResponseEntity<Page<RequisicaoGetResponseDto>> findAllRequisicoes(Pageable pageable) {
+        Page<RequisicaoGetResponseDto> page = requisicaoService.findAll(pageable);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RequisicaoGetResponseDto> findRequisicaoById(@PathVariable Long id) {
         var requisicao = requisicaoService.findById(id);
-        RequisicaoGetResponseDto responseDto = objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class);
+        var responseDto = objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/buscar/nome/{nome}")
-    public ResponseEntity<List<RequisicaoGetResponseDto>> findRequisicoesByPacienteNome(@PathVariable String nome) {
-        var requisicoes = requisicaoService.findByPacienteNome(nome);
-        List<RequisicaoGetResponseDto> responseDtos = requisicoes.stream()
-                .map(requisicao -> objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(responseDtos);
+    public ResponseEntity<Page<RequisicaoGetResponseDto>> findRequisicoesByPacienteNome(@PathVariable String nome, Pageable pageable) {
+        Page<RequisicaoGetResponseDto> page = requisicaoService.findByPacienteNome(nome, pageable);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/buscar/cpf/{cpf}")
-    public ResponseEntity<List<RequisicaoGetResponseDto>> findRequisicoesByPacienteCpf(@PathVariable String cpf) {
-        var requisicoes = requisicaoService.findByPacienteCpf(cpf);
-        List<RequisicaoGetResponseDto> responseDtos = requisicoes.stream()
-                .map(requisicao -> objectMapperUtil.map(requisicao, RequisicaoGetResponseDto.class))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(responseDtos);
+    public ResponseEntity<Page<RequisicaoGetResponseDto>> findRequisicoesByPacienteCpf(@PathVariable String cpf, Pageable pageable) {
+        Page<RequisicaoGetResponseDto> page = requisicaoService.findByPacienteCpf(cpf, pageable);
+        return ResponseEntity.ok(page);
     }
 
     @DeleteMapping("/{id}")
