@@ -8,6 +8,8 @@ import br.com.ifba.prg04.funcionario.entities.Funcionario;
 import br.com.ifba.prg04.funcionario.repositories.FuncionarioRepository;
 import br.com.ifba.prg04.funcionario.service.FuncionarioService;
 import br.com.ifba.prg04.infrastructure.mapper.ObjectMapperUtil;
+import br.com.ifba.prg04.paciente.entity.Paciente;
+import br.com.ifba.prg04.paciente.repository.PacienteRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/familias")
@@ -30,6 +34,7 @@ public class FamiliaController {
     private final ObjectMapperUtil objectMapper;
     private final FuncionarioRepository funcionarioRepository;
     private final FuncionarioService funcionarioService;
+    private final PacienteRepository pacienteRepository;
 
     @PostMapping(path = "/save", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,13 +71,20 @@ public class FamiliaController {
 
         familia.setNome(familiaPut.getNome());
         familia.setEndereco(familiaPut.getEndereco());
-        familia.setMembros(familiaPut.getMembros());
 
         if (familiaPut.getResponsavelId() != null) {
             Funcionario responsavel = funcionarioRepository.findById(familiaPut.getResponsavelId())
                     .orElseThrow(() -> new RuntimeException("Responsavel nao encontrado com o id: " + familiaPut.getResponsavelId()));
             familia.setResponsavel(responsavel);
         }
+
+        List<Paciente> pacientes = familiaPut.getMembros().stream()
+                .map(nome -> pacienteRepository.findByNomeOrCpf(nome, null)) //busca so pelo nome
+                .filter(Objects::nonNull) //remove valores nulos
+                .collect(Collectors.toList());
+
+        familia.setMembros(pacientes);
+
         // Atualiza a família usando o serviço
         Familia familiaAtualizada = familiaService.update(id, familia);
 
@@ -80,8 +92,12 @@ public class FamiliaController {
         FamiliaPutResquestDTO response = new FamiliaPutResquestDTO();
         response.setNome(familiaAtualizada.getNome());
         response.setEndereco(familiaAtualizada.getEndereco());
-        response.setMembros(familiaAtualizada.getMembros());
         response.setResponsavelId(familiaAtualizada.getResponsavel().getId());
+        response.setMembros(
+                familiaAtualizada.getMembros().stream()
+                        .map(Paciente::getNome) //converte paciente para string e pega so o nome
+                        .collect(Collectors.toList())
+        );
 
         // Retorna a resposta com status 200 OK
         return ResponseEntity.status(HttpStatus.OK).body(response);
