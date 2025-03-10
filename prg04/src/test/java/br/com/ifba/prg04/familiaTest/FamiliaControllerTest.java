@@ -5,6 +5,7 @@ import br.com.ifba.prg04.familia.dto.FamiliaPostRequestDTO;
 import br.com.ifba.prg04.familia.entity.Familia;
 import br.com.ifba.prg04.familia.service.FamiliaService;
 import br.com.ifba.prg04.funcionario.entities.Funcionario;
+import br.com.ifba.prg04.paciente.entity.Paciente;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -53,13 +55,27 @@ public class FamiliaControllerTest {
         Funcionario responsavel = new Funcionario();
         responsavel.setId(1L);
         responsavel.setNome("Dr. João Silva");
+        
+        Paciente paciente1 = new Paciente();
+        paciente1.setNome("Lucas");
+        paciente1.setCpf("123.123.123-12");
+        
+        Paciente paciente2 = new Paciente();
+        paciente2.setNome("Pedro");
+        paciente2.setCpf("122.123.123-12");
+        
+        List<Paciente> pacientes = new ArrayList<>();
+
+        pacientes.add(paciente1);
+        pacientes.add(paciente2);
+        
 
         //cria DTO com membros preenchidos
         FamiliaPostRequestDTO familiaDTO = new FamiliaPostRequestDTO();
         familiaDTO.setNome("Família Souza");
         familiaDTO.setEndereco("Rua X, 123");
         familiaDTO.setResponsavel_id(responsavel.getId());
-        familiaDTO.setMembros(List.of("Maria Souza", "Carlos Oliveira"));
+        familiaDTO.setMembros(pacientes);
 
         Familia familia = new Familia();
         familia.setId(1L);
@@ -76,8 +92,8 @@ public class FamiliaControllerTest {
                         .content(objectMapper.writeValueAsString(familiaDTO)))
                 .andExpect(status().isCreated()) //retornar 201 se der tudo certo
                 .andExpect(jsonPath("$.nome").value("Familia Souza"))
-                .andExpect(jsonPath("$.membros[0]").value("Maria Souza"))
-                .andExpect(jsonPath("$.membros[1]").value("Carlos Oliveira"));
+                .andExpect(jsonPath("$.membros[0]").value("Lucas"))
+                .andExpect(jsonPath("$.membros[1]").value("Pedro"));
     }
 
     @Test
@@ -88,8 +104,21 @@ public class FamiliaControllerTest {
         familia.setEndereco("Rua X, 123");
         Funcionario responsavel = new Funcionario();
         responsavel.setNome("Dr. João Silva");
+
+        Paciente paciente1 = new Paciente();
+        paciente1.setNome("Lucas");
+        paciente1.setCpf("123.123.123-12");
+        
+        Paciente paciente2 = new Paciente();
+        paciente2.setNome("Pedro");
+        paciente2.setCpf("122.123.123-12");
+        
+        List<Paciente> pacientes = new ArrayList<>();
+
+        pacientes.add(paciente1);
+        pacientes.add(paciente2);
         familia.setResponsavel(responsavel);
-        familia.setMembros(List.of("Maria Souza", "Carlos Oliveira"));
+        familia.setMembros(pacientes);
 
         // Simula a resposta do serviço
         Mockito.when(familiaService.findByName("Familia Souza")).thenReturn(List.of(familia));
@@ -98,8 +127,8 @@ public class FamiliaControllerTest {
         mockMvc.perform(get("/familias/findByName/{nome}", "Familia Souza"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].nome").value("Familia Souza"))
-                .andExpect(jsonPath("$[0].membros[0]").value("Maria Souza"))
-                .andExpect(jsonPath("$[0].membros[1]").value("Carlos Oliveira"));
+                .andExpect(jsonPath("$[0].membros[0]").value("Lucas"))
+                .andExpect(jsonPath("$[0].membros[1]").value("Pedro"));
     }
 
     @Test
